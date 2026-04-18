@@ -5,7 +5,7 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Sat, 18 Apr 2026 01:09:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Apr 2026 02:01:15 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
         <title>About</title>
@@ -13,7 +13,7 @@
         <description>## Who am I?
 
 I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Sat, 18 Apr 2026 01:09:49 +0000</pubDate>
+        <pubDate>Sat, 18 Apr 2026 02:01:15 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
     </item>
@@ -21,7 +21,7 @@ I&apos;m an engineer who works in a field that is not related to software develo
         <title>Home</title>
         <link>https://jeff-mitchell.dev/</link>
         <description></description>
-        <pubDate>Sat, 18 Apr 2026 01:09:49 +0000</pubDate>
+        <pubDate>Sat, 18 Apr 2026 02:01:15 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
     </item>
