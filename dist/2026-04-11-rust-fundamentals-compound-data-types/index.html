@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Compound Data Types</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-11" itemprop="datePublished">
+                April 11, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">942 words &middot; 5 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Compound Data Types</h1>
-    <p>In the previous article on <a href="/2026-04-10-rust-fundamentals-scalar-data-types/">Scalar Data Types</a>, we covered values that represent a single thing: an integer, a float, a boolean, or a character. Compound data types let you group multiple values together into one type. Rust has two built-in compound types: tuples and arrays.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>In the previous article on <a href="/2026-04-10-rust-fundamentals-scalar-data-types/">Scalar Data Types</a>, we covered values that represent a single thing: an integer, a float, a boolean, or a character. Compound data types let you group multiple values together into one type. Rust has two built-in compound types: tuples and arrays.</p>
 <h3>Tuples</h3>
 <p>A tuple groups together values that can each be a different type. Once created, a tuple has a fixed length and cannot grow or shrink.</p>
 <pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> survey_result<span class="hl-punctuation-delimiter">:</span> <span class="hl-punctuation-bracket">(</span><span class="hl-operator">&amp;</span><span class="hl-type-builtin">str</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-type-builtin">u8</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-type-builtin">bool</span><span class="hl-punctuation-bracket">)</span> = <span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;John&quot;</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">36</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">true</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
@@ -111,26 +134,37 @@
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch03-02-data-types.html">The Rust Programming Language, Chapter 3.2</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/data-types/">data-types</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/data-types/">data-types</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Decomposition: A Cheatsheet - jeff-mitchell.dev</title>
+    <meta name="description" content="Struggling to decompose problems into smaller steps? This is the cheatsheet for you.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Problem Decomposition: A Cheatsheet">
+    <meta property="og:description" content="Struggling to decompose problems into smaller steps? This is the cheatsheet for you.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Problem Decomposition: A Cheatsheet">
+    <meta name="twitter:description" content="Struggling to decompose problems into smaller steps? This is the cheatsheet for you.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Problem Decomposition: A Cheatsheet</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-18" itemprop="datePublished">
+                April 18, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">767 words &middot; 4 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/cheatsheets/">Cheatsheets</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
+    
+
+    <div class="article-content" itemprop="articleBody">
+        <p>This is the distillation of my latest conversation with Claude about problem solving.</p>
+<h2>The Framework</h2>
+<p>Every problem, every time, same steps:</p>
+<ol>
+<li><strong>What do I have?</strong> Look at what's in front of you. Not in your head — on the screen, on paper. List it.</li>
+<li><strong>What do I want?</strong> Describe the end result in plain words, not code.</li>
+<li><strong>What's the gap?</strong> Compare the two. Don't solve the gap — just describe it.</li>
+<li><strong>What do I know that might work?</strong> Scan your shapes list. Look backward before you look forward.</li>
+<li><strong>One small question about the gap.</strong> If the question feels too big, split it. Keep splitting until it feels almost trivially answerable.</li>
+<li><strong>Answer that question.</strong> Try something. If it's wrong, that's data. Go back to step 5.</li>
+</ol>
+<h2>Pseudocode Rules</h2>
+<ul>
+<li>Pseudocode is comments in plain English describing what needs to happen. That's it. No special format.</li>
+<li>Pseudocode and coding are <strong>two separate activities</strong>. The pseudocode describes the <em>what</em>. The code describes the <em>how</em>. Don't mix them.</li>
+<li>Each step should feel almost too simple. If a step feels hard, it's actually two or more steps compressed together.</li>
+<li>A step is valid even if you don't know the syntax to implement it. Not knowing the syntax means you have a googleable question, not a dead end.</li>
+<li>Write the steps first. Put <code>// ???</code> next to any step where you don't know the syntax. Don't stop to look anything up. Write all the <em>whats</em> first, then go back and figure out the <em>hows</em> one at a time.</li>
+<li>Validate pseudocode by running a small example through it mentally. Pick specific inputs and trace them through each step.</li>
+</ul>
+<h2>The Shapes Are Enough</h2>
+<p>Most "new" problems are familiar shapes with different names. Routes are just folders. Nav links are just a transform. Frontmatter parsing is just "find the delimiter, slice around it." Tera is just a fancy <code>.replace()</code> chain.</p>
+<p>When a problem feels new, it probably isn't. When it truly is new, decompose it with the framework, solve it, name the shape, and add it to the list.</p>
+<h2>Habits to Watch For</h2>
+<ul>
+<li><strong>The freeze.</strong> The feeling of being stuck comes before you've actually tried. It's the fear of being wrong, not the absence of ability. When you notice it, ask one small question — any question.</li>
+<li><strong>Discounting evidence.</strong> Successes don't register. Failures stick. When something works, it "doesn't count" because it wasn't natural, or it was too easy, or you needed help. Write it down anyway.</li>
+<li><strong>The hidden trick.</strong> The belief that there's a better, more correct approach you can't see. There almost never is. The brute force way — loop, compare, check — is the real solution. The fancy approaches are wrappers around it.</li>
+<li><strong>Negative absolutes.</strong> "I can't." "I don't." "I never." Add "yet" or "right now" for accuracy. "I can't decompose this right now on my own" points toward what's missing instead of slamming the door.</li>
+<li><strong>All-or-nothing understanding.</strong> The belief that you need to understand something completely before you can use it. You use <code>println!</code>, <code>.find()</code>, and database connections without understanding the internals. A HashMap is the same kind of leap.</li>
+<li><strong>Comparing your inside to others' outside.</strong> What looks like effortless reasoning in experienced people is pattern matching against a library you can't see. They have more reps, not a different kind of brain.</li>
+<li><strong>The grading mindset.</strong> Nobody is grading you. Being wrong costs a compiler error and thirty seconds. The only rush is in your head.</li>
+</ul>
+<h2>Key Insights</h2>
+<ul>
+<li>The problem is never the whole problem. It's always a stack of small problems.</li>
+<li>Small steps should feel almost stupidly easy. That's how you know the decomposition worked.</li>
+<li>When something feels abstract and blocked, make it concrete. Receipts on a table, cards face-down, a notebook with names in it. The logic is identical — you're just removing the part that triggers the freeze.</li>
+<li>Nothing is lost by thinking in plain language first. The English steps translate directly to code.</li>
+<li>The brute force solution is a real solution. The fancy approach is an optimization you earn after the brute force version works.</li>
+<li>Wrong answers are information. Wrong questions still move you forward. The only thing that doesn't move you forward is not trying.</li>
+<li>You don't need to do this in your head. Externalize — screen, paper, conversation. That's not a weakness. That's just how your brain works best.</li>
+<li>You learned clarinet from nothing to improvisation. You know how to learn this way. Give yourself the same patience with code.</li>
+</ul>
+
+    </div>
+
+    
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/problem-solving/">problem-solving</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
+</article>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">A Greeting Program</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-15" itemprop="datePublished">
+                April 15, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">1146 words &middot; 6 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>A Greeting Program</h1>
-    <p>Over the past several articles I've covered the foundational building blocks of Rust, from variables and data types through to functions and loops. All of that theory is useful, but at some point you need to put it into practice. This post does exactly that by building a small program that asks for your name and prints a greeting back to you.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Over the past several articles I've covered the foundational building blocks of Rust, from variables and data types through to functions and loops. All of that theory is useful, but at some point you need to put it into practice. This post does exactly that by building a small program that asks for your name and prints a greeting back to you.</p>
 <p>The output will look like this:</p>
 <pre><code class="language-bash">What is your name? Jeff
 Hello, Jeff, nice to meet you!
@@ -138,28 +161,39 @@ Hello, Jeff, nice to meet you!
 <p><a href="https://pragprog.com/titles/bhwb/exercises-for-programmers/">Exercises for Programmers, by Brian P. Hogan</a></p>
 <p><a href="https://doc.rust-lang.org/std/io/index.html">The Rust Standard Library: std::io</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/standard-library/">standard-library</a>
-        
-        <a href="/tags/strings/">strings</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/standard-library/">standard-library</a>
+            
+            <a href="/tags/strings/">strings</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

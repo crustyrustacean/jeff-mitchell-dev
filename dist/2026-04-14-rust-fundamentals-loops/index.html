@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Loops</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-14" itemprop="datePublished">
+                April 14, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">794 words &middot; 4 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Loops</h1>
-    <p>In the previous article on <a href="/2026-04-13-rust-fundamentals-conditional-logic/">Conditional Logic</a>, we looked at how <code>if</code> and <code>else if</code> expressions let a program choose between different code paths. Loops take things further by allowing a program to repeat a block of code until some condition is met or a collection has been fully processed. Rust provides three kinds of loops: <code>loop</code>, <code>while</code>, and <code>for</code>.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>In the previous article on <a href="/2026-04-13-rust-fundamentals-conditional-logic/">Conditional Logic</a>, we looked at how <code>if</code> and <code>else if</code> expressions let a program choose between different code paths. Loops take things further by allowing a program to repeat a block of code until some condition is met or a collection has been fully processed. Rust provides three kinds of loops: <code>loop</code>, <code>while</code>, and <code>for</code>.</p>
 <h3>loop</h3>
 <p>The <code>loop</code> keyword tells Rust to execute a block of code repeatedly until you explicitly tell it to stop with the <code>break</code> keyword. At its simplest, a <code>loop</code> with no <code>break</code> runs forever:</p>
 <pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
@@ -115,26 +138,37 @@
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch03-05-control-flow.html">The Rust Programming Language, Chapter 3.5</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/control-flow/">control-flow</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/control-flow/">control-flow</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

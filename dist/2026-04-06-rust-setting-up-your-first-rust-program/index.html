@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Setting Up Rust and Your First Program</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-06" itemprop="datePublished">
+                April 06, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">780 words &middot; 4 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Setting Up Rust and Your First Program</h1>
-    <p>Late in 2020, I decided I needed to properly learn to code. I explored several options before settling on Rust at the beginning of 2022, and I haven't looked back. Rust is performant, has excellent tooling, and its compiler gives you some of the most helpful error messages of any language. It runs on Windows, Linux, and macOS, and can be used to build just about any kind of software you can think of.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Late in 2020, I decided I needed to properly learn to code. I explored several options before settling on Rust at the beginning of 2022, and I haven't looked back. Rust is performant, has excellent tooling, and its compiler gives you some of the most helpful error messages of any language. It runs on Windows, Linux, and macOS, and can be used to build just about any kind of software you can think of.</p>
 <p>The learning curve is steep, no question about it. But the payoff is worth the effort. This article will help you get off the ground by installing Rust, creating your first project, and running a simple program.</p>
 <h3>Before You Start</h3>
 <p>This article assumes you have a solid foundation of general computer skills and are comfortable using the command line on your platform of choice. Experience with another programming language will help, though Rust can be your first language if you're prepared for a steeper climb.</p>
@@ -100,30 +123,41 @@ cargo --version
 <p><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></p>
 <p><a href="https://rustup.rs/">Rustup</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/getting-started/">getting-started</a>
-        
-        <a href="/tags/cargo/">cargo</a>
-        
-        <a href="/tags/toolchain/">toolchain</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/getting-started/">getting-started</a>
+            
+            <a href="/tags/cargo/">cargo</a>
+            
+            <a href="/tags/toolchain/">toolchain</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

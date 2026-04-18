@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Functions</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-12" itemprop="datePublished">
+                April 12, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">818 words &middot; 5 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Functions</h1>
-    <p>Functions are how you organize code in Rust. They let you break a program into smaller, named pieces, each with a clear job, which makes everything easier to read, test, and change later. We've already been using one function in every program so far, the <code>main</code> function, which serves as the entry point for every Rust binary. Now it's time to write our own.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Functions are how you organize code in Rust. They let you break a program into smaller, named pieces, each with a clear job, which makes everything easier to read, test, and change later. We've already been using one function in every program so far, the <code>main</code> function, which serves as the entry point for every Rust binary. Now it's time to write our own.</p>
 <h3>Declaring a Function</h3>
 <p>A function is declared with the <code>fn</code> keyword, followed by a name, a pair of parentheses for parameters, and a body wrapped in curly braces:</p>
 <pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">remaining_lyrics</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
@@ -117,26 +140,37 @@ x + <span class="hl-constant-builtin">1</span>       <span class="hl-comment">//
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch03-03-how-functions-work.html">The Rust Programming Language, Chapter 3.3</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/functions/">functions</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/functions/">functions</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

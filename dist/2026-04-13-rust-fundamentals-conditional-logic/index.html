@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Conditional Logic</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-13" itemprop="datePublished">
+                April 13, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">801 words &middot; 5 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Conditional Logic</h1>
-    <p>Software would be pretty limited if there were no way to make decisions and follow different logic paths. The ability to branch and provide different outcomes, based on either internal results or external user input, is essential to any useful program. Rust provides this through <code>if</code>, <code>else</code>, and <code>else if</code> expressions.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Software would be pretty limited if there were no way to make decisions and follow different logic paths. The ability to branch and provide different outcomes, based on either internal results or external user input, is essential to any useful program. Rust provides this through <code>if</code>, <code>else</code>, and <code>else if</code> expressions.</p>
 <p>An important word in that last sentence is "expressions." In many languages, <code>if</code> is a statement that controls flow but doesn't produce a value. In Rust, <code>if</code> is an expression, which means it evaluates to a value and can be used in places that might surprise you if you're coming from another language. We'll see this in action later in the article.</p>
 <h3>The if Expression</h3>
 <p>An <code>if</code> expression starts with the <code>if</code> keyword followed by a condition. If the condition evaluates to true, the block of code inside the curly braces runs. If not, it's skipped entirely.</p>
@@ -114,26 +137,37 @@
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch03-05-control-flow.html">The Rust Programming Language, Chapter 3.5</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/control-flow/">control-flow</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/control-flow/">control-flow</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

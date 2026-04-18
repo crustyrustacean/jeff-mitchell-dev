@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Scalar Data Types</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-10" itemprop="datePublished">
+                April 10, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">787 words &middot; 4 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>Scalar Data Types</h1>
-    <p>Data types are at the core of getting things done in Rust. They tell the compiler what kind of value a variable holds, which in turn determines how much memory to allocate and what operations are valid. Rust has two broad categories of built-in data types: scalar and compound. This article covers scalar types, which represent a single value. Compound types, which group multiple values together, are up next.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Data types are at the core of getting things done in Rust. They tell the compiler what kind of value a variable holds, which in turn determines how much memory to allocate and what operations are valid. Rust has two broad categories of built-in data types: scalar and compound. This article covers scalar types, which represent a single value. Compound types, which group multiple values together, are up next.</p>
 <p>Rust has four scalar types: integers, floating-point numbers, booleans, and characters. If you've worked with another compiled language before, these will feel familiar. I originally learned these concepts in Turbo Pascal many years ago, and the ideas carry over almost directly.</p>
 <h3>Integers</h3>
 <p>An integer is a whole number with no fractional component. Rust provides both signed and unsigned integer types in several sizes:</p>
@@ -101,26 +124,37 @@
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch03-02-data-types.html">The Rust Programming Language, Chapter 3.2</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/data-types/">data-types</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/data-types/">data-types</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

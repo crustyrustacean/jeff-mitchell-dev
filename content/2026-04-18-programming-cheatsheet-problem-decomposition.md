@@ -3,9 +3,11 @@ title = "Problem Decomposition: A Cheatsheet"
 date = 2026-04-18
 description = "Struggling to decompose problems into smaller steps? This is the cheatsheet for you."
 categories = ["Cheatsheets"]
-tags = ["enum-type"]
-draft = true
+tags = ["problem-solving"]
+draft = false
 +++
+
+This is the distillation of my latest conversation with Claude about problem solving.
 
 ## The Framework
 
@@ -48,7 +50,7 @@ When a problem feels new, it probably isn't. When it truly is new, decompose it 
 - The problem is never the whole problem. It's always a stack of small problems.
 - Small steps should feel almost stupidly easy. That's how you know the decomposition worked.
 - When something feels abstract and blocked, make it concrete. Receipts on a table, cards face-down, a notebook with names in it. The logic is identical — you're just removing the part that triggers the freeze.
-- Nothing is lost by thinking in plain language first. The English steps translate directly to code. They have been correct every time.
+- Nothing is lost by thinking in plain language first. The English steps translate directly to code.
 - The brute force solution is a real solution. The fancy approach is an optimization you earn after the brute force version works.
 - Wrong answers are information. Wrong questions still move you forward. The only thing that doesn't move you forward is not trying.
 - You don't need to do this in your head. Externalize — screen, paper, conversation. That's not a weakness. That's just how your brain works best.

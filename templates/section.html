@@ -1,44 +1,77 @@
 {% extends "base.html" %}
 
 {% block title %}{{ section.title }} | {{ site.name }}{% endblock %}
+{% block description %}{% if section.description %}{{ section.description }}{% else %}{{ section.title }} - {{ site.name }}{% endif %}{% endblock %}
 
 {% block content %}
-<section>
+<section aria-labelledby="section-title">   
+    <header class="section-header">
+        <h1 id="section-title">{{ section.title }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
     {% if section.content %}
-    {{ section.content | safe }}
-    <a class="back-link" href="/">&larr; Back</a>
-    {% else %}
-    <nav class="taxonomy-nav">
+    <div class="section-content">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+
+    {% if not section.content %}
+    <nav class="taxonomy-nav" aria-label="Filter by">
         <a href="/categories/">Categories</a>
         <a href="/tags/">Tags</a>
     </nav>
     {% endif %}
+
     {% if section.pages %}
-    <ul class="page-list">
+    <ul class="page-list" role="list">
         {% for page in section.pages %}
         <li>
-            <a href="{{ page.path }}">
-                <h3>{{ page.title }}</h3>
-                <p class="meta">{{ page.date }}{% if page.categories %} &middot; {{ page.categories | join(sep=", ") }}{% endif %} &middot; {{ page.word_count }} words &middot; {{ page.reading_time }} min read</p>
-                {% if page.description %}
-                <p class="summary">{{ page.description }}</p>
-                {% elif page.summary %}
-                <p class="summary">{{ page.summary }}</p>
-                {% endif %}
-            </a>
+            <article class="page-list-item">
+                <a href="{{ page.path }}">
+                    <h2>{{ page.title }}</h2>
+                    <p class="meta">
+                        <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format='%B %d, %Y') }}</time>
+                        {% if page.categories %}
+                        <span class="meta-separator">&middot;</span>
+                        <span class="categories">{{ page.categories | join(sep=", ") }}</span>
+                        {% endif %}
+                        <span class="meta-separator">&middot;</span>
+                        <span class="reading-time">{{ page.word_count }} words &middot; {{ page.reading_time }} min read</span>
+                    </p>
+                    {% if page.description %}
+                    <p class="summary">{{ page.description }}</p>
+                    {% elif page.summary %}
+                    <p class="summary">{{ page.summary }}</p>
+                    {% endif %}
+                </a>
+            </article>
         </li>
         {% endfor %}
     </ul>
     {% endif %}
+
     {% if section.pagination %}
-    <nav class="pagination">
+    <nav class="pagination" aria-label="Pagination">
         {% if section.pagination.prev %}
-        <a href="{{ section.pagination.prev }}">&larr; Previous</a>
+        <a href="{{ section.pagination.prev }}" rel="prev">&larr; Previous</a>
+        {% else %}
+        <span class="pagination-disabled">&larr; Previous</span>
         {% endif %}
-        <span class="page-info">Page {{ section.pagination.current }} of {{ section.pagination.total }}</span>
+        <span class="page-info" aria-current="page">Page {{ section.pagination.current }} of {{ section.pagination.total }}</span>
         {% if section.pagination.next %}
-        <a href="{{ section.pagination.next }}">Next &rarr;</a>
+        <a href="{{ section.pagination.next }}" rel="next">Next &rarr;</a>
+        {% else %}
+        <span class="pagination-disabled">Next &rarr;</span>
         {% endif %}
+    </nav>
+    {% endif %}
+
+    {% if section.content %}
+    <nav class="section-nav" aria-label="Section navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
     </nav>
     {% endif %}
 </section>

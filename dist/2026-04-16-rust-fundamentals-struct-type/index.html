@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">The Struct Type</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-16" itemprop="datePublished">
+                April 16, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">1068 words &middot; 6 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>The Struct Type</h1>
-    <p>Up to this point, we've worked with scalar types like integers and booleans, and compound types like tuples and arrays. These are useful, but they don't give you a great way to represent something with multiple related pieces of data, like a music album that has an artist, a name, a genre, and a release date. That's where structs come in.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>Up to this point, we've worked with scalar types like integers and booleans, and compound types like tuples and arrays. These are useful, but they don't give you a great way to represent something with multiple related pieces of data, like a music album that has an artist, a name, a genre, and a release date. That's where structs come in.</p>
 <h3>What is a Struct?</h3>
 <p>A struct is a custom data type that lets you group related values together under named fields. If you've used tuples, you already understand the idea of grouping values, but structs improve on tuples in an important way: each field has a name, so you don't have to remember that index 0 is the artist and index 2 is the genre. The field names make your intent clear.</p>
 <h3>Defining a Struct</h3>
@@ -151,26 +174,37 @@
 <h3>Resources</h3>
 <p><a href="https://doc.rust-lang.org/book/ch05-01-defining-structs.html">The Rust Programming Language, Chapter 5.1</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/struct-type/">struct-type</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/struct-type/">struct-type</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

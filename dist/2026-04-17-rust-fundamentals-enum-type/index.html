@@ -45,11 +45,34 @@
     </header>
     <main>
         
-<article>
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">The Enum Type</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-17" itemprop="datePublished">
+                April 17, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">815 words &middot; 5 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
     
 
-    <h1>The Enum Type</h1>
-    <p>If you're coming from a language like C or Java, you probably think of enums as a list of named constants. Rust's enums go much further than that. Each variant of a Rust enum can carry its own data, and different variants can carry different types and amounts of data. This makes enums one of the most expressive features in the language.</p>
+    <div class="article-content" itemprop="articleBody">
+        <p>If you're coming from a language like C or Java, you probably think of enums as a list of named constants. Rust's enums go much further than that. Each variant of a Rust enum can carry its own data, and different variants can carry different types and amounts of data. This makes enums one of the most expressive features in the language.</p>
 <h3>What is an Enum?</h3>
 <p>An enum defines a type by listing its possible variants. Where a struct says "this thing has all of these fields," an enum says "this thing is one of these possibilities." That distinction is important. A struct models something that has multiple attributes at once. An enum models something that can be exactly one of several different things.</p>
 <h3>Defining an Enum</h3>
@@ -122,26 +145,37 @@
 <p><a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html">The Rust Programming Language, Chapter 6.1</a></p>
 <p><a href="https://doc.rust-lang.org/book/ch06-02-match.html">The Rust Programming Language, Chapter 6.2</a></p>
 
-    
-    <div class="post-tags">
-        
-        <a href="/tags/enum-type/">enum-type</a>
-        
     </div>
+
     
-    <a class="back-link" href="/">&larr; Back</a>
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/enum-type/">enum-type</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 
     </main>
     <footer>
-        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
     </footer>
     <script type="module">
         import init, * as bindings from '/wasm/client.js';

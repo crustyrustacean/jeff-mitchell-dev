@@ -9,35 +9,75 @@
 {% block twitter_description %}{{ page.description | default(value=site.description) }}{% endblock %}
 
 {% block content %}
-<article>
-    {% if page.hero %}
-    <picture>
-        <source srcset="{{ page.hero.srcset | safe }}" type="{{ page.hero.mime_type }}">
-        <img src="{{ page.hero.src | safe }}"
-            alt="{{ page.hero.alt }}"
-            width="{{ page.hero.width }}"
-            height="{{ page.hero.height }}"
-            loading="eager"
-            decoding="async">
-    </picture>
-{% endif %}
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">{{ page.title }}</h1>
+        {% if page.date %}
+        <div class="article-meta">
+            <time datetime="{{ page.date | date(format='%Y-%m-%d') }}" itemprop="datePublished">
+                {{ page.date | date(format='%B %d, %Y') }}
+            </time>
+            {% if page.word_count and page.reading_time %}
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">{{ page.word_count }} words &middot; {{ page.reading_time }} min read</span>
+            {% endif %}
+            {% if page.categories %}
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                {% for category in page.categories %}
+                <a href="/categories/{{ category | slugify }}/">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </header>
 
-    <h1>{{ page.title }}</h1>
-    {{ page.content | safe }}
-    {% if page.tags %}
-    <div class="post-tags">
-        {% for tag in page.tags %}
-        <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
-        {% endfor %}
-    </div>
+    {% if page.hero %}
+    <figure class="article-hero">
+        <picture>
+            <source srcset="{{ page.hero.srcset | safe }}" type="{{ page.hero.mime_type }}">
+            <img src="{{ page.hero.src | safe }}"
+                alt="{{ page.hero.alt }}"
+                width="{{ page.hero.width }}"
+                height="{{ page.hero.height }}"
+                loading="eager"
+                decoding="async"
+                itemprop="image">
+        </picture>
+        {% if page.hero.caption %}
+        <figcaption>{{ page.hero.caption }}</figcaption>
+        {% endif %}
+    </figure>
     {% endif %}
-    <a class="back-link" href="/">&larr; Back</a>
+
+    <div class="article-content" itemprop="articleBody">
+        {{ page.content | safe }}
+    </div>
+
+    {% if page.tags %}
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            {% for tag in page.tags %}
+            <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </footer>
+    {% endif %}
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
 </article>
-<script src="https://utteranc.es/client.js"
-        repo="crustyrustacean/jeff-mitchell-dev"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
 {% endblock %}
