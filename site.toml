@@ -1,0 +1,16 @@
+[site]
+name = "jeff-mitchell.dev"
+base_url = "https://jeff-mitchell.dev"
+author = "Jeff Mitchell"
+description = "Writing about building the things mostly in Rust...mostly..."
+
+[build]
+content_dir = "content"
+output_dir = "dist"
+static_dir = "static"
+styles_dir = "styles"
+templates_dir = "templates"
+
+[highlight]
+enabled = true
+class_prefix = 'hl-'

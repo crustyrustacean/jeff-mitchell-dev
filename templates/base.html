@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+    <meta name="author" content="{{ site.author }}">
+    <link rel="canonical" href="{{ site.base_url }}{{ page.url | default(value='/') }}">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ site.name }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site.description }}{% endblock %}">
+    <meta property="og:url" content="{{ site.base_url }}{{ page.url | default(value='/') }}">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site.name }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ site.description }}{% endblock %}">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">{{ site.name }}</a></h1>
+                <h2>{{ site.description }}</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    {{ island(component="SearchBox", class="site-search") | safe }}
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; {{ now.year }} &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

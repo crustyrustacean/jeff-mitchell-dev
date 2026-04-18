@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loops - jeff-mitchell.dev</title>
+    <meta name="description" content="Rust&#x27;s three loop types: loop, while, and for, including returning values from loops and using ranges.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Loops">
+    <meta property="og:description" content="Rust&#x27;s three loop types: loop, while, and for, including returning values from loops and using ranges.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Loops">
+    <meta name="twitter:description" content="Rust&#x27;s three loop types: loop, while, and for, including returning values from loops and using ranges.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article>
+    
+
+    <h1>Loops</h1>
+    <p>In the previous article on <a href="/2026-04-13-rust-fundamentals-conditional-logic/">Conditional Logic</a>, we looked at how <code>if</code> and <code>else if</code> expressions let a program choose between different code paths. Loops take things further by allowing a program to repeat a block of code until some condition is met or a collection has been fully processed. Rust provides three kinds of loops: <code>loop</code>, <code>while</code>, and <code>for</code>.</p>
+<h3>loop</h3>
+<p>The <code>loop</code> keyword tells Rust to execute a block of code repeatedly until you explicitly tell it to stop with the <code>break</code> keyword. At its simplest, a <code>loop</code> with no <code>break</code> runs forever:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">loop</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Help, I&#39;m stuck in a loop!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>This will print the same message endlessly until you press <code>ctrl+c</code> in the terminal to kill the program. Not very useful on its own, but <code>loop</code> becomes interesting when you combine it with <code>break</code> to exit at the right moment.</p>
+<p>What makes <code>loop</code> distinct from Rust's other looping constructs is that it can return a value. This is useful when you need to compute something through repeated iterations and then hand the result back to the rest of your program. You do this by placing the value you want to return right after the <code>break</code> keyword:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> <span class="hl-keyword">mut</span> counter = <span class="hl-constant-builtin">0</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-keyword">let</span> result = <span class="hl-keyword">loop</span> <span class="hl-punctuation-bracket">{</span>
+        counter += <span class="hl-constant-builtin">1</span><span class="hl-punctuation-delimiter">;</span>
+
+        <span class="hl-keyword">if</span> counter == <span class="hl-constant-builtin">10</span> <span class="hl-punctuation-bracket">{</span>
+            <span class="hl-keyword">break</span> counter <span class="hl-operator">*</span> <span class="hl-constant-builtin">2</span><span class="hl-punctuation-delimiter">;</span>
+        <span class="hl-punctuation-bracket">}</span>
+    <span class="hl-punctuation-bracket">}</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The result is {}&quot;</span><span class="hl-punctuation-delimiter">,</span> result<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Here we increment <code>counter</code> on each pass through the loop. When it reaches 10, we break out and return <code>counter * 2</code>, which means <code>result</code> ends up with the value 20. The whole <code>loop</code> block acts as an expression that gets bound to the variable <code>result</code>. This ability to return values from a loop is something you won't find in many other languages, and it comes in handy more often than you might expect.</p>
+<h3>while</h3>
+<p>A <code>while</code> loop repeats for as long as a condition remains true. If you find yourself writing a <code>loop</code> with an <code>if</code> check and a <code>break</code> just to control when to stop, a <code>while</code> loop is almost always the cleaner choice.</p>
+<p>Here's a simple countdown:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> <span class="hl-keyword">mut</span> number = <span class="hl-constant-builtin">10</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-keyword">while</span> number != <span class="hl-constant-builtin">0</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Counting down...{}!&quot;</span><span class="hl-punctuation-delimiter">,</span> number<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+        number -= <span class="hl-constant-builtin">1</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">}</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Liftoff!!!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>We start with <code>number</code> set to 10. On each pass through the loop, we print the current value and subtract 1. Once <code>number</code> reaches 0, the condition <code>number != 0</code> is no longer true and execution moves on to the final message. The intent is immediately clear from reading the <code>while</code> line, which is the main advantage over using a bare <code>loop</code> for this kind of task.</p>
+<h3>for</h3>
+<p>The <code>for</code> loop is used to iterate over a collection of items. Rather than managing a counter variable and checking a condition yourself, you hand <code>for</code> something to iterate over and it processes each element in turn. This is the loop you'll reach for most often in Rust.</p>
+<p>Here's an example that iterates over an array:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> albums = <span class="hl-punctuation-bracket">[</span><span class="hl-string">&quot;Coat of Arms&quot;</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-string">&quot;The Last Stand&quot;</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-string">&quot;The Great War&quot;</span><span class="hl-punctuation-bracket">]</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-keyword">for</span> album <span class="hl-keyword">in</span> albums <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Now playing: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> album<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>for</code> loop walks through each element in the <code>albums</code> array, binding it to the variable <code>album</code> for each pass. There's no index to manage and no risk of accidentally going past the end of the array. Rust handles all of that for you.</p>
+<p>The <code>for</code> loop also works with ranges, which are created using the <code>..</code> syntax. This is handy when you need to do something a specific number of times or generate a sequence of numbers:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">for</span> number <span class="hl-keyword">in</span> <span class="hl-punctuation-bracket">(</span><span class="hl-constant-builtin">1</span>..<span class="hl-constant-builtin">10</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">.</span><span class="hl-function">rev</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}!&quot;</span><span class="hl-punctuation-delimiter">,</span> number<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">}</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;We have liftoff!!!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>There are a couple of things worth noting here. The range <code>1..10</code> generates numbers from 1 up to but not including 10, so you get 1 through 9. The upper bound being exclusive is something that trips people up at first, so keep it in mind. The <code>.rev()</code> method reverses the range so that it counts down from 9 to 1 instead of up. This is your first glimpse of method chaining on an iterator, which is a pattern that shows up everywhere in Rust once you start working with collections.</p>
+<h3>Where to Go from Here</h3>
+<p>These three loop types, combined with the conditional logic from the previous article, give you the tools to control how your program flows through its instructions. Over the next couple of articles, I'll put these fundamentals into practice by building a few small programs. It will be a chance to see how variables, functions, conditionals, loops, and Rust's standard library all work together to create something real.</p>
+<h3>Resources</h3>
+<p><a href="https://doc.rust-lang.org/book/ch03-05-control-flow.html">The Rust Programming Language, Chapter 3.5</a></p>
+
+    
+    <div class="post-tags">
+        
+        <a href="/tags/control-flow/">control-flow</a>
+        
+    </div>
+    
+    <a class="back-link" href="/">&larr; Back</a>
+</article>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} | {{ site.name }}{% endblock %}
+
+{% block content %}
+<section>
+    {% if section.content %}
+    {{ section.content | safe }}
+    <a class="back-link" href="/">&larr; Back</a>
+    {% else %}
+    <nav class="taxonomy-nav">
+        <a href="/categories/">Categories</a>
+        <a href="/tags/">Tags</a>
+    </nav>
+    {% endif %}
+    {% if section.pages %}
+    <ul class="page-list">
+        {% for page in section.pages %}
+        <li>
+            <a href="{{ page.path }}">
+                <h3>{{ page.title }}</h3>
+                <p class="meta">{{ page.date }}{% if page.categories %} &middot; {{ page.categories | join(sep=", ") }}{% endif %} &middot; {{ page.word_count }} words &middot; {{ page.reading_time }} min read</p>
+                {% if page.description %}
+                <p class="summary">{{ page.description }}</p>
+                {% elif page.summary %}
+                <p class="summary">{{ page.summary }}</p>
+                {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if section.pagination %}
+    <nav class="pagination">
+        {% if section.pagination.prev %}
+        <a href="{{ section.pagination.prev }}">&larr; Previous</a>
+        {% endif %}
+        <span class="page-info">Page {{ section.pagination.current }} of {{ section.pagination.total }}</span>
+        {% if section.pagination.next %}
+        <a href="{{ section.pagination.next }}">Next &rarr;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

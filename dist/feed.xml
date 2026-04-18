@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>jeff-mitchell.dev</title>
+    <link>https://jeff-mitchell.dev</link>
+    <description>Writing about building the things mostly in Rust...mostly...</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 18 Apr 2026 01:09:49 +0000</lastBuildDate>
+    <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Sat, 18 Apr 2026 01:09:49 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Sat, 18 Apr 2026 01:09:49 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    </item>
+    <item>
+        <title>The Enum Type</title>
+        <link>https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</link>
+        <description>If you&apos;re coming from a language like C or Java, you probably think of enums as a list of named constants. Rust&apos;s enums go much further than that. Each variant of a Rust enum can carry its own data, a...</description>
+        <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>enum-type</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</guid>
+    </item>
+    <item>
+        <title>Programming Shapes: A Pattern Library</title>
+        <link>https://jeff-mitchell.dev/2026-04-17-programming-patterns-and-shapes/</link>
+        <description>Most programming problems, no matter how different they look on the surface, are built from a small number of repeating shapes. The names change, the data changes, but the structure is identical. Here...</description>
+        <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>patterns</category>
+    <category>problem-solving</category>
+    <category>decomposition</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-17-programming-patterns-and-shapes/</guid>
+    </item>
+    <item>
+        <title>The Struct Type</title>
+        <link>https://jeff-mitchell.dev/2026-04-16-rust-fundamentals-struct-type/</link>
+        <description>Up to this point, we&apos;ve worked with scalar types like integers and booleans, and compound types like tuples and arrays. These are useful, but they don&apos;t give you a great way to represent something wit...</description>
+        <pubDate>Thu, 16 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>struct-type</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-16-rust-fundamentals-struct-type/</guid>
+    </item>
+    <item>
+        <title>A Greeting Program</title>
+        <link>https://jeff-mitchell.dev/2026-04-15-rust-building-something-a-greeting-program/</link>
+        <description>Over the past several articles I&apos;ve covered the foundational building blocks of Rust, from variables and data types through to functions and loops. All of that theory is useful, but at some point you ...</description>
+        <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>standard-library</category>
+    <category>strings</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-15-rust-building-something-a-greeting-program/</guid>
+    </item>
+    <item>
+        <title>Loops</title>
+        <link>https://jeff-mitchell.dev/2026-04-14-rust-fundamentals-loops/</link>
+        <description>In the previous article on [Conditional Logic](@/2026-04-13-rust-fundamentals-conditional-logic.md), we looked at how `if` and `else if` expressions let a program choose between different code paths. ...</description>
+        <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>control-flow</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-14-rust-fundamentals-loops/</guid>
+    </item>
+    <item>
+        <title>Conditional Logic</title>
+        <link>https://jeff-mitchell.dev/2026-04-13-rust-fundamentals-conditional-logic/</link>
+        <description>Software would be pretty limited if there were no way to make decisions and follow different logic paths. The ability to branch and provide different outcomes, based on either internal results or exte...</description>
+        <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>control-flow</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-13-rust-fundamentals-conditional-logic/</guid>
+    </item>
+    <item>
+        <title>Functions</title>
+        <link>https://jeff-mitchell.dev/2026-04-12-rust-fundamentals-functions/</link>
+        <description>Functions are how you organize code in Rust. They let you break a program into smaller, named pieces, each with a clear job, which makes everything easier to read, test, and change later. We&apos;ve alread...</description>
+        <pubDate>Sun, 12 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>functions</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-12-rust-fundamentals-functions/</guid>
+    </item>
+    <item>
+        <title>Compound Data Types</title>
+        <link>https://jeff-mitchell.dev/2026-04-11-rust-fundamentals-compound-data-types/</link>
+        <description>In the previous article on [Scalar Data Types](@/2026-04-10-rust-fundamentals-scalar-data-types.md), we covered values that represent a single thing: an integer, a float, a boolean, or a character. Co...</description>
+        <pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>data-types</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-11-rust-fundamentals-compound-data-types/</guid>
+    </item>
+    <item>
+        <title>Scalar Data Types</title>
+        <link>https://jeff-mitchell.dev/2026-04-10-rust-fundamentals-scalar-data-types/</link>
+        <description>Data types are at the core of getting things done in Rust. They tell the compiler what kind of value a variable holds, which in turn determines how much memory to allocate and what operations are vali...</description>
+        <pubDate>Fri, 10 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>data-types</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-10-rust-fundamentals-scalar-data-types/</guid>
+    </item>
+    <item>
+        <title>Variables, Mutability, and Shadowing</title>
+        <link>https://jeff-mitchell.dev/2026-04-09-rust-fundamentals-variables-mutability-shadowing/</link>
+        <description>Variables are fundamental to any programming language, and Rust handles them in a way that might surprise you if you&apos;re coming from another language. The core idea is straightforward, but Rust layers ...</description>
+        <pubDate>Thu, 09 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>variables-and-bindings</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-09-rust-fundamentals-variables-mutability-shadowing/</guid>
+    </item>
+    <item>
+        <title>Constants</title>
+        <link>https://jeff-mitchell.dev/2026-04-08-rust-fundamentals-constants/</link>
+        <description>In the [previous article](@/2026-04-07-rust-fundamentals-comments.md) we covered comments. Now let&apos;s look at constants, which are one of the simplest but most practical features in any programming lan...</description>
+        <pubDate>Wed, 08 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>constants</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-08-rust-fundamentals-constants/</guid>
+    </item>
+    <item>
+        <title>Comments</title>
+        <link>https://jeff-mitchell.dev/2026-04-07-rust-fundamentals-comments/</link>
+        <description>I&apos;m going to start this article by asking you to take my advice, because I&apos;m not using it. I say that because I&apos;m terrible at commenting my code. Comments are important, don&apos;t be like me.
+
+Before I co...</description>
+        <pubDate>Tue, 07 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>getting-started</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-07-rust-fundamentals-comments/</guid>
+    </item>
+    <item>
+        <title>Setting Up Rust and Your First Program</title>
+        <link>https://jeff-mitchell.dev/2026-04-06-rust-setting-up-your-first-rust-program/</link>
+        <description>Late in 2020, I decided I needed to properly learn to code. I explored several options before settling on Rust at the beginning of 2022, and I haven&apos;t looked back. Rust is performant, has excellent to...</description>
+        <pubDate>Mon, 06 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>getting-started</category>
+    <category>cargo</category>
+    <category>toolchain</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-06-rust-setting-up-your-first-rust-program/</guid>
+    </item>
+
+</channel>
+</rss>

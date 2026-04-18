@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
+{% block description %}{{ page.description | default(value=site.description) }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ page.title }}{% endblock %}
+{% block og_description %}{{ page.description | default(value=site.description) }}{% endblock %}
+{% block twitter_title %}{{ page.title }}{% endblock %}
+{% block twitter_description %}{{ page.description | default(value=site.description) }}{% endblock %}
+
+{% block content %}
+<article>
+    {% if page.hero %}
+    <picture>
+        <source srcset="{{ page.hero.srcset | safe }}" type="{{ page.hero.mime_type }}">
+        <img src="{{ page.hero.src | safe }}"
+            alt="{{ page.hero.alt }}"
+            width="{{ page.hero.width }}"
+            height="{{ page.hero.height }}"
+            loading="eager"
+            decoding="async">
+    </picture>
+{% endif %}
+
+    <h1>{{ page.title }}</h1>
+    {{ page.content | safe }}
+    {% if page.tags %}
+    <div class="post-tags">
+        {% for tag in page.tags %}
+        <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <a class="back-link" href="/">&larr; Back</a>
+</article>
+{% endblock %}

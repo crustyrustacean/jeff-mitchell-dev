@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Categories | {{ site.name }}{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Categories</h2>
+    <nav class="taxonomy-nav">
+        <a href="/categories/" class="active">Categories</a>
+        <a href="/tags/">Tags</a>
+    </nav>
+    {% if extra.taxonomy.terms %}
+    <ul class="page-list">
+        {% for term in extra.taxonomy.terms %}
+        <li>
+            <a href="{{ term.path }}">
+                <h3>{{ term.name }}</h3>
+                <p class="meta">{{ term.page_count }} post{{ term.page_count | pluralize }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No categories yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

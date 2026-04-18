@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Up Rust and Your First Program - jeff-mitchell.dev</title>
+    <meta name="description" content="Install Rust, create your first project with Cargo, and run a hello world program step by step.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Setting Up Rust and Your First Program">
+    <meta property="og:description" content="Install Rust, create your first project with Cargo, and run a hello world program step by step.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Setting Up Rust and Your First Program">
+    <meta name="twitter:description" content="Install Rust, create your first project with Cargo, and run a hello world program step by step.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article>
+    
+
+    <h1>Setting Up Rust and Your First Program</h1>
+    <p>Late in 2020, I decided I needed to properly learn to code. I explored several options before settling on Rust at the beginning of 2022, and I haven't looked back. Rust is performant, has excellent tooling, and its compiler gives you some of the most helpful error messages of any language. It runs on Windows, Linux, and macOS, and can be used to build just about any kind of software you can think of.</p>
+<p>The learning curve is steep, no question about it. But the payoff is worth the effort. This article will help you get off the ground by installing Rust, creating your first project, and running a simple program.</p>
+<h3>Before You Start</h3>
+<p>This article assumes you have a solid foundation of general computer skills and are comfortable using the command line on your platform of choice. Experience with another programming language will help, though Rust can be your first language if you're prepared for a steeper climb.</p>
+<h3>Compiled vs Interpreted</h3>
+<p>Rust is a compiled language, which means the programs you write are translated into machine code before they can run. This is different from interpreted languages like Python or JavaScript, where your code is executed more or less directly. Compilation adds a step to your workflow, but it's also where Rust catches many bugs before your program ever runs. If you'd like a deeper explanation of the difference, <a href="https://www.freecodecamp.org/news/compiled-versus-interpreted-languages/">this article on freeCodeCamp</a> is a great starting point.</p>
+<h3>Cargo</h3>
+<p><code>Cargo</code> is Rust's build tool and package manager. It handles creating projects, managing dependencies (external libraries, called "crates" in Rust), compiling your code, running tests, and more. You technically can write Rust without Cargo by compiling individual files with the <code>rustc</code> compiler, but there's no good reason to. Cargo makes everything easier and I'll use it exclusively in everything I write going forward.</p>
+<h3>Installation</h3>
+<p>If you haven't already installed Rust, head over to <a href="https://rustup.rs/">rustup.rs</a> and follow the instructions for your platform. The installer will set up <code>rustc</code> (the compiler), <code>cargo</code>, and the Rust standard library. Once installation is complete, you can verify everything is working by opening a terminal and running:</p>
+<pre><code class="language-bash">rustc --version
+cargo --version
+</code></pre>
+<p>If both commands print a version number, you're good to go.</p>
+<h3>Your First Program</h3>
+<p>It's a cliche, but let's start with a program that says hello. Open your terminal, navigate to a directory where you'd like to keep your projects, and run:</p>
+<pre><code class="language-bash">cargo new hello_name
+</code></pre>
+<p>This creates a new Rust project in a directory called <code>hello_name</code>. Cargo sets up the project structure for you, including a <code>src</code> directory with a <code>main.rs</code> file and a <code>Cargo.toml</code> file that describes your project and its dependencies.</p>
+<p>Rust projects come in two flavors: binaries and libraries. A binary is a standalone program that can be run on its own. A library is meant to be used as a dependency by other Rust code. Cargo creates a binary project by default, which is what we want.</p>
+<p>Change into the project directory:</p>
+<pre><code class="language-bash">cd hello_name
+</code></pre>
+<p>Open the project in your editor of choice, then look at <code>src/main.rs</code>. Cargo has already generated a working program for you:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Hello, world!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Let's modify it to greet you by name:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> name = <span class="hl-string">&quot;Jeff&quot;</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Hello, {}!&quot;</span><span class="hl-punctuation-delimiter">,</span> name<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Change "Jeff" to your own name, of course. There are a few things worth noticing in this tiny program:</p>
+<p>The <code>fn main()</code> line declares the main function, which is the entry point of every Rust binary. When you run the program, this is where execution begins.</p>
+<p>The <code>let name = "Jeff"</code> line creates a variable called <code>name</code> and binds the string "Jeff" to it. The <code>let</code> keyword is how you create variables in Rust, and we'll explore this in much more detail in a later article.</p>
+<p>The <code>println!</code> line is a macro (the <code>!</code> at the end is what distinguishes a macro from a regular function) that prints text to the console. The <code>{}</code> acts as a placeholder that gets replaced with the value of <code>name</code>.</p>
+<p>Every statement ends with a semicolon, and the body of the function is wrapped in curly braces. These curly braces define a scope, which becomes very important later when we get into ownership, one of Rust's core concepts.</p>
+<p>Now let's run it. Back in your terminal:</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<p>The first time you run this, Cargo will compile your program and then execute it. You should see:</p>
+<pre><code class="language-bash">Hello, Jeff!
+</code></pre>
+<p>Congratulations. No matter how simple, you've written and run a Rust program. There are many concepts ahead, and the learning curve is real, but this first step is behind you now.</p>
+<h3>Resources</h3>
+<p><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></p>
+<p><a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a></p>
+<p><a href="https://rustup.rs/">Rustup</a></p>
+
+    
+    <div class="post-tags">
+        
+        <a href="/tags/getting-started/">getting-started</a>
+        
+        <a href="/tags/cargo/">cargo</a>
+        
+        <a href="/tags/toolchain/">toolchain</a>
+        
+    </div>
+    
+    <a class="back-link" href="/">&larr; Back</a>
+</article>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
