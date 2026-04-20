@@ -4,7 +4,7 @@ date = 2026-04-20
 description = "How Rust manages memory through ownership, moving, copying, cloning, borrowing, and references, with the rules that make your programs safe without a garbage collector."
 categories = ["Fundamentals"]
 tags = ["ownership"]
-draft = true
+draft = false
 +++
 
 > "Fortune, fame, mirror vain, gone insane...but the memory remains!" - Metallica, The Memory Remains

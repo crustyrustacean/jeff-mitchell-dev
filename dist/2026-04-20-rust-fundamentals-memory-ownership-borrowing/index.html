@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ownership and Borrowing - jeff-mitchell.dev</title>
+    <meta name="description" content="How Rust manages memory through ownership, moving, copying, cloning, borrowing, and references, with the rules that make your programs safe without a garbage collector.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Ownership and Borrowing">
+    <meta property="og:description" content="How Rust manages memory through ownership, moving, copying, cloning, borrowing, and references, with the rules that make your programs safe without a garbage collector.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Ownership and Borrowing">
+    <meta name="twitter:description" content="How Rust manages memory through ownership, moving, copying, cloning, borrowing, and references, with the rules that make your programs safe without a garbage collector.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Ownership and Borrowing</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-20" itemprop="datePublished">
+                April 20, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">2260 words &middot; 12 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
+    
+
+    <div class="article-content" itemprop="articleBody">
+        <blockquote>
+<p>"Fortune, fame, mirror vain, gone insane...but the memory remains!" - Metallica, The Memory Remains</p>
+</blockquote>
+<p>I'll be honest, I procrastinated on this article for a long time. Ownership and borrowing are the concepts that make Rust different from every other language I've used, and for a while I wasn't confident I understood them well enough to write about them. I'm going for it anyway, because if you never start, you never finish.</p>
+<p>These concepts are probably the most challenging part of learning Rust. They're also the most rewarding once they click, because they're the reason Rust programs are memory-safe without paying the cost of a garbage collector. Everything you've learned so far in this series has been building toward this.</p>
+<h3>How Languages Handle Memory</h3>
+<p>Programming languages take different approaches to managing memory, and it helps to understand the landscape before diving into what Rust does.</p>
+<p>Some languages, like C, leave memory management entirely up to you. You allocate memory when you need it and free it when you're done. Forget to free it and you have a memory leak. Free it too early and you have a dangling pointer. Free it twice and you have undefined behavior. The flexibility is total, and so is the risk.</p>
+<p>Other languages, like JavaScript or Python, use a garbage collector that periodically scans for memory that's no longer in use and frees it automatically. This is convenient, but the garbage collector runs at runtime, which adds overhead and can cause unpredictable pauses. For performance-sensitive or resource-constrained systems, this cost may not be acceptable.</p>
+<p>Rust takes a third approach. The compiler enforces a set of ownership rules at compile time. If your code violates any of these rules, it won't compile. Because the checks happen at compile time rather than at runtime, there's no performance cost. You get the safety of garbage collection with the performance of manual memory management.</p>
+<h3>The Stack and the Heap</h3>
+<p>To understand ownership, you need a basic picture of where data lives in memory. There are two regions that matter: the stack and the heap.</p>
+<p>The stack is fast and structured. Data goes on top, comes off the top, and everything stored on it must have a known, fixed size. All of the scalar types we covered earlier, integers, floats, booleans, characters, as well as fixed-size compound types like arrays and tuples, live on the stack. Allocation and deallocation are essentially instant because there's no searching involved.</p>
+<p>The heap is more flexible. When you need to store data whose size can change or isn't known at compile time, like a <code>String</code> that can grow, it goes on the heap. The memory allocator finds a block of space large enough, marks it as in use, and gives you back a pointer to that location. Accessing heap data is slower than stack data because the program has to follow the pointer to find it. Managing heap memory is where things get complicated in most languages, and it's exactly where Rust's ownership system earns its keep.</p>
+<h3>The Rules of Ownership</h3>
+<p>Rust's ownership system is built on three rules:</p>
+<ol>
+<li>Every value in Rust has a variable that's called its owner.</li>
+<li>There can only be one owner at a time.</li>
+<li>When the owner goes out of scope, the value is dropped.</li>
+</ol>
+<p>That third rule is doing the heavy lifting. Let's see it in action.</p>
+<h3>Scope and Drop</h3>
+<p>A scope in Rust is defined by curly braces. When a variable goes out of scope, Rust automatically calls an internal <code>drop</code> function to clean up the memory it was using:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> fuel = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Give me fuel, give me fire&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-comment">// fuel is valid here, we can use it freely</span>
+
+<span class="hl-punctuation-bracket">}</span> <span class="hl-comment">// fuel goes out of scope here and Rust drops it</span>
+</code></pre>
+<p>Once execution passes the closing brace, <code>fuel</code> no longer exists and the memory it occupied on the heap is freed. You don't have to remember to free it, and you can't accidentally use it after it's been freed. The compiler enforces both.</p>
+<p>This seems straightforward with a single function, but things get interesting when you start passing values around.</p>
+<h3>Move Semantics</h3>
+<p>Consider what happens when you pass a <code>String</code> to a function:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> fuel = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Give me fuel, give me fire&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-keyword">let</span> <span class="hl-punctuation-bracket">(</span>fuel2<span class="hl-punctuation-delimiter">,</span> len<span class="hl-punctuation-bracket">)</span> = <span class="hl-function">calculate_length</span><span class="hl-punctuation-bracket">(</span>fuel<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The length of &#39;{}&#39; is {}.&quot;</span><span class="hl-punctuation-delimiter">,</span> fuel2<span class="hl-punctuation-delimiter">,</span> len<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">calculate_length</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">s</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type">String</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-punctuation-bracket">(</span><span class="hl-type">String</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-type-builtin">usize</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> length = s<span class="hl-punctuation-delimiter">.</span><span class="hl-function">len</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">(</span>s<span class="hl-punctuation-delimiter">,</span> length<span class="hl-punctuation-bracket">)</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>When we pass <code>fuel</code> to <code>calculate_length</code>, ownership of the string moves into the function. The variable <code>fuel</code> is no longer valid in <code>main</code> after that point. If we tried to use <code>fuel</code> after the function call, the compiler would stop us.</p>
+<p>To keep using the string in <code>main</code>, the function has to return it back. That's why <code>calculate_length</code> returns a tuple containing both the string and its length. We then bind those return values to new variables.</p>
+<p>This works, but it's awkward. We're doing a lot of passing back and forth just to calculate the length of a string. Fortunately, Rust gives us a better way.</p>
+<h3>Copy vs Move</h3>
+<p>Before we get to that better way, there's an important nuance to understand. Not all types behave like <code>String</code> when you assign them to another variable or pass them to a function. Try this with an integer:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> x = <span class="hl-constant-builtin">5</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">let</span> y = x<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;x is {} and y is {}&quot;</span><span class="hl-punctuation-delimiter">,</span> x<span class="hl-punctuation-delimiter">,</span> y<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>This compiles and works fine. Both <code>x</code> and <code>y</code> are valid. But if you try the same thing with a <code>String</code>:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> s1 = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">let</span> s2 = s1<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}&quot;</span><span class="hl-punctuation-delimiter">,</span> s1<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span> <span class="hl-comment">// This won&#39;t compile</span>
+</code></pre>
+<p>The compiler stops you because <code>s1</code> was moved into <code>s2</code> and is no longer valid.</p>
+<p>The difference comes down to the <code>Copy</code> trait. Types that are simple and live entirely on the stack, like integers, floats, booleans, and characters, implement the <code>Copy</code> trait. When you assign one of these to another variable, Rust makes a cheap bitwise copy of the data. It's so inexpensive that there's no reason to prevent you from using the original.</p>
+<p>Types that involve heap allocation, like <code>String</code>, don't implement <code>Copy</code>. Assigning or passing these values moves ownership instead, because having two variables pointing to the same heap data and both thinking they own it would be a problem. When the first one went out of scope and Rust tried to drop the data, the second one would be left pointing at freed memory. The ownership rules prevent this from ever happening.</p>
+<p>This distinction between Copy and Move is something you'll bump into constantly in Rust, and understanding it saves a lot of confusion when the compiler tells you a value has been moved.</p>
+<h3>Clone</h3>
+<p>Sometimes you genuinely need a full, independent copy of heap data. That's what the <code>.clone()</code> method is for:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> s1 = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">let</span> s2 = s1<span class="hl-punctuation-delimiter">.</span><span class="hl-function">clone</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;s1 is {} and s2 is {}&quot;</span><span class="hl-punctuation-delimiter">,</span> s1<span class="hl-punctuation-delimiter">,</span> s2<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>Both <code>s1</code> and <code>s2</code> are valid because <code>.clone()</code> creates a complete, deep copy of the data on the heap. The original isn't moved because a brand new allocation was made for the clone.</p>
+<p>It's worth being deliberate about when you use <code>.clone()</code>. It's perfectly fine and sometimes necessary, but it's also more expensive than a borrow because it duplicates data in memory. If you find yourself reaching for <code>.clone()</code> to make the compiler happy, take a moment to consider whether a reference would work instead. That said, don't be afraid of <code>.clone()</code> when it's the right tool. Correct and clear code is more important than saving a few allocations, especially while you're learning.</p>
+<h3>References and Borrowing</h3>
+<p>Instead of transferring ownership, we can let a function borrow a value by passing a reference to it. A reference allows access to the data without taking ownership:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> fuel = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Give me fuel, give me fire&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-keyword">let</span> len = <span class="hl-function">calculate_length</span><span class="hl-punctuation-bracket">(</span><span class="hl-operator">&amp;</span>fuel<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The length of &#39;{}&#39; is {}.&quot;</span><span class="hl-punctuation-delimiter">,</span> fuel<span class="hl-punctuation-delimiter">,</span> len<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">calculate_length</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">s</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-type">String</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-type-builtin">usize</span> <span class="hl-punctuation-bracket">{</span>
+    s<span class="hl-punctuation-delimiter">.</span><span class="hl-function">len</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>&amp;</code> in <code>&amp;fuel</code> creates a reference to the value without moving ownership. The function signature <code>s: &amp;String</code> says it accepts a reference to a <code>String</code>. Inside the function, we can read the data through the reference, but <code>fuel</code> still belongs to <code>main</code>.</p>
+<p>Because <code>calculate_length</code> never owned the string, it doesn't need to return it. After the function call, <code>fuel</code> is still perfectly valid and we can keep using it. This is called borrowing, and it's how you'll work with data most of the time in Rust.</p>
+<h3>Mutable References</h3>
+<p>References are immutable by default. If a function borrows a value, it can read it but can't change it. This makes sense, because you generally don't want someone else modifying something they don't own without your explicit permission.</p>
+<p>When you do need to modify borrowed data, you use a mutable reference:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> <span class="hl-keyword">mut</span> fuel = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Give me fuel, give me fire&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function">complete_lyrics</span><span class="hl-punctuation-bracket">(</span><span class="hl-operator">&amp;</span><span class="hl-keyword">mut</span> fuel<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}&quot;</span><span class="hl-punctuation-delimiter">,</span> fuel<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">complete_lyrics</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">s</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-keyword">mut</span> <span class="hl-type">String</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    s<span class="hl-punctuation-delimiter">.</span><span class="hl-function">push_str</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;, give me that which I desire&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Three things need to line up for this to work. The variable must be declared with <code>mut</code>. The reference must be passed as <code>&amp;mut fuel</code>. And the function parameter must accept <code>&amp;mut String</code>. All three are required, making it very explicit at every level that mutation is happening.</p>
+<p>Rust enforces an important restriction on mutable references: you can have only one mutable reference to a particular piece of data at a time. This prevents data races, which are a category of bug where two parts of a program try to modify the same data simultaneously with unpredictable results.</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> <span class="hl-keyword">mut</span> s = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">let</span> r1 = <span class="hl-operator">&amp;</span><span class="hl-keyword">mut</span> s<span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">let</span> r2 = <span class="hl-operator">&amp;</span><span class="hl-keyword">mut</span> s<span class="hl-punctuation-delimiter">;</span> <span class="hl-comment">// This won&#39;t compile</span>
+
+<span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}, {}&quot;</span><span class="hl-punctuation-delimiter">,</span> r1<span class="hl-punctuation-delimiter">,</span> r2<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>The compiler will refuse this code. Only one mutable reference can exist at a time.</p>
+<p>There's a related restriction: you can't have a mutable reference while immutable references to the same data are still in use. This is because code holding an immutable reference doesn't expect the value to change out from under it.</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> <span class="hl-keyword">mut</span> s = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">let</span> r1 = <span class="hl-operator">&amp;</span>s<span class="hl-punctuation-delimiter">;</span>     <span class="hl-comment">// immutable borrow</span>
+<span class="hl-keyword">let</span> r2 = <span class="hl-operator">&amp;</span>s<span class="hl-punctuation-delimiter">;</span>     <span class="hl-comment">// another immutable borrow, this is fine</span>
+<span class="hl-keyword">let</span> r3 = <span class="hl-operator">&amp;</span><span class="hl-keyword">mut</span> s<span class="hl-punctuation-delimiter">;</span>  <span class="hl-comment">// mutable borrow while immutable borrows exist, won&#39;t compile</span>
+
+<span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}, {}, {}&quot;</span><span class="hl-punctuation-delimiter">,</span> r1<span class="hl-punctuation-delimiter">,</span> r2<span class="hl-punctuation-delimiter">,</span> r3<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>Multiple immutable references are fine because no one is changing the data. But the moment a mutable reference enters the picture, no other references of any kind can coexist. These rules might feel restrictive at first, but they eliminate entire categories of bugs at compile time that would be very difficult to track down at runtime.</p>
+<h3>Dangling References</h3>
+<p>One more safety guarantee worth understanding: Rust prevents you from creating dangling references. A dangling reference is a pointer to memory that has already been freed, and in languages like C they're a notorious source of bugs.</p>
+<p>Consider a function that tries to return a reference to a value it created locally:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">dangle</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-operator">&amp;</span><span class="hl-type">String</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> s = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-operator">&amp;</span>s
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>This won't compile. The variable <code>s</code> is created inside <code>dangle</code> and will be dropped when the function ends. If Rust let you return a reference to <code>s</code>, the caller would receive a reference pointing to freed memory. The compiler catches this and tells you exactly what's wrong.</p>
+<p>The fix is to return the <code>String</code> itself, transferring ownership to the caller:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">no_dangle</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-type">String</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> s = <span class="hl-type">String</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">from</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;hello&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    s
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Now the string moves out of the function rather than being dropped, and the caller takes ownership. This is another example of the ownership system preventing bugs that would be very difficult to diagnose at runtime.</p>
+<h3>A Note on Slices</h3>
+<p>Throughout this article series, you've been using <code>&amp;str</code> in function parameters and struct definitions without a full explanation of what it is. A <code>&amp;str</code> is a string slice, which is a reference to a portion of string data. Slices are a kind of reference that don't take ownership, and they work with other collection types as well, not just strings.</p>
+<p>Slices deserve their own article because they're a concept you'll use constantly in Rust, and there are important details around how they relate to ownership. For now, knowing that <code>&amp;str</code> is a borrowed view into string data, rather than an owned copy, is enough to make sense of the code you've seen so far.</p>
+<h3>Where to Go from Here</h3>
+<p>Ownership and borrowing are concepts you'll wrestle with for a while. In the early days there's a lot of so-called "fighting the borrow checker," and it can be frustrating. But over time these rules become intuitive, and you start to appreciate that the compiler is catching real bugs, not just being pedantic. The ownership system is what allows Rust to be both safe and fast, and everything else in the language is built on top of it.</p>
+<p>There's more to the ownership story, including slices in depth and lifetimes, which I'll cover in future articles. For now, the core ideas of ownership, moving, copying, cloning, borrowing, and the rules around mutable references give you the foundation to start understanding why your code does or doesn't compile. When in doubt, read the compiler's error messages carefully. The Rust compiler is genuinely trying to help you, and its ownership-related messages are some of the most informative you'll find in any language.</p>
+<h3>Resources</h3>
+<p><a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html">The Rust Programming Language, Chapter 4.1</a></p>
+<p><a href="https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html">The Rust Programming Language, Chapter 4.2</a></p>
+<p><a href="https://doc.rust-lang.org/book/ch04-03-slices.html">The Rust Programming Language, Chapter 4.3</a></p>
+
+    </div>
+
+    
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/ownership/">ownership</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
+</article>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
