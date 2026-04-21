@@ -5,25 +5,29 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Mon, 20 Apr 2026 13:34:48 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2026 13:25:20 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-        <title>Home</title>
-        <link>https://jeff-mitchell.dev/</link>
-        <description></description>
-        <pubDate>Mon, 20 Apr 2026 13:34:48 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
-    </item>
     <item>
         <title>About</title>
         <link>https://jeff-mitchell.dev/about/</link>
         <description>## Who am I?
 
 I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Mon, 20 Apr 2026 13:34:48 +0000</pubDate>
+        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Blogroll</title>
+        <link>https://jeff-mitchell.dev/blogroll/</link>
+        <description>My favourite places on the internet.
+
+[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
+
+[Tania Rascia](https://www.taniarascia.com)</description>
+        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
         <title>Projects</title>
@@ -36,19 +40,26 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Mon, 20 Apr 2026 13:34:48 +0000</pubDate>
+        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
     </item>
     <item>
-        <title>Blogroll</title>
-        <link>https://jeff-mitchell.dev/blogroll/</link>
-        <description>My favourite places on the internet.
-
-[Jayson&apos;s Dev Space](https://jaysonlennon.dev)</description>
-        <pubDate>Mon, 20 Apr 2026 13:34:48 +0000</pubDate>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    </item>
+    <item>
+        <title>Pattern Matching with `match`</title>
+        <link>https://jeff-mitchell.dev/2026-04-21-rust-fundamentals-match-syntax/</link>
+        <description>In previous articles I covered [conditional logic](@/2026-04-13-rust-fundamentals-conditional-logic.md) with `if` and `else`, which works well when you have one or two conditions to check. But Rust ha...</description>
+        <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>pattern-matching</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-21-rust-fundamentals-match-syntax/</guid>
     </item>
     <item>
         <title>Ownership and Borrowing</title>
@@ -197,17 +208,6 @@ Before I co...</description>
     <author>Jeff Mitchell</author>
     <category>getting-started</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-07-rust-fundamentals-comments/</guid>
-    </item>
-    <item>
-        <title>Setting Up Rust and Your First Program</title>
-        <link>https://jeff-mitchell.dev/2026-04-06-rust-setting-up-your-first-rust-program/</link>
-        <description>Late in 2020, I decided I needed to properly learn to code. I explored several options before settling on Rust at the beginning of 2022, and I haven&apos;t looked back. Rust is performant, has excellent to...</description>
-        <pubDate>Mon, 06 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>getting-started</category>
-    <category>cargo</category>
-    <category>toolchain</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-06-rust-setting-up-your-first-rust-program/</guid>
     </item>
 
 </channel>

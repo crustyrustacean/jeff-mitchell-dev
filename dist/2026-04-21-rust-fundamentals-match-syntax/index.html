@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Matching with `match` - jeff-mitchell.dev</title>
+    <meta name="description" content="How to use Rust&#x27;s match expression for exhaustive pattern matching, including enums with data, the wildcard pattern, if let, and Option.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pattern Matching with `match`">
+    <meta property="og:description" content="How to use Rust&#x27;s match expression for exhaustive pattern matching, including enums with data, the wildcard pattern, if let, and Option.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pattern Matching with `match`">
+    <meta name="twitter:description" content="How to use Rust&#x27;s match expression for exhaustive pattern matching, including enums with data, the wildcard pattern, if let, and Option.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Pattern Matching with `match`</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-21" itemprop="datePublished">
+                April 21, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">1278 words &middot; 7 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
+    
+
+    <div class="article-content" itemprop="articleBody">
+        <p>In previous articles I covered <a href="/2026-04-13-rust-fundamentals-conditional-logic/">conditional logic</a> with <code>if</code> and <code>else</code>, which works well when you have one or two conditions to check. But Rust has a much more powerful tool for situations where a value could be one of many possibilities: the <code>match</code> expression. Once you get comfortable with <code>match</code>, it becomes genuinely addictive, and you'll miss it whenever you work in a language that doesn't have it.</p>
+<h3>The Basics of match</h3>
+<p>A <code>match</code> expression takes a value and compares it against a series of patterns called arms. Each arm has a pattern and the code to run if that pattern matches. Rust evaluates the arms from top to bottom and runs the code for the first matching arm.</p>
+<p>Let's explore this with a Star Wars themed example:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">enum</span> <span class="hl-type">Classification</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-constructor">Starfighter</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">Freighter</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">Corvette</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">Frigate</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">StarDestroyer</span><span class="hl-punctuation-delimiter">,</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">get_ship_type</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">ship</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type">Classification</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-operator">&amp;</span><span class="hl-label"><span class="hl-operator">&#39;</span>static</span> <span class="hl-type-builtin">str</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">match</span> ship <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Starfighter</span> =&gt; <span class="hl-string">&quot;A small fighter-type craft&quot;</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Freighter</span> =&gt; <span class="hl-string">&quot;A craft which carries cargo&quot;</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Corvette</span> =&gt; <span class="hl-string">&quot;The ship that carried Princess Leia in A New Hope&quot;</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Frigate</span> =&gt; <span class="hl-string">&quot;Like the ship Luke was on at the end of Empire Strikes Back&quot;</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">StarDestroyer</span> =&gt; <span class="hl-string">&quot;The classic wedge-shaped subjugator of worlds&quot;</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> xwing = <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Starfighter</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-keyword">let</span> millennium_falcon = <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Freighter</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-keyword">let</span> tantive_iv = <span class="hl-type">Classification</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Corvette</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;An X-wing is: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> get_ship_type<span class="hl-punctuation-bracket">(</span>xwing<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The Millennium Falcon is: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> get_ship_type<span class="hl-punctuation-bracket">(</span>millennium_falcon<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The Tantive IV is: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> get_ship_type<span class="hl-punctuation-bracket">(</span>tantive_iv<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>get_ship_type</code> function receives a <code>Classification</code> enum and uses <code>match</code> to return a different string for each variant. Each line inside the <code>match</code> is an arm, consisting of a pattern (like <code>Classification::Starfighter</code>), the <code>=&gt;</code> symbol, and the code to execute. Because the last expression in each arm is the return value, there are no semicolons after the strings.</p>
+<p>A quick note on the <code>&amp;'static str</code> return type: the <code>'static</code> part is a lifetime annotation. Lifetimes are a topic for a future article. For now, just know that it means these string slices live for the entire duration of the program, which is true of any string literal you write directly in your code.</p>
+<h3>Exhaustiveness</h3>
+<p>One of the most powerful things about <code>match</code> is that it must be exhaustive. Every possible value must be covered by an arm. If you added a new variant to the <code>Classification</code> enum but forgot to add a corresponding arm, the compiler would refuse to build your program. This is a safety net you'll come to appreciate as your enums grow, because it means you can't accidentally forget to handle a case.</p>
+<h3>The Wildcard Pattern</h3>
+<p>When you only care about specific values and want everything else handled the same way, the <code>_</code> wildcard catches anything that wasn't matched by the arms above it:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">describe_roll</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">roll</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type-builtin">u32</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">match</span> roll <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-constant-builtin">1</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical failure!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">20</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical hit!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        _ =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;You rolled a {}.&quot;</span><span class="hl-punctuation-delimiter">,</span> roll<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>_</code> arm here handles every number that isn't 1 or 20. Without it, the compiler would complain that we haven't covered every possible <code>u32</code> value, which would be impractical to list out individually.</p>
+<h3>Multiple Patterns and Ranges</h3>
+<p>You can match against multiple values in a single arm using the <code>|</code> operator:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">describe_roll</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">roll</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type-builtin">u32</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">match</span> roll <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-constant-builtin">1</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical failure!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">2</span> | <span class="hl-constant-builtin">3</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;That&#39;s rough.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">18</span> | <span class="hl-constant-builtin">19</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Nice roll!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">20</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical hit!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        _ =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;You rolled a {}.&quot;</span><span class="hl-punctuation-delimiter">,</span> roll<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>For contiguous ranges, you can use the <code>..=</code> syntax:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">describe_roll</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">roll</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type-builtin">u32</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">match</span> roll <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-constant-builtin">1</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical failure!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">2</span>..=<span class="hl-constant-builtin">5</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Not great.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">6</span>..=<span class="hl-constant-builtin">14</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;A decent roll.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">15</span>..=<span class="hl-constant-builtin">19</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Nice roll!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constant-builtin">20</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Critical hit!&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        _ =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Invalid roll: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> roll<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>..=</code> means an inclusive range, so <code>2..=5</code> matches 2, 3, 4, and 5. This is much cleaner than writing out <code>2 | 3 | 4 | 5</code>.</p>
+<h3>Matching Enums with Data</h3>
+<p>In the <a href="/2026-04-17-rust-fundamentals-enum-type/">enums article</a>, we saw that enum variants can carry data. The <code>match</code> expression is how you extract that data. Each arm can bind the inner values to variables:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">enum</span> <span class="hl-type">Command</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-constructor">Quit</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">Echo</span><span class="hl-punctuation-bracket">(</span><span class="hl-type">String</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">MoveCursor</span><span class="hl-punctuation-bracket">(</span><span class="hl-type-builtin">i32</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-type-builtin">i32</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">execute</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">cmd</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-type">Command</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">match</span> cmd <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-type">Command</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Quit</span> =&gt; <span class="hl-punctuation-bracket">{</span>
+            <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Shutting down.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+        <span class="hl-punctuation-bracket">}</span>
+        <span class="hl-type">Command</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">Echo</span><span class="hl-punctuation-bracket">(</span>message<span class="hl-punctuation-bracket">)</span> =&gt; <span class="hl-punctuation-bracket">{</span>
+            <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;{}&quot;</span><span class="hl-punctuation-delimiter">,</span> message<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+        <span class="hl-punctuation-bracket">}</span>
+        <span class="hl-type">Command</span><span class="hl-punctuation-delimiter">::</span><span class="hl-constructor">MoveCursor</span><span class="hl-punctuation-bracket">(</span>x<span class="hl-punctuation-delimiter">,</span> y<span class="hl-punctuation-bracket">)</span> =&gt; <span class="hl-punctuation-bracket">{</span>
+            <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Moving cursor to ({}, {}).&quot;</span><span class="hl-punctuation-delimiter">,</span> x<span class="hl-punctuation-delimiter">,</span> y<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+        <span class="hl-punctuation-bracket">}</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>In the <code>Echo</code> arm, the <code>String</code> carried by the variant is bound to the variable <code>message</code>. In the <code>MoveCursor</code> arm, both integers are bound to <code>x</code> and <code>y</code>. This is the real power of combining enums with <code>match</code>: you define a set of possibilities, each with its own shape of data, and then handle each one with full access to whatever it contains.</p>
+<p>Notice that the <code>Quit</code> arm uses curly braces around its body. When an arm contains multiple statements, or when you just want visual clarity, wrapping the body in braces works well. For simple single-expression arms, you can leave them off.</p>
+<h3>Matching on Option</h3>
+<p>One of the most common uses of <code>match</code> is working with Rust's <code>Option</code> type. <code>Option</code> is an enum built into the standard library that represents a value which might or might not exist:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">enum</span> <span class="hl-type">Option</span><span class="hl-punctuation-bracket">&lt;</span><span class="hl-type">T</span><span class="hl-punctuation-bracket">&gt;</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-constructor">Some</span><span class="hl-punctuation-bracket">(</span><span class="hl-type">T</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-constructor">None</span><span class="hl-punctuation-delimiter">,</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>You don't need to define this yourself because it's always available. Anywhere you might use <code>null</code> in another language, Rust uses <code>Option</code> instead. The advantage is that the compiler forces you to handle the <code>None</code> case, so you can never accidentally try to use a value that doesn't exist.</p>
+<p>Here's a practical example:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">find_first_even</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">numbers</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-punctuation-bracket">[</span><span class="hl-type-builtin">i32</span><span class="hl-punctuation-bracket">]</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-type">Option</span><span class="hl-punctuation-bracket">&lt;</span><span class="hl-type-builtin">i32</span><span class="hl-punctuation-bracket">&gt;</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">for</span> <span class="hl-operator">&amp;</span>num <span class="hl-keyword">in</span> numbers <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-keyword">if</span> num % <span class="hl-constant-builtin">2</span> == <span class="hl-constant-builtin">0</span> <span class="hl-punctuation-bracket">{</span>
+            <span class="hl-keyword">return</span> <span class="hl-function">Some</span><span class="hl-punctuation-bracket">(</span>num<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+        <span class="hl-punctuation-bracket">}</span>
+    <span class="hl-punctuation-bracket">}</span>
+    <span class="hl-constructor">None</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> numbers = <span class="hl-punctuation-bracket">[</span><span class="hl-constant-builtin">1</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">3</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">5</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">8</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constant-builtin">11</span><span class="hl-punctuation-bracket">]</span><span class="hl-punctuation-delimiter">;</span>
+
+    <span class="hl-keyword">match</span> <span class="hl-function">find_first_even</span><span class="hl-punctuation-bracket">(</span><span class="hl-operator">&amp;</span>numbers<span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-constructor">Some</span><span class="hl-punctuation-bracket">(</span>n<span class="hl-punctuation-bracket">)</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;The first even number is {}.&quot;</span><span class="hl-punctuation-delimiter">,</span> n<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+        <span class="hl-constructor">None</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;No even numbers found.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The function returns <code>Some(num)</code> when it finds an even number and <code>None</code> if it reaches the end without finding one. The <code>match</code> in <code>main</code> handles both possibilities. If you tried to skip the <code>None</code> arm, the compiler would stop you, which is exactly the kind of safety that prevents null pointer errors.</p>
+<h3>Simplifying with <code>if let</code></h3>
+<p>Sometimes you only care about one specific pattern and want to ignore everything else. Writing a full <code>match</code> with a <code>_ =&gt; ()</code> arm for this case feels heavy. Rust provides <code>if let</code> as a shorthand:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">let</span> some_value<span class="hl-punctuation-delimiter">:</span> <span class="hl-type">Option</span><span class="hl-punctuation-bracket">&lt;</span><span class="hl-type-builtin">i32</span><span class="hl-punctuation-bracket">&gt;</span> = <span class="hl-function">Some</span><span class="hl-punctuation-bracket">(</span><span class="hl-constant-builtin">42</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">if</span> <span class="hl-keyword">let</span> <span class="hl-constructor">Some</span><span class="hl-punctuation-bracket">(</span>n<span class="hl-punctuation-bracket">)</span> = some_value <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Got a value: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> n<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>This is equivalent to:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">match</span> some_value <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-constructor">Some</span><span class="hl-punctuation-bracket">(</span>n<span class="hl-punctuation-bracket">)</span> =&gt; <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Got a value: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> n<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+    _ =&gt; <span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">,</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>if let</code> version is more concise when you only need to handle one variant. You can also add an <code>else</code> block to handle everything that doesn't match:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">if</span> <span class="hl-keyword">let</span> <span class="hl-constructor">Some</span><span class="hl-punctuation-bracket">(</span>n<span class="hl-punctuation-bracket">)</span> = some_value <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Got a value: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> n<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span> <span class="hl-keyword">else</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Got nothing.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Use <code>if let</code> when you care about one pattern. Use <code>match</code> when you need to handle multiple patterns or want the compiler to verify you've covered everything. Both have their place, and you'll develop a feel for which to reach for over time.</p>
+<h3>Where to Go from Here</h3>
+<p>The <code>match</code> expression is one of Rust's most distinctive features, and it shows up everywhere once you start writing real code. Error handling with <code>Result</code>, extracting values from <code>Option</code>, branching on enum variants, and even destructuring structs and tuples all use the same pattern matching system. There are more advanced features like match guards and nested patterns that I'll cover in a future article, but the fundamentals covered here will carry you a long way.</p>
+<h3>Resources</h3>
+<p><a href="https://doc.rust-lang.org/book/ch06-02-match.html">The Rust Programming Language, Chapter 6.2</a></p>
+<p><a href="https://doc.rust-lang.org/book/ch06-03-if-let.html">The Rust Programming Language, Chapter 6.3</a></p>
+<p><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html">The Rust Programming Language, Chapter 18</a></p>
+
+    </div>
+
+    
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/pattern-matching/">pattern-matching</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
+</article>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

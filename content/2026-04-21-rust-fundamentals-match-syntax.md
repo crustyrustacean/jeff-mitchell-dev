@@ -4,7 +4,7 @@ date = 2026-04-21
 description = "How to use Rust's match expression for exhaustive pattern matching, including enums with data, the wildcard pattern, if let, and Option."
 categories = ["Fundamentals"]
 tags = ["pattern-matching"]
-draft = true
+draft = false
 +++
 
 In previous articles I covered [conditional logic](@/2026-04-13-rust-fundamentals-conditional-logic.md) with `if` and `else`, which works well when you have one or two conditions to check. But Rust has a much more powerful tool for situations where a value could be one of many possibilities: the `match` expression. Once you get comfortable with `match`, it becomes genuinely addictive, and you'll miss it whenever you work in a language that doesn't have it.
