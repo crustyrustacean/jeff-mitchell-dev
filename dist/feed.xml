@@ -5,7 +5,7 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Tue, 21 Apr 2026 13:25:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2026 13:53:28 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
         <title>About</title>
@@ -13,21 +13,9 @@
         <description>## Who am I?
 
 I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
+        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
-    </item>
-    <item>
-        <title>Blogroll</title>
-        <link>https://jeff-mitchell.dev/blogroll/</link>
-        <description>My favourite places on the internet.
-
-[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
-
-[Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
         <title>Projects</title>
@@ -40,17 +28,38 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
+        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
+    </item>
+    <item>
+        <title>Blogroll</title>
+        <link>https://jeff-mitchell.dev/blogroll/</link>
+        <description>My favourite places on the internet.
+
+[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
+
+[Tania Rascia](https://www.taniarascia.com)</description>
+        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
         <title>Home</title>
         <link>https://jeff-mitchell.dev/</link>
         <description></description>
-        <pubDate>Tue, 21 Apr 2026 13:25:20 +0000</pubDate>
+        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    </item>
+    <item>
+        <title>The Option Type</title>
+        <link>https://jeff-mitchell.dev/2026-04-22-rust-fundamentals-option-type/</link>
+        <description>There&apos;s a famous saying in computing that null values were a &quot;billion dollar mistake.&quot; If you search the history, you&apos;ll quickly find the evidence. Null pointers, null reference exceptions, undefined ...</description>
+        <pubDate>Wed, 22 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>option-type</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-22-rust-fundamentals-option-type/</guid>
     </item>
     <item>
         <title>Pattern Matching with `match`</title>
@@ -197,17 +206,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>constants</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-08-rust-fundamentals-constants/</guid>
-    </item>
-    <item>
-        <title>Comments</title>
-        <link>https://jeff-mitchell.dev/2026-04-07-rust-fundamentals-comments/</link>
-        <description>I&apos;m going to start this article by asking you to take my advice, because I&apos;m not using it. I say that because I&apos;m terrible at commenting my code. Comments are important, don&apos;t be like me.
-
-Before I co...</description>
-        <pubDate>Tue, 07 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>getting-started</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-07-rust-fundamentals-comments/</guid>
     </item>
 
 </channel>
