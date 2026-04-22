@@ -4,7 +4,7 @@ date = 2026-04-22
 description = "How Rust uses the Option type instead of null values, with pattern matching, if let, and common methods like unwrap, map, and unwrap_or."
 categories = ["Fundamentals"]
 tags = ["option-type"]
-draft = true
+draft = false
 +++
 
 There's a famous saying in computing that null values were a "billion dollar mistake." If you search the history, you'll quickly find the evidence. Null pointers, null reference exceptions, undefined values, the havoc that "nothing" has caused across the software world is staggering.
