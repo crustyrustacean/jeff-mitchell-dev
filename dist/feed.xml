@@ -5,17 +5,15 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Apr 2026 13:53:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 13:46:42 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-        <title>About</title>
-        <link>https://jeff-mitchell.dev/about/</link>
-        <description>## Who am I?
-
-I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
     </item>
     <item>
         <title>Projects</title>
@@ -28,9 +26,19 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
+        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
+    </item>
+    <item>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
     </item>
     <item>
         <title>Blogroll</title>
@@ -40,17 +48,18 @@ A checkers game, made with Rama and WebAssembly.
 [Jayson&apos;s Dev Space](https://jaysonlennon.dev)
 
 [Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
+        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
-        <title>Home</title>
-        <link>https://jeff-mitchell.dev/</link>
-        <description></description>
-        <pubDate>Wed, 22 Apr 2026 13:53:28 +0000</pubDate>
+        <title>The Result Type</title>
+        <link>https://jeff-mitchell.dev/2026-04-23-rust-fundamentals-result-type/</link>
+        <description>In the [previous article](@/2026-04-22-rust-fundamentals-option-type.md) we looked at `Option`, which represents a value that might not exist. `Result` is its close companion. Where `Option` answers t...</description>
+        <pubDate>Thu, 23 Apr 2026 00:00:00 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    <category>result-type</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-23-rust-fundamentals-result-type/</guid>
     </item>
     <item>
         <title>The Option Type</title>
@@ -197,15 +206,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>variables-and-bindings</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-09-rust-fundamentals-variables-mutability-shadowing/</guid>
-    </item>
-    <item>
-        <title>Constants</title>
-        <link>https://jeff-mitchell.dev/2026-04-08-rust-fundamentals-constants/</link>
-        <description>In the [previous article](@/2026-04-07-rust-fundamentals-comments.md) we covered comments. Now let&apos;s look at constants, which are one of the simplest but most practical features in any programming lan...</description>
-        <pubDate>Wed, 08 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>constants</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-08-rust-fundamentals-constants/</guid>
     </item>
 
 </channel>

@@ -4,7 +4,7 @@ date = 2026-04-23
 description = "How Rust handles recoverable errors with the Result type, including pattern matching, the ? operator, and common methods like map_err and unwrap_or."
 categories = ["Fundamentals"]
 tags = ["result-type"]
-draft = true
+draft = false
 +++
 
 In the [previous article](@/2026-04-22-rust-fundamentals-option-type.md) we looked at `Option`, which represents a value that might not exist. `Result` is its close companion. Where `Option` answers the question "is there a value?", `Result` answers the question "did this operation succeed, and if not, why?"
