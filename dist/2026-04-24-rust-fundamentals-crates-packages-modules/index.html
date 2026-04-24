@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizing Code: Crates, Packages, and Modules - jeff-mitchell.dev</title>
+    <meta name="description" content="How Rust programs are organized with crates, packages, and modules, including file structure, visibility, paths, and the use keyword.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Organizing Code: Crates, Packages, and Modules">
+    <meta property="og:description" content="How Rust programs are organized with crates, packages, and modules, including file structure, visibility, paths, and the use keyword.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Organizing Code: Crates, Packages, and Modules">
+    <meta name="twitter:description" content="How Rust programs are organized with crates, packages, and modules, including file structure, visibility, paths, and the use keyword.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Organizing Code: Crates, Packages, and Modules</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-24" itemprop="datePublished">
+                April 24, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">1414 words &middot; 8 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/fundamentals/">Fundamentals</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
+    
+
+    <div class="article-content" itemprop="articleBody">
+        <p>As your Rust programs grow beyond a single file, you need a way to organize code into logical pieces. Rust provides three levels of organization: crates, packages, and modules. I'll be honest, I found this system confusing when I first encountered it. The terminology overlaps in ways that aren't immediately obvious, and the relationship between modules and files took me a while to internalize. But once it clicks, it's a clean and powerful system for keeping code manageable.</p>
+<h3>Crates</h3>
+<p>A crate is the smallest unit of compilation in Rust. When the compiler builds your code, it thinks in terms of crates. Even a single file with a <code>main</code> function counts as a crate:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;I am a crate.&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Every crate has a root, which is the file the compiler starts from when building. For a binary crate, the root is typically <code>src/main.rs</code>. For a library crate, it's <code>src/lib.rs</code>.</p>
+<p>There are two kinds of crates:</p>
+<p>A <strong>binary crate</strong> has a <code>main</code> function and compiles into an executable you can run. Every program you've written so far in this series has been a binary crate.</p>
+<p>A <strong>library crate</strong> doesn't have a <code>main</code> function and can't run on its own. It provides functionality meant to be used by other crates. When you add a dependency like <code>rand</code> or <code>serde</code> to your project, you're pulling in a library crate.</p>
+<p>A common pattern for organizing larger Rust programs is to split them into both: a binary crate in <code>src/main.rs</code> that handles startup and initialization, and a library crate in <code>src/lib.rs</code> that contains the core logic. The binary crate then depends on the library crate. For small programs this is overkill, but for anything substantial it keeps things modular and makes the library portion independently testable.</p>
+<h3>Packages</h3>
+<p>A package is a bundle of one or more crates that are built together. A package is defined by the presence of a <code>Cargo.toml</code> file at the root of the project directory. Every time you run <code>cargo new my_project</code>, you create a package.</p>
+<p>The rules for what a package can contain are straightforward: it can have at most one library crate, and it can have as many binary crates as you like. It must contain at least one crate of either kind.</p>
+<p>By default, Cargo follows these conventions:</p>
+<ul>
+<li><code>src/main.rs</code> is the crate root for a binary crate</li>
+<li><code>src/lib.rs</code> is the crate root for a library crate</li>
+<li>Additional binary crates can live in <code>src/bin/</code>, one file per crate</li>
+</ul>
+<p>The package name comes from the <code>[package]</code> section in <code>Cargo.toml</code>, and dependencies are listed under <code>[dependencies]</code>. You've been working with packages throughout this series, you just might not have thought of them in those terms.</p>
+<h3>Modules</h3>
+<p>Modules are how you organize code within a crate. They let you group related functions, structs, enums, and other items together, and they control what's visible to code outside the module.</p>
+<p>You define a module with the <code>mod</code> keyword:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">mod</span> audio <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">pub</span> <span class="hl-keyword">fn</span> <span class="hl-function">play</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">track</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-type-builtin">str</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Playing: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> track<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-punctuation-bracket">}</span>
+
+    <span class="hl-keyword">fn</span> <span class="hl-function">load_file</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">path</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-type-builtin">str</span><span class="hl-punctuation-bracket">)</span> -&gt; <span class="hl-type">String</span> <span class="hl-punctuation-bracket">{</span>
+        <span class="hl-function-macro">format</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Loading {}&quot;</span><span class="hl-punctuation-delimiter">,</span> path<span class="hl-punctuation-bracket">)</span>
+    <span class="hl-punctuation-bracket">}</span>
+<span class="hl-punctuation-bracket">}</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    audio<span class="hl-punctuation-delimiter">::</span><span class="hl-function">play</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Fuel&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-comment">// audio::load_file(&quot;song.mp3&quot;); // This won&#39;t compile, load_file is private</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The <code>audio</code> module contains two functions. The <code>play</code> function is marked <code>pub</code>, making it accessible from outside the module. The <code>load_file</code> function has no <code>pub</code> keyword, so it's private and can only be called from within the <code>audio</code> module itself.</p>
+<p>This is an important default in Rust: everything inside a module is private unless you explicitly make it public. This encourages you to think about what should be part of your public interface versus what's an internal implementation detail.</p>
+<h3>Modules as Separate Files</h3>
+<p>Putting all your modules in one file works for small programs, but it quickly becomes unwieldy. Rust provides a clean mapping from modules to files and directories.</p>
+<p>When the compiler sees <code>mod audio;</code> (with a semicolon instead of curly braces), it looks for the module's code in a separate file. Here's what a simple project looks like:</p>
+<pre><code>my_project/
+├── Cargo.toml
+└── src/
+    ├── main.rs
+    ├── audio.rs
+    └── playlist.rs
+</code></pre>
+<p>And in <code>src/main.rs</code>:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">mod</span> audio<span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">mod</span> playlist<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    audio<span class="hl-punctuation-delimiter">::</span><span class="hl-function">play</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Fuel&quot;</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    playlist<span class="hl-punctuation-delimiter">::</span><span class="hl-function">show</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Each <code>mod</code> declaration tells the compiler to look for the corresponding file and treat its contents as a module. The code in <code>src/audio.rs</code> doesn't need its own <code>mod audio { }</code> wrapper because the file itself is the module.</p>
+<h3>Module File Conventions: New vs Old</h3>
+<p>When a module has submodules, you need a directory. This is where Rust has two conventions, and it's worth understanding both because you'll encounter each in the wild.</p>
+<p><strong>The modern convention</strong> (introduced in the 2018 edition) names the parent module file to match the directory:</p>
+<pre><code>src/
+├── main.rs
+├── audio.rs
+├── audio/
+│   ├── player.rs
+│   └── decoder.rs
+└── playlist.rs
+</code></pre>
+<p>Here, <code>src/audio.rs</code> serves as the root of the <code>audio</code> module, and the <code>src/audio/</code> directory contains its submodules. Inside <code>src/audio.rs</code>:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">pub</span> <span class="hl-keyword">mod</span> player<span class="hl-punctuation-delimiter">;</span>
+<span class="hl-keyword">pub</span> <span class="hl-keyword">mod</span> decoder<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">pub</span> <span class="hl-keyword">fn</span> <span class="hl-function">play</span><span class="hl-punctuation-bracket">(</span><span class="hl-variable-parameter">track</span><span class="hl-punctuation-delimiter">:</span> <span class="hl-operator">&amp;</span><span class="hl-type-builtin">str</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Playing: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> track<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p><strong>The older convention</strong> uses a <code>mod.rs</code> file inside the directory instead:</p>
+<pre><code>src/
+├── main.rs
+├── audio/
+│   ├── mod.rs
+│   ├── player.rs
+│   └── decoder.rs
+└── playlist.rs
+</code></pre>
+<p>In this layout, <code>src/audio/mod.rs</code> does the same job that <code>src/audio.rs</code> does in the modern style. The contents of the file would be identical.</p>
+<p>The <code>mod.rs</code> approach still compiles and isn't technically deprecated, but it's considered the older style and has a practical downside: in any project of reasonable size, you end up with a dozen tabs in your editor all named <code>mod.rs</code>, and you can't tell which module you're looking at without checking the file path. The modern convention avoids this problem entirely because each file has a unique, descriptive name.</p>
+<p>If you're starting a new project, use the modern convention. If you're reading someone else's code and see <code>mod.rs</code> files everywhere, now you know what's going on.</p>
+<p>The <code>pub mod</code> declarations make the submodules visible to code outside the <code>audio</code> module.</p>
+<h3>Paths and the use Keyword</h3>
+<p>To refer to an item inside a module, you use a path with the <code>::</code> operator:</p>
+<pre class="highlight"><code class="language-rust">audio<span class="hl-punctuation-delimiter">::</span>player<span class="hl-punctuation-delimiter">::</span><span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>Paths can be absolute (starting from the crate root) or relative (starting from the current module):</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-comment">// Absolute path, starting from the crate root</span>
+<span class="hl-keyword">crate</span><span class="hl-punctuation-delimiter">::</span>audio<span class="hl-punctuation-delimiter">::</span>player<span class="hl-punctuation-delimiter">::</span><span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-comment">// Relative path, starting from the current module</span>
+audio<span class="hl-punctuation-delimiter">::</span>player<span class="hl-punctuation-delimiter">::</span><span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>The <code>self</code> keyword refers to the current module, and <code>super</code> refers to the parent module. <code>super</code> is particularly useful when a submodule needs to call something in its parent:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-comment">// Inside src/audio/player.rs</span>
+<span class="hl-keyword">pub</span> <span class="hl-keyword">fn</span> <span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-keyword">let</span> track = <span class="hl-keyword">super</span><span class="hl-punctuation-delimiter">::</span><span class="hl-function">get_current_track</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+    <span class="hl-function-macro">println</span><span class="hl-function-macro">!</span><span class="hl-punctuation-bracket">(</span><span class="hl-string">&quot;Starting: {}&quot;</span><span class="hl-punctuation-delimiter">,</span> track<span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>Typing full paths gets tedious when you use something frequently. The <code>use</code> keyword brings an item into scope so you can refer to it by its short name:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">use</span> audio<span class="hl-punctuation-delimiter">::</span>player<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    player<span class="hl-punctuation-delimiter">::</span><span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>You can also bring specific items directly into scope:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">use</span> audio<span class="hl-punctuation-delimiter">::</span>player<span class="hl-punctuation-delimiter">::</span>start<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-function">main</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span> <span class="hl-punctuation-bracket">{</span>
+    <span class="hl-function">start</span><span class="hl-punctuation-bracket">(</span><span class="hl-punctuation-bracket">)</span><span class="hl-punctuation-delimiter">;</span>
+<span class="hl-punctuation-bracket">}</span>
+</code></pre>
+<p>The convention in Rust is to <code>use</code> up to the parent module for functions (so you write <code>player::start()</code> and it's clear where <code>start</code> comes from) but to bring structs and enums all the way in (so you write <code>Album</code> rather than <code>types::Album</code>). This isn't a rule, just a community convention that helps with readability.</p>
+<p>When you need multiple items from the same module, you can use a nested path:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-keyword">use</span> std<span class="hl-punctuation-delimiter">::</span>io<span class="hl-punctuation-delimiter">::</span><span class="hl-punctuation-bracket">{</span><span class="hl-variable-builtin">self</span><span class="hl-punctuation-delimiter">,</span> <span class="hl-constructor">Write</span><span class="hl-punctuation-bracket">}</span><span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>This brings both <code>io</code> itself and the <code>Write</code> trait into scope in a single line. You've seen this exact line in the <a href="/2026-04-15-rust-building-something-a-greeting-program/">greeting program</a> earlier in this series.</p>
+<h3>Re-exporting with pub use</h3>
+<p>Sometimes you want to expose an item from a submodule as if it were part of the parent module. The <code>pub use</code> syntax re-exports an item, making it available through a shorter path:</p>
+<pre class="highlight"><code class="language-rust"><span class="hl-comment">// In src/audio/mod.rs</span>
+<span class="hl-keyword">mod</span> player<span class="hl-punctuation-delimiter">;</span>
+
+<span class="hl-keyword">pub</span> <span class="hl-keyword">use</span> player<span class="hl-punctuation-delimiter">::</span>start<span class="hl-punctuation-delimiter">;</span>
+</code></pre>
+<p>Now code outside the <code>audio</code> module can call <code>audio::start()</code> instead of <code>audio::player::start()</code>. This is useful for creating a clean public API that hides your internal module structure from users of your code.</p>
+<h3>Where to Go from Here</h3>
+<p>The crate, package, and module system can feel like a lot of concepts at once, but in daily use it boils down to a few habits: put related code in modules, mark public items with <code>pub</code>, use <code>mod</code> declarations to tell the compiler where to find things, and bring frequently used items into scope with <code>use</code>. As your projects grow, these tools keep your code navigable and your public interfaces intentional.</p>
+<h3>Resources</h3>
+<p><a href="https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">The Rust Programming Language, Chapter 7</a></p>
+<p><a href="https://doc.rust-lang.org/rust-by-example/mod.html">Rust By Example: Modules</a></p>
+
+    </div>
+
+    
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/code-organization/">code-organization</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
+</article>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

@@ -5,13 +5,13 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Thu, 23 Apr 2026 13:46:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2026 13:33:58 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
         <title>Home</title>
         <link>https://jeff-mitchell.dev/</link>
         <description></description>
-        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
+        <pubDate>Fri, 24 Apr 2026 13:33:58 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
     </item>
@@ -26,19 +26,9 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
+        <pubDate>Fri, 24 Apr 2026 13:33:58 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
-    </item>
-    <item>
-        <title>About</title>
-        <link>https://jeff-mitchell.dev/about/</link>
-        <description>## Who am I?
-
-I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
     </item>
     <item>
         <title>Blogroll</title>
@@ -48,9 +38,28 @@ I&apos;m an engineer who works in a field that is not related to software develo
 [Jayson&apos;s Dev Space](https://jaysonlennon.dev)
 
 [Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Thu, 23 Apr 2026 13:46:42 +0000</pubDate>
+        <pubDate>Fri, 24 Apr 2026 13:33:58 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    </item>
+    <item>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Fri, 24 Apr 2026 13:33:58 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Organizing Code: Crates, Packages, and Modules</title>
+        <link>https://jeff-mitchell.dev/2026-04-24-rust-fundamentals-crates-packages-modules/</link>
+        <description>As your Rust programs grow beyond a single file, you need a way to organize code into logical pieces. Rust provides three levels of organization: crates, packages, and modules. I&apos;ll be honest, I found...</description>
+        <pubDate>Fri, 24 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>code-organization</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-24-rust-fundamentals-crates-packages-modules/</guid>
     </item>
     <item>
         <title>The Result Type</title>
@@ -115,15 +124,6 @@ Every problem, every time, same steps:
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-18-programming-cheatsheet-problem-decomposition/</guid>
     </item>
     <item>
-        <title>The Enum Type</title>
-        <link>https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</link>
-        <description>If you&apos;re coming from a language like C or Java, you probably think of enums as a list of named constants. Rust&apos;s enums go much further than that. Each variant of a Rust enum can carry its own data, a...</description>
-        <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>enum-type</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</guid>
-    </item>
-    <item>
         <title>Programming Shapes: A Pattern Library</title>
         <link>https://jeff-mitchell.dev/2026-04-17-programming-patterns-and-shapes/</link>
         <description>Most programming problems, no matter how different they look on the surface, are built from a small number of repeating shapes. The names change, the data changes, but the structure is identical. Here...</description>
@@ -133,6 +133,15 @@ Every problem, every time, same steps:
     <category>problem-solving</category>
     <category>decomposition</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-17-programming-patterns-and-shapes/</guid>
+    </item>
+    <item>
+        <title>The Enum Type</title>
+        <link>https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</link>
+        <description>If you&apos;re coming from a language like C or Java, you probably think of enums as a list of named constants. Rust&apos;s enums go much further than that. Each variant of a Rust enum can carry its own data, a...</description>
+        <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>enum-type</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-17-rust-fundamentals-enum-type/</guid>
     </item>
     <item>
         <title>The Struct Type</title>
@@ -197,15 +206,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>data-types</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-10-rust-fundamentals-scalar-data-types/</guid>
-    </item>
-    <item>
-        <title>Variables, Mutability, and Shadowing</title>
-        <link>https://jeff-mitchell.dev/2026-04-09-rust-fundamentals-variables-mutability-shadowing/</link>
-        <description>Variables are fundamental to any programming language, and Rust handles them in a way that might surprise you if you&apos;re coming from another language. The core idea is straightforward, but Rust layers ...</description>
-        <pubDate>Thu, 09 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>variables-and-bindings</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-09-rust-fundamentals-variables-mutability-shadowing/</guid>
     </item>
 
 </channel>

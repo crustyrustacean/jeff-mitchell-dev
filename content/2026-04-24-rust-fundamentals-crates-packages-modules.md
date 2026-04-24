@@ -4,7 +4,7 @@ date = 2026-04-24
 description = "How Rust programs are organized with crates, packages, and modules, including file structure, visibility, paths, and the use keyword."
 categories = ["Fundamentals"]
 tags = ["code-organization"]
-draft = true
+draft = false
 +++
 
 As your Rust programs grow beyond a single file, you need a way to organize code into logical pieces. Rust provides three levels of organization: crates, packages, and modules. I'll be honest, I found this system confusing when I first encountered it. The terminology overlaps in ways that aren't immediately obvious, and the relationship between modules and files took me a while to internalize. But once it clicks, it's a clean and powerful system for keeping code manageable.
