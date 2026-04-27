@@ -5,37 +5,15 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Sat, 25 Apr 2026 04:21:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 13:58:55 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
         <title>Home</title>
         <link>https://jeff-mitchell.dev/</link>
         <description></description>
-        <pubDate>Sat, 25 Apr 2026 04:21:53 +0000</pubDate>
+        <pubDate>Mon, 27 Apr 2026 13:58:55 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
-    </item>
-    <item>
-        <title>About</title>
-        <link>https://jeff-mitchell.dev/about/</link>
-        <description>## Who am I?
-
-I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Sat, 25 Apr 2026 04:21:53 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
-    </item>
-    <item>
-        <title>Blogroll</title>
-        <link>https://jeff-mitchell.dev/blogroll/</link>
-        <description>My favourite places on the internet.
-
-[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
-
-[Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Sat, 25 Apr 2026 04:21:53 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
         <title>Projects</title>
@@ -48,9 +26,48 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Sat, 25 Apr 2026 04:21:53 +0000</pubDate>
+        <pubDate>Mon, 27 Apr 2026 13:58:55 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
+    </item>
+    <item>
+        <title>Blogroll</title>
+        <link>https://jeff-mitchell.dev/blogroll/</link>
+        <description>My favourite places on the internet.
+
+[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
+
+[Tania Rascia](https://www.taniarascia.com)</description>
+        <pubDate>Mon, 27 Apr 2026 13:58:55 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    </item>
+    <item>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Mon, 27 Apr 2026 13:58:55 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Hacker News Rust Digest — April 27, 2026</title>
+        <link>https://jeff-mitchell.dev/2026-04-27-hacker-news-rust-digest-april-27-2026/</link>
+        <description>Here&apos;s your Hacker News Rust digest for today.
+
+### Leaked Results of Mythos&apos; Audit of the Rust Stdlib
+
+A security firm&apos;s audit of the Rust standard library (core, alloc, std, stdarch, and related cra...</description>
+        <pubDate>Mon, 27 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>hacker-news</category>
+    <category>security</category>
+    <category>async</category>
+    <category>language-design</category>
+    <category>community</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-27-hacker-news-rust-digest-april-27-2026/</guid>
     </item>
     <item>
         <title>De-mystifying JSON</title>
@@ -197,15 +214,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>functions</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-12-rust-fundamentals-functions/</guid>
-    </item>
-    <item>
-        <title>Compound Data Types</title>
-        <link>https://jeff-mitchell.dev/2026-04-11-rust-fundamentals-compound-data-types/</link>
-        <description>In the previous article on [Scalar Data Types](@/2026-04-10-rust-fundamentals-scalar-data-types.md), we covered values that represent a single thing: an integer, a float, a boolean, or a character. Co...</description>
-        <pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>data-types</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-11-rust-fundamentals-compound-data-types/</guid>
     </item>
 
 </channel>

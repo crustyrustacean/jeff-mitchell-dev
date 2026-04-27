@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker News Rust Digest — April 27, 2026 - jeff-mitchell.dev</title>
+    <meta name="description" content="A roundup of the top Rust discussions on Hacker News: a stdlib security audit with 189 findings, async promises vs reality, language complexity concerns, panic-free annotations, and more.">
+    <meta name="author" content="Jeff Mitchell">
+    <link rel="canonical" href="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hacker News Rust Digest — April 27, 2026">
+    <meta property="og:description" content="A roundup of the top Rust discussions on Hacker News: a stdlib security audit with 189 findings, async promises vs reality, language complexity concerns, panic-free annotations, and more.">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jeff-mitchell.dev&amp;#x2F;">
+    <meta property="og:site_name" content="jeff-mitchell.dev">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Hacker News Rust Digest — April 27, 2026">
+    <meta name="twitter:description" content="A roundup of the top Rust discussions on Hacker News: a stdlib security audit with 189 findings, async promises vs reality, language complexity concerns, panic-free annotations, and more.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="alternate" type="application/rss+xml" title="jeff-mitchell.dev" href="/feed.xml" />
+    <script>initTheme();</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-tAndaMxuq5M8kAbhiDfcv.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="header-row">
+            <div>
+                <h1><a href="/">jeff-mitchell.dev</a></h1>
+                <h2>Writing about building the things mostly in Rust...mostly...</h2>
+            </div>
+            <div class="header-actions">
+                <div class="search-container">
+                    <div data-island="SearchBox" data-props='{"placeholder":"Search...","max_results":5,"class":"site-search"}'><!--<[]>--><div class="search-box site-search"><input type="text" placeholder="Search..." class="search-input"><ul class="search-results"></ul></div><!--</[]>--></div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+<article itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article-header">
+        <h1 itemprop="headline">Hacker News Rust Digest — April 27, 2026</h1>
+        
+        <div class="article-meta">
+            <time datetime="2026-04-27" itemprop="datePublished">
+                April 27, 2026
+            </time>
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="reading-time">326 words &middot; 2 min read</span>
+            
+            
+            <span class="meta-separator">&middot;</span>
+            <span class="article-categories" itemprop="articleSection">
+                
+                <a href="/categories/digest/">Digest</a>
+                
+            </span>
+            
+        </div>
+        
+    </header>
+
+    
+
+    <div class="article-content" itemprop="articleBody">
+        <p>Here's your Hacker News Rust digest for today.</p>
+<h3>Leaked Results of Mythos' Audit of the Rust Stdlib</h3>
+<p>A security firm's audit of the Rust standard library (core, alloc, std, stdarch, and related crates) surfaced 189 findings — 27 high severity, 149 medium, 13 low. Each finding includes a write-up and a proposed patch. Still early discussion, but the sheer volume is drawing attention.</p>
+<p><a href="https://news.ycombinator.com/item?id=47919674">HN Discussion</a> | <a href="https://github.com/Swival/security-audits/tree/main/rust-stdlib">Audit</a></p>
+<h3>Show HN: Peeroxide — Full Wire-Compatible Rust Implementation of Hyperswarm</h3>
+<p>A developer shipped a complete Rust port of the Hyperswarm P2P networking stack, fully wire-compatible with the existing Node.js implementation so Rust peers can join the live HyperDHT and connect seamlessly with Node.js peers.</p>
+<p><a href="https://news.ycombinator.com/item?id=47907096">HN Discussion</a> | <a href="https://github.com/Rightbracket/peeroxide">Repo</a></p>
+<h3>What Async Promised and What It Delivered</h3>
+<p>A lively debate about whether Rust's async/await design was the right call. Critics argue green threads would have been simpler and avoided the notorious "async colour" problem and borrow-checker friction. Defenders point to C interoperability and the Embassy embedded executor as vindication.</p>
+<p><a href="https://news.ycombinator.com/item?id=47904475">HN Discussion</a></p>
+<h3>An Incoherent Rust</h3>
+<p>A critique arguing that Rust's coherence rules and advanced type features (GATs, etc.) are becoming increasingly difficult to reason about, echoing fears that the language is drifting toward C++-level complexity. The thread is a meaty read on language design tradeoffs.</p>
+<p><a href="https://news.ycombinator.com/item?id=47490648">HN Discussion</a> | <a href="https://www.boxyuwu.blog/posts/an-incoherent-rust/">Article</a></p>
+<h3>My "Grand Vision" for Rust</h3>
+<p>Yoshua Wuyts proposes language-level annotations to guarantee panic-free, deterministic code. The discussion splits between those who want stronger compile-time guarantees and those who worry about Rust's already steep complexity curve.</p>
+<p><a href="https://news.ycombinator.com/item?id=47256376">HN Discussion</a> | <a href="https://blog.yoshuawuyts.com/a-grand-vision-for-rust/">Article</a></p>
+<h3>Revisiting Rust in 2026</h3>
+<p>A thoughtful retrospective on Rust adoption four years on. LLMs and improved rust-analyzer have lowered the barrier, but finding Rust developers remains hard and early-stage startups are still advised to prioritize velocity over the robustness Rust offers.</p>
+<p><a href="https://mdwdotla.medium.com/revisiting-rust-in-2026-ae8720cc7f2c">Article</a></p>
+<hr />
+<p>The headline item today is clearly the stdlib security audit — 189 findings across core crates is significant and will likely generate a lot more discussion as people digest the details.</p>
+
+    </div>
+
+    
+    <footer class="article-footer">
+        <div class="post-tags" itemprop="keywords">
+            
+            <a href="/tags/hacker-news/">hacker-news</a>
+            
+            <a href="/tags/security/">security</a>
+            
+            <a href="/tags/async/">async</a>
+            
+            <a href="/tags/language-design/">language-design</a>
+            
+            <a href="/tags/community/">community</a>
+            
+        </div>
+    </footer>
+    
+
+    <nav class="article-nav" aria-label="Article navigation">
+        <a class="back-link" href="/" rel="prev">&larr; Back to Home</a>
+    </nav>
+</article>
+
+<section class="comments" aria-labelledby="comments-heading">
+    <h2 id="comments-heading" class="visually-hidden">Comments</h2>
+    <script src="https://utteranc.es/client.js"
+            repo="crustyrustacean/jeff-mitchell-dev"
+            issue-term="pathname"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2026 &middot; Jeffery D. Mitchell &middot; <a href="https://github.com/crustyrustacean" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://get-taxus-org.pages.dev" target="_blank" rel="noopener noreferrer">Built with Taxus</a> &middot; <a href="/about">About Me</a> &middot; <a href="/blogroll">Blogroll</a> &middot; <a href="/projects">Projects</a> &middot; <a href="/feed.xml">RSS</a></p>
+    </footer>
+    <script type="module">
+        import init, * as bindings from '/wasm/client.js';
+        const wasm = await init({ module_or_path: '/wasm/client_bg.wasm' });
+        window.wasmBindings = bindings;
+        bindings.hydrate_islands();
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
