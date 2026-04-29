@@ -5,29 +5,15 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Mon, 27 Apr 2026 14:00:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2026 13:57:03 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-        <title>About</title>
-        <link>https://jeff-mitchell.dev/about/</link>
-        <description>## Who am I?
-
-I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Mon, 27 Apr 2026 14:00:19 +0000</pubDate>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
-    </item>
-    <item>
-        <title>Blogroll</title>
-        <link>https://jeff-mitchell.dev/blogroll/</link>
-        <description>My favourite places on the internet.
-
-[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
-
-[Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Mon, 27 Apr 2026 14:00:19 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
     </item>
     <item>
         <title>Projects</title>
@@ -40,17 +26,43 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Mon, 27 Apr 2026 14:00:19 +0000</pubDate>
+        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
     </item>
     <item>
-        <title>Home</title>
-        <link>https://jeff-mitchell.dev/</link>
-        <description></description>
-        <pubDate>Mon, 27 Apr 2026 14:00:19 +0000</pubDate>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Blogroll</title>
+        <link>https://jeff-mitchell.dev/blogroll/</link>
+        <description>My favourite places on the internet.
+
+[Jayson&apos;s Dev Space](https://jaysonlennon.dev)
+
+[Tania Rascia](https://www.taniarascia.com)</description>
+        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    </item>
+    <item>
+        <title>Bugs Rust Won&apos;t Catch: Lessons from the uutils/coreutils CVE Audit</title>
+        <link>https://jeff-mitchell.dev/2026-04-29-bugs-rust-wont-catch/</link>
+        <description>A [professional security audit of uutils/coreutils](https://corrode.dev/blog/bugs-rust-wont-catch) — the Rust reimplementation of GNU coreutils — turned up 44 CVEs. Not one was a memory-safety bug. Th...</description>
+        <pubDate>Wed, 29 Apr 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>rust</category>
+    <category>security</category>
+    <category>systems-programming</category>
+    <category>best-practices</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-29-bugs-rust-wont-catch/</guid>
     </item>
     <item>
         <title>Hacker News Rust Digest — April 27, 2026</title>
@@ -205,15 +217,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>control-flow</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-13-rust-fundamentals-conditional-logic/</guid>
-    </item>
-    <item>
-        <title>Functions</title>
-        <link>https://jeff-mitchell.dev/2026-04-12-rust-fundamentals-functions/</link>
-        <description>Functions are how you organize code in Rust. They let you break a program into smaller, named pieces, each with a clear job, which makes everything easier to read, test, and change later. We&apos;ve alread...</description>
-        <pubDate>Sun, 12 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>functions</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-12-rust-fundamentals-functions/</guid>
     </item>
 
 </channel>
