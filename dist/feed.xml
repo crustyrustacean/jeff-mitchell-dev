@@ -5,16 +5,8 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Apr 2026 13:57:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 13:50:53 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
-    <item>
-        <title>Home</title>
-        <link>https://jeff-mitchell.dev/</link>
-        <description></description>
-        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
-    </item>
     <item>
         <title>Projects</title>
         <link>https://jeff-mitchell.dev/projects/</link>
@@ -26,7 +18,7 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
+        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
     </item>
@@ -36,7 +28,7 @@ A checkers game, made with Rama and WebAssembly.
         <description>## Who am I?
 
 I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
+        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
     </item>
@@ -48,9 +40,34 @@ I&apos;m an engineer who works in a field that is not related to software develo
 [Jayson&apos;s Dev Space](https://jaysonlennon.dev)
 
 [Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Wed, 29 Apr 2026 13:57:03 +0000</pubDate>
+        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
+    </item>
+    <item>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    </item>
+    <item>
+        <title>Hacker News Rust — Digest May 11, 2026</title>
+        <link>https://jeff-mitchell.dev/2026-05-11-hacker-news-rust-digest-may-11-2026/</link>
+        <description>A lively week on Hacker News for Rust: tooling continued its march into new domains, a major JavaScript runtime quietly swapped its foundation, and a playful language experiment stole the weekend.
+
+##...</description>
+        <pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>rust</category>
+    <category>hacker-news</category>
+    <category>systems-programming</category>
+    <category>tooling</category>
+    <category>llm</category>
+    <category>cuda</category>
+    <category>bun</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-05-11-hacker-news-rust-digest-may-11-2026/</guid>
     </item>
     <item>
         <title>Bugs Rust Won&apos;t Catch: Lessons from the uutils/coreutils CVE Audit</title>
@@ -208,15 +225,6 @@ Every problem, every time, same steps:
     <author>Jeff Mitchell</author>
     <category>control-flow</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-14-rust-fundamentals-loops/</guid>
-    </item>
-    <item>
-        <title>Conditional Logic</title>
-        <link>https://jeff-mitchell.dev/2026-04-13-rust-fundamentals-conditional-logic/</link>
-        <description>Software would be pretty limited if there were no way to make decisions and follow different logic paths. The ability to branch and provide different outcomes, based on either internal results or exte...</description>
-        <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>control-flow</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-13-rust-fundamentals-conditional-logic/</guid>
     </item>
 
 </channel>
