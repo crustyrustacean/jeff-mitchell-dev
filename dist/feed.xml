@@ -5,7 +5,7 @@
     <link>https://jeff-mitchell.dev</link>
     <description>Writing about building the things mostly in Rust...mostly...</description>
     <language>en</language>
-    <lastBuildDate>Mon, 11 May 2026 13:50:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 May 2026 15:48:59 +0000</lastBuildDate>
     <atom:link href="https://jeff-mitchell.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
         <title>Projects</title>
@@ -18,19 +18,17 @@ A checkers game, made with Rama and WebAssembly.
 
 [Rusty Checkers](https://rusty-checkers.fly.dev)
 </description>
-        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
+        <pubDate>Mon, 18 May 2026 15:48:59 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/projects/</guid>
     </item>
     <item>
-        <title>About</title>
-        <link>https://jeff-mitchell.dev/about/</link>
-        <description>## Who am I?
-
-I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
-        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
+        <title>Home</title>
+        <link>https://jeff-mitchell.dev/</link>
+        <description></description>
+        <pubDate>Mon, 18 May 2026 15:48:59 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
     </item>
     <item>
         <title>Blogroll</title>
@@ -40,17 +38,35 @@ I&apos;m an engineer who works in a field that is not related to software develo
 [Jayson&apos;s Dev Space](https://jaysonlennon.dev)
 
 [Tania Rascia](https://www.taniarascia.com)</description>
-        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
+        <pubDate>Mon, 18 May 2026 15:48:59 +0000</pubDate>
     <author>Jeff Mitchell</author>
     <guid isPermaLink="true">https://jeff-mitchell.dev/blogroll/</guid>
     </item>
     <item>
-        <title>Home</title>
-        <link>https://jeff-mitchell.dev/</link>
-        <description></description>
-        <pubDate>Mon, 11 May 2026 13:50:53 +0000</pubDate>
+        <title>About</title>
+        <link>https://jeff-mitchell.dev/about/</link>
+        <description>## Who am I?
+
+I&apos;m an engineer who works in a field that is not related to software development. Computers are in my blood, I&apos;ve been around them since I was a child. I can code and have danced with ma...</description>
+        <pubDate>Mon, 18 May 2026 15:48:59 +0000</pubDate>
     <author>Jeff Mitchell</author>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/</guid>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/about/</guid>
+    </item>
+    <item>
+        <title>Hacker News Rust Digest — May 18, 2026</title>
+        <link>https://jeff-mitchell.dev/2026-05-18-hacker-news-rust-digest-may-18-2026/</link>
+        <description>A week of high-signal Rust discussion on Hacker News, anchored by the dramatic news that the Bun JavaScript runtime is experimenting with an AI-assisted rewrite from Zig to Rust.
+
+## Zig → Rust Portin...</description>
+        <pubDate>Mon, 18 May 2026 00:00:00 +0000</pubDate>
+    <author>Jeff Mitchell</author>
+    <category>rust</category>
+    <category>hacker-news</category>
+    <category>bun</category>
+    <category>zig</category>
+    <category>systems-programming</category>
+    <category>language-design</category>
+    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-05-18-hacker-news-rust-digest-may-18-2026/</guid>
     </item>
     <item>
         <title>Hacker News Rust — Digest May 11, 2026</title>
@@ -216,15 +232,6 @@ Every problem, every time, same steps:
     <category>standard-library</category>
     <category>strings</category>
     <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-15-rust-building-something-a-greeting-program/</guid>
-    </item>
-    <item>
-        <title>Loops</title>
-        <link>https://jeff-mitchell.dev/2026-04-14-rust-fundamentals-loops/</link>
-        <description>In the previous article on [Conditional Logic](@/2026-04-13-rust-fundamentals-conditional-logic.md), we looked at how `if` and `else if` expressions let a program choose between different code paths. ...</description>
-        <pubDate>Tue, 14 Apr 2026 00:00:00 +0000</pubDate>
-    <author>Jeff Mitchell</author>
-    <category>control-flow</category>
-    <guid isPermaLink="true">https://jeff-mitchell.dev/2026-04-14-rust-fundamentals-loops/</guid>
     </item>
 
 </channel>

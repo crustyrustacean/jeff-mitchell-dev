@@ -1,1 +1,4 @@
 # gitignore for jeff-mitchell-dev
+
+# OS System Files
+.DS_Store
