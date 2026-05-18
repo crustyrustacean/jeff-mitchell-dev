@@ -2,3 +2,6 @@
 
 # OS System Files
 .DS_Store
+
+# Build artifacts
+dist
