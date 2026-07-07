@@ -1,5 +1,11 @@
 # gitignore for jeff-mitchell-dev
 
+# .rho configuration
+.rho
+
+# .rho logs
+logs
+
 # OS System Files
 .DS_Store
 
