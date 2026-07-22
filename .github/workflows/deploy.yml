@@ -30,12 +30,6 @@ jobs:
       - name: Build site
         run: taxus build
 
-      - name: Create Cloudflare Pages project
-        run: npx wrangler pages project create jeff-mitchell-dev --production-branch trunk || true
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy dist/ --project-name=jeff-mitchell-dev --branch=${{ github.ref_name }}
         env:
