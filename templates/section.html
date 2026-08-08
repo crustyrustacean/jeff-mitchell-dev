@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ section.title }} | {{ site.name }}{% endblock %}
+{% block title %}{{ site.name }} | {{ section.title }} {% endblock %}
 {% block description %}{% if section.description %}{{ section.description }}{% else %}{{ section.title }} - {{ site.name }}{% endif %}{% endblock %}
 
 {% block content %}

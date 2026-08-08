@@ -12,15 +12,11 @@ A GCRA based rate limiter. Published to [crates.io](https://crates.io/crates/flu
 
 ## Rho Coding Agent
 
-My take on a coding harness, inspired by [Pi](https://pi.dev)
+My take on a coding harness, inspired by [Pi](https://pi.dev). It has two UIs, I like the [Makepad](https://makepad.nl) one best.
 
 [Rho Coding Agent](https://github.com/crustyrustacean/rho-coding-agent)
 
-## Rusty Checkers
-
-A checkers game, made with Rama and WebAssembly.
-
-[Rusty Checkers](https://github.com/crustyrustacean/rusty-checkers)
+[Rho UI](https://github.com/crustyrustacean/rho-ui.git)
 
 ## Taxus
 
