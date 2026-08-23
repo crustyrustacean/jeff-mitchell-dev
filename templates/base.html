@@ -11,7 +11,7 @@
     <meta name="author" content="{{ site.author }}" />
     <link
       rel="canonical"
-      href="{{ site.base_url }}{{ page?.path | default(value='/') }}"
+      href="{{ site.base_url }}{{ page.path | default(value='/') }}"
     />
     <meta name="robots" content="index, follow" />
     <meta
@@ -28,7 +28,7 @@
     />
     <meta
       property="og:url"
-      content="{{ site.base_url }}{{ page?.path | default(value='/') }}"
+      content="{{ site.base_url }}{{ page.path | default(value='/') }}"
     />
     <meta property="og:site_name" content="{{ site.name }}" />
     <meta name="twitter:card" content="summary" />
@@ -108,10 +108,12 @@
         <a href="/projects">Projects</a> &middot;
         <a href="https://crusty-metallian.net">Music</a> &middot;
         <a href="/feed.xml">RSS</a>
+        <a href="https://textlog.cc/u/crustyrustacean" target="_blank" rel="noopener noreferrer"><img src="https://textlog.cc/u/crustyrustacean/follow.png" alt="Follow @crustyrustacean on textlog" height="32"></a>
       </p>
     </footer>
     <script type="module">
-      import init, * as bindings from "/wasm/client.js";
+      import init from "/wasm/client.js";
+      import * as bindings from "/wasm/client.js";
       const wasm = await init({ module_or_path: "/wasm/client_bg.wasm" });
       window.wasmBindings = bindings;
       bindings.hydrate_islands();
