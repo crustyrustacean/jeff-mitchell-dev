@@ -20,8 +20,7 @@ I wanted to be different. I wanted something:
 - easy to start with
 - let's me focus on building the site and its content
 - that gave a terrific hot re-loading dev experience
-- enabled easy use of web standards
-- that didn't fight the browser
+- enabled easy use of web standards that don't fight the browser
 
 I think I've achieved those goals. I find taxus fun to use, and if I really want, it's AI friendly so I can have LLM tools help craft at least the structure of the site.
 
