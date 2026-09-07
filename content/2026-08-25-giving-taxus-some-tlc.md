@@ -26,6 +26,6 @@ I think I've achieved those goals. I find taxus fun to use, and if I really want
 
 I started treating Taxus more like a real software project, cleaning up many bugs over the course of the past couple of days. I'm great at getting the *skeleton* of something that works for me, but not so great at edge cases up front. Also, I have wierd gaps in understanding, which only become evident sometimes when either I a) hit them or b) they're pointed out by someone (or something).
 
-Taxus is built with AI tooling, mostly [Pi](https://pi.dev) at the start, but now my own harness [Rho](https://rho-code.dev) and [jinn](https://github.com/jayson-lennon/jinn).
+Taxus is built with AI tooling, mostly [Pi](https://pi.dev) at the start, but now my own harness [Rho](https://rho-code.dev) and [jinn](https://github.com/jayson-lennon/jinn) by [Jayson Lennon](https://jaysonlennon.dev).
 
 I'd like to hope that, someday, at least one other person finds their way to Taxus and it resonates with them. I think that's pretty unlikely, but a hobbyist can always hope.
