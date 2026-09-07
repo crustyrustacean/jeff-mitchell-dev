@@ -473,6 +473,7 @@ article {
 
     p {
         margin-bottom: 1.25em;
+        overflow-wrap: break-word;
     }
 
     ul, ol {
@@ -533,6 +534,25 @@ article {
         background: var(--color-bg-soft);
         padding: 0.15em 0.35em;
         border-radius: 3px;
+    }
+
+    /* Code blocks must scroll internally: without overflow-x, a long line
+       (88 chars ≈ 740px in existing posts) paints straight past the 720px
+       container and makes the whole page horizontally scrollable on
+       phones. Reset the inline-code chip styling inside blocks. */
+    pre {
+        overflow-x: auto;
+        background: var(--color-bg-soft);
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1.25em;
+
+        code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 0.85rem;
+        }
     }
 }
 
