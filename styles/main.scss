@@ -71,6 +71,10 @@ a {
     }
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
 header {
     width: 100%;
     padding: 2rem 0 0;
@@ -621,12 +625,17 @@ footer {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
-        gap: 0.25rem 0;
 
-        a:not(:first-child)::before {
-            content: "\00B7";
-            margin: 0 0.6rem;
-            color: var(--color-text-lighter);
+        a {
+            padding: 0 0.6rem;
+        }
+
+        a:first-child {
+            padding-left: 0;
+        }
+
+        a + a {
+            border-left: 1px solid var(--color-border);
         }
     }
 
