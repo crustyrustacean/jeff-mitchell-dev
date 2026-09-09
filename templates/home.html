@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.name }}{% endblock %}
+{% block description %}{% if section.description %}{{ section.description }}{% else %}{{ site.description }}{% endif %}{% endblock %}
+
+{% block content %}
+<section aria-labelledby="home-title">
+    <header class="section-header">
+        <h1 id="home-title">{{ section.title }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    {% if section.content %}
+    <div class="section-content">
+        {{ section.content | safe }}
+    </div>
+    {% endif %}
+</section>
+
+<section class="recent-posts" aria-labelledby="recent-posts-title">
+    <h2 id="recent-posts-title">Recent Posts</h2>
+    <p><a href="/blog/">Read the latest on the blog &rarr;</a></p>
+</section>
+{% endblock %}
