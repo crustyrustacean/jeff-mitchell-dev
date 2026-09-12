@@ -1,16 +1,14 @@
 +++
-title = "String Theory"
-date = 2026-09-07
-description = "An introduction to string types in Rust"
-categories = ["Intermediate Guides"]
-tags = ["rust", "collections", "string"]
-draft = true
-aliases = ["/2026-09-07-string-theory"]
+title = "Strings"
+date = 2026-09-12
+description = "How to define, instantiate and use the string collection type in Rust."
+categories = ["fundamentals"]
+tags = ["collection-types", "string"]
+draft = false
+aliases = ["/2026-09-12-rust-fundamentals-collection-types-strings"]
 +++
 
 String in Rust are hard. The difficulty stems from the different ways strings are handled by the language. This article reflects the two core types of strings and my understanding of them. It will evolve over time. Be aware, this does not offer the be-all-end-all explanation of strings. The main purpose here is to provide a jumping off point for me, and you, to dive deeper as needed. To often, I avoid writing because I feel I can't do a topic justice.
-
-<!-- more -->
 
 This is just an excuse.
 

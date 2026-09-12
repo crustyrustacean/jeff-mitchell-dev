@@ -31,10 +31,10 @@ A static site generator. This site is built with it.
 
 [Taxus](https://get-taxus.org)
 
-## Photo Storage Engine
+## Metallian Photos
 
 Not really a separate project yet, but my music blog gallery shows the basis of a flexible storage engine, founded in `actix-web`, `sqlite`, and `opendal`.
 
-[Photo Storage Engine](https://github.com/crustyrustacean/metallian-photos.git)
+[Metallian Photos](https://github.com/crustyrustacean/metallian-photos.git)
 
 

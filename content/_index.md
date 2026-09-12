@@ -1,6 +1,6 @@
 +++
 title = "Home"
-description = "Learning Rust in public: the screaming, crying, bitter tears...and the odd tutorial when things worked."
+description = "Learning Rust in public: the screaming, crying, bitter tears...and the odd burst of coherent words when things worked."
 template = "home.html"
 +++
 
