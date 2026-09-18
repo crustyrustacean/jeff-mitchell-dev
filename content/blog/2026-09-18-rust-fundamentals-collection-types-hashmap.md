@@ -1,16 +1,14 @@
 +++
-title = "The Mystery of the Hashmap"
-date = 2026-09-28
-description = "An introduction to the Hashmap collection type in Rust"
-categories = ["Intermediate Guides"]
-tags = ["rust", "collections", "hashmaps"]
-draft = true
-aliases = ["/2026-09-28-the-mystery-of-the-hashmap"]
+title = "HashMaps"
+date = 2026-09-18
+description = "How to define, instantiate and use the hash map collection type in Rust."
+categories = ["fundamentals"]
+tags = ["collection-types", "hashmaps"]
+draft = false
+aliases = ["/2026-09-28-rust-fundamentals-collection-types-hashmap"]
 +++
 
-A little over two years ago, I started seriously doubling down on the Rust programming language. I found [Zero to Mastery](https://zerotomastery.io) and their Rust course. With a great head of steam, as I did the course, I also started blogging my way through the Rust Book. This head of steam continued nicely through the more basic aspects of the language, but as I entered the deeper waters, I faltered.
-
-<!-- more -->
+A little over threeyears ago, I started seriously doubling down on the Rust programming language. I found [Zero to Mastery](https://zerotomastery.io) and their Rust course. With a great head of steam, as I did the course, I also started blogging my way through the Rust Book. This head of steam continued nicely through the more basic aspects of the language, but as I entered the deeper waters, I faltered.
 
 One of the areas I faltered in was the Hashmap collection type. I found it difficult to think up something specific to write about, but didn't want to just rehash/regurgitate the chapter content from the Rust book. So, I asked ChatGPT, which is great for offering suggestions, and it gave me a few clues. Oddly enough, this interaction also gave me a clue in general for a structure for future posts on this blog.
 
@@ -306,7 +304,7 @@ There are a couple of key things to call out:
 - I have an odd obsession with not using the `println!' macro. As of this program, I'm kind of favouring to not do things with macros.
 - I've tried to get rid of all pesky `.unwraps()`, errors should generally be handled decently
 - I haven't made a custom error type or pulled in `anyhow` or `color_eyre` because, generally, failures can be handled by returning a `std::io::Result<()>`
-  - I've used one `.except()`, in the `input_to_snippet` function, which I feel is reasonable because if you can't read in the saved data (the `String::from_utf8` conversion could fail for characters that are not UTF-8) there's not much point in continuing. You may disagree.
+- I've used one `.except()`, in the `input_to_snippet` function, which I feel is reasonable because if you can't read in the saved data (the `String::from_utf8` conversion could fail for characters that are not UTF-8) there's not much point in continuing. You may disagree.
 
 ## Areas for Further Work
 
