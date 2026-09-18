@@ -8,7 +8,7 @@ draft = false
 aliases = ["/2026-09-28-rust-fundamentals-collection-types-hashmap"]
 +++
 
-A little over threeyears ago, I started seriously doubling down on the Rust programming language. I found [Zero to Mastery](https://zerotomastery.io) and their Rust course. With a great head of steam, as I did the course, I also started blogging my way through the Rust Book. This head of steam continued nicely through the more basic aspects of the language, but as I entered the deeper waters, I faltered.
+A little over three years ago, I started seriously doubling down on the Rust programming language. I found [Zero to Mastery](https://zerotomastery.io) and their Rust course. With a great head of steam, as I did the course, I also started blogging my way through the Rust Book. This head of steam continued nicely through the more basic aspects of the language, but as I entered the deeper waters, I faltered.
 
 One of the areas I faltered in was the Hashmap collection type. I found it difficult to think up something specific to write about, but didn't want to just rehash/regurgitate the chapter content from the Rust book. So, I asked ChatGPT, which is great for offering suggestions, and it gave me a few clues. Oddly enough, this interaction also gave me a clue in general for a structure for future posts on this blog.
 
