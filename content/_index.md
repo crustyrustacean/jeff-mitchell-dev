@@ -10,4 +10,4 @@ I *want* to write the tutorials I wished I'd found back in 2022: plain language,
 
 It's a work in progress...just like the author.
 
-Newest posts are in [the blog](/blog/). The [about page](/about/) has the full story, [projects](/projects/) has the code, and the music lives at [crusty-metallian.net](https://crusty-metallian.net/). Eventually will come photography.
+Newest posts are in [the blog](/blog/). The [about page](/about/) has a story of me, [projects](/projects/) has the code, and the music lives at [crusty-metallian.net](https://crusty-metallian.net/). My take on an Instagram you might actually want to use again is at [halation.photos](https://halation.photos)
