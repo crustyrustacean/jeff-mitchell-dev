@@ -4,7 +4,7 @@ date = 2026-09-27
 description = "How to think about the `if-let` syntax"
 categories = ["Field-Notes"]
 tags = ["syntax", "if-let"]
-draft = true 
+draft = false
 +++
 
 The `if-let` syntax has always given me difficulty.
