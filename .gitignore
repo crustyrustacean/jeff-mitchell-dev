@@ -1,5 +1,8 @@
 # gitignore for jeff-mitchell-dev
 
+# Zed IDE settings
+.zed
+
 # .rho configuration
 .rho
 
