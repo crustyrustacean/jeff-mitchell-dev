@@ -4,7 +4,7 @@ date = 2026-09-28
 description = "A thinner Rust week on HN, led by the state of SIMD in Rust, Tokio's ambitious Topcoat web framework, AI agents that optimize Rust by measuring it, and a Rust take on 'Parse, don't validate.'"
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "simd", "web-frameworks", "ai-agents", "type-systems", "performance"]
-draft = true
+draft = false
 aliases = ["/2026-09-28-hacker-news-rust-digest-september-28-2026"]
 +++
 
@@ -37,4 +37,3 @@ Eli Bendersky revisits Alexis King's famous dictum through Rust's type system (8
 ---
 
 A thin week by volume, but a coherent one: every story that mattered was about Rust getting more pragmatic. The SIMD survey and the agent-optimization piece both argue the performance story is shifting from hand-written heroics to better feedback loops — whether compiler-level runtime dispatch or benchmark-driven AI iteration — while Topcoat shows the ecosystem still has appetite for bold, batteries-included frameworks despite (or because of) honest uncertainty about where web development is heading. And Bendersky's piece is a reminder that Rust's quietest export is an idea: the discipline of encoding invariants in types is spreading back into dynamically-typed languages, whether or not those programmers ever ship Rust.
-
