@@ -5,7 +5,7 @@ description = "Servers, browsers, and the three technologies every site is built
 summary = "I got into Rust partly because of WebAssembly, but I never properly learned how the web itself works. This is the first in a series fixing that: what happens when you visit a page, and how HTML, CSS, and JavaScript become what you see."
 categories = ["fundamentals"]
 tags = ["web", "html", "css", "javascript"]
-draft = true
+draft = false
 aliases = ["/2026-09-29-back-to-basics-how-the-web-works"]
 +++
 
