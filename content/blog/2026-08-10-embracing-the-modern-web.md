@@ -15,7 +15,7 @@ I’m an engineer and I work in the construction industry. I see many parallels 
 
 ### Foundation — Separation of Concerns
 
-Every building needs to rest on stable soil, have solid footings, and sound structure to support itself and its occupants. A website is no different. Set up a clean folder structure and have separate files. HTML should be on its own, CSS should be on its own and properly referenced from your HTML files. JavaScript should be on its own and properly reference from your HTML files. Separating things out serves three purposes, it makes code easier to debug and maintain, it makes it understandable by others, and it makes the web site function efficiently. Attention spans are ever shorter, long load times will cause readers to move on to the next thing. The choices made in laying out the site will have a significant impact on performance.
+Every building needs to rest on stable soil, have solid footings, and sound structure to support itself and its occupants. A website is no different. Set up a clean folder structure and have separate files. HTML should be on its own, CSS should be on its own and properly referenced from your HTML files. JavaScript should be on its own and properly reference from your HTML files. Separating things out serves three purposes, it makes code easier to debug and maintain, it makes it understandable by others, and it makes the website function efficiently. Attention spans are ever shorter, long load times will cause readers to move on to the next thing. The choices made in laying out the site will have a significant impact on performance.
 
 ### Structure — HTML
 
@@ -32,4 +32,3 @@ The addition of some JavaScript gives a site functionality and juices it with po
 ### Conclusion
 
 There’s a rush today that makes everything frantic and borderline unsustainable. The rush, when applied to web design, can result in products which are difficult to maintain and perform poorly for their intended audience. Take your time, smell the flowers, and make sure your creation has a solid footing with the pillars of web technology.
-
