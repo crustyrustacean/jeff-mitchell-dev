@@ -4,7 +4,7 @@ date = 2026-10-05
 description = "A speed-obsessed week: rustc posts another 5% monthly gain, an experimental patch halves build times, a self-optimizing inference engine launches, and Rust powers an open-source Adobe challenger and a retro game engine."
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "compiler", "performance", "local-llm", "open-source", "game-dev"]
-draft = true
+draft = false
 aliases = ["/2026-10-05-hacker-news-rust-digest-october-05-2026"]
 +++
 
