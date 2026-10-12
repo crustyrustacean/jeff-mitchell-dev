@@ -16,7 +16,7 @@ I ended up doing both, too soon, as is typical for me. [rho](https://rho-code.de
 
 On Linux, this problem has a deep bench: namespaces, seccomp, landlock, bubblewrap — decades of overflow. Windows has… enthusiasm. It's the underserved platform, which is exactly why I like spending time there, and exactly why I had no idea what I'd do about containment. I mean yes, there is Windows Sandbox, but it's one of those non-option options.
 
-Then, Microsoft shipped MXC after several months of beta-ness: real process containers, a derived sandbox identity for your workload, declarative policy, and no civilian writing about driving it from a coding agent. Underserved territory...f**k yeah!
+Then, Microsoft shipped MXC after several months of beta-ness: real process containers, a derived sandbox identity for your workload, declarative policy. The explainers arrived within the week: summaries, walkthroughs, even a TypeScript tutorial or two. Nobody's published the scars yet. Underserved territory...heck yeah!
 
 This post is part one: my understanding of what MXC even is. The part where I actually put it in front of an agent (and find out what fights back) comes after. This is a field report, not a tutorial. I will flag what I don't know, and corrections are welcome; I'd rather be corrected than confident and wrong.
 
