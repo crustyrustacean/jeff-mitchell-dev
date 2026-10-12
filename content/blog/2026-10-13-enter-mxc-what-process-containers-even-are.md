@@ -81,13 +81,13 @@ The lightest tier is the interesting one for agents: per-command containers with
 
 ## What I don't understand yet
 
-The section that would have been left out of a braver-looking post, left in on purpose:
+The section that would have been left out of a braver-looking post, left in on purpose.
 
-- **How the derived SID is actually constructed.** I know it's derived from the policy and that different policies produce different identities, but not the mechanics. "It's a SID and the kernel honors it" is about my depth.
-- **What `needsDaclAugmentation` augments.** The probe tool reports it, `false` is the good answer, and my investigation stopped exactly there.
-- **How the filesystem virtualization works**: a contained process sees a *virtualized* `%TEMP%` that isn't the real one. I know it happens; I couldn't tell you where those files actually live or how the redirect is wired.
-- **Whether loopback can ever be allowed** in the base tier, or whether "deny" is the only honest posture there.
-- **The msys story.** Git-bash binaries simply fail to initialize inside an AppContainer; I have the failure code and a plausible explanation involving a privilege that sandboxed identities structurally lack, but that's inference from a corpse, not understanding. Deserves its own post once it's earned one.
+Start with the mechanics I can't explain. I know the sandbox identity is derived from the policy, and that different policies produce different identities, but I couldn't tell you how the derivation actually works; "it's a SID and the kernel honors it" is about my depth. The probe tool reports a field called `needsDaclAugmentation`, `false` is apparently the good answer, and my investigation stopped exactly there. And while a contained process clearly sees a *virtualized* `%TEMP%` that isn't the real one, I couldn't tell you where those files actually live or how the redirect is wired.
+
+Then the policy question I haven't answered: can loopback ever be allowed in the base tier, or is "deny" the only honest posture there? I don't know.
+
+And the one with a body count. Git-bash binaries simply fail to initialize inside an AppContainer; I have the failure code and a plausible explanation involving a privilege that sandboxed identities structurally lack, but that's inference from a corpse, not understanding. That one deserves its own post once it's earned it.
 
 If you know these answers, the comment box is open. If you don't, welcome: we can be unsure together and grow.
 
