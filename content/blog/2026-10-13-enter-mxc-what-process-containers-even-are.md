@@ -12,11 +12,11 @@ Every week brings another story about an agent harness treating your stuff as th
 
 I got tired of reading those stories. So I made a vow: either I write my own harness, or I support the people building in the open.
 
-I ended up doing both, in proportion to my talents. [rho-code](https://github.com/crustyrustacean/rho-code) is mine: almost entirely LLM-coded, with the corners edited by me directly. It works, and it is forever a pat-pat good-effort project that I am oddly proud of. I even baked a sandbox into it — and I could never shake the feeling that it was precisely what it was: an amateur sandbox. [jinn](https://github.com/jayson-lennon/jinn) is the serious one, a coding agent built by someone whose ambition outruns mine, and I support that effort because the alternative was complaining about it. But here is the thing nobody tells you about the vow: **both roads end at the same place.** If the harness is mine, the security is mine — and on rho that means an LLM-written harness running LLM-written commands behind a fence its own author doesn't entirely trust. If I support someone else's, I'd better understand the answer they picked — because when an agent runs a shell command on my behalf, that command executes with *my full authority*. My files, my credentials, my network. And who wrote the command? A language model. Usually right, occasionally wrong, and in the worst case steered by something hostile that leaked into the prompt.
+I ended up doing both, too soon, as is typical for me. [rho](https://rho-code.dev) is mine: almost entirely LLM-coded, with tiny corners edited by me directly. It works, and it is forever a pat-pat good-effort project that I regard as learning territory. I even baked a sandbox into it — and I could never shake the feeling that it was precisely what it was: an amateur sandbox with holes. [jinn](https://github.com/jayson-lennon/jinn) is the serious one, a coding agent built by someone whose skills FAR outrun mine, and I support that effort because the alternative was using `pi`, which...sorry but TypeScript. But here is the thing nobody tells you about the vow: **both roads end at the same place.** If the harness is mine, the security is mine — and on `rho` that means an LLM-written harness running LLM-written commands behind a fence its own author doesn't entirely understand let alone trust. If I support someone else's, I'd better understand the answer they picked — because when an agent runs a shell command on my behalf, that command executes with *my full authority*. My files, my credentials, my network. And who wrote the command? A language model. Usually right, occasionally wrong, and in the worst case steered by something hostile that leaked into the prompt.
 
-On Linux, this problem has a deep bench: namespaces, seccomp, landlock, bubblewrap — decades of overflow. Windows has… enthusiasm. It's the underserved platform, which is exactly why I like spending time there, and exactly why I had no idea what I'd do about containment.
+On Linux, this problem has a deep bench: namespaces, seccomp, landlock, bubblewrap — decades of overflow. Windows has… enthusiasm. It's the underserved platform, which is exactly why I like spending time there, and exactly why I had no idea what I'd do about containment. I mean yes, there is Windows Sandbox, but it's one of those non-option options.
 
-Then Microsoft shipped MXC: real process containers, a derived sandbox identity for your workload, declarative policy — and almost nobody writing about driving it from a coding agent. Underserved territory, all right.
+Then, Microsoft shipped MXC after several months of beta-ness: real process containers, a derived sandbox identity for your workload, declarative policy — and no civilian writing about driving it from a coding agent. Underserved territory...f**k yeah!
 
 This post is part one: my understanding of what MXC even is. The part where I actually put it in front of an agent — and find out what fights back — comes after. This is a field report, not a tutorial. I will flag what I don't know, and corrections are welcome; I'd rather be corrected than confident and wrong.
 
@@ -32,9 +32,9 @@ Containment inverts the default. Instead of "trusted unless proven bad," the com
 
 Here's the part that surprised me most, because Windows' reputation made me expect something baroque: the mechanism underneath MXC is the same one Windows has used forever.
 
-Every file on an NTFS volume carries an ACL — a list of who may read, write, or execute it. Every process carries an identity — a SID. Access control is just the kernel comparing the two: if you're not on the list, the answer is "Access is denied." Your normal processes carry *your* identity, so they pass every check against everything you own.
+Every file on an NTFS volume carries an Access Control List (ACL) — a list of who may read, write, or execute it. Every process carries an identity — a SID. Access control is just the kernel comparing the two: if you're not on the list, the answer is "Access is denied." Your normal processes carry *your* identity, so they pass every check against everything you own.
 
-What MXC's **process container** does is launch a workload with a *derived* identity instead — an **AppContainer SID**, the same mechanism Windows uses to isolate UWP apps and Edge tabs. The workload still runs:
+What MXC's **process container** does is launch a workload with a *derived* identity instead — an **AppContainer SID**, the same mechanism Windows uses to isolate Universal Windows Platform (UWP) apps and Edge browser tabs. The workload still runs:
 
 - on your CPU — no hypervisor, no VM,
 - in your session — same desktop, `whoami` still shows *you*,
@@ -89,8 +89,8 @@ The section that would have been left out of a braver-looking post, left in on p
 - **Whether loopback can ever be allowed** in the base tier, or whether "deny" is the only honest posture there.
 - **The msys story.** Git-bash binaries simply fail to initialize inside an AppContainer — I have the failure code and a plausible explanation involving a privilege that sandboxed identities structurally lack, but that's inference from a corpse, not understanding. Deserves its own post once it's earned one.
 
-If you know these answers, the email link works. If you don't, welcome — we can be unsure together, one step ahead of the documentation.
+If you know these answers, the comment box is open. If you don't, welcome — we can be unsure together and grow.
 
 ## Next
 
-Part two is the part with blood in it: handing MXC to a real agent as its default shell sandbox, learning mode as the authoring loop, what a workload actually asks for when it thinks nobody's watching — and at least one discovery I did not see coming. The vow stands. The platform is still underserved. That's what makes it worth writing about.
+Part two is the part with blood in it: handing MXC to a real agent as its default shell sandbox, learning mode as the authoring loop, what a workload actually asks for when it thinks nobody's watching — and at least one discovery I did not see coming. The vow stands. The platform is still underserved and the torch is lit.
