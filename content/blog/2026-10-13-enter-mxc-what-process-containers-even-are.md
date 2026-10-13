@@ -4,17 +4,17 @@ date = 2026-10-13
 description = "Part one of a field report on Microsoft's MXC: what process containers actually are (AppContainer identities, declarative policy, learn-versus-enforce), explained from the underserved platform, doubts included."
 categories = ["Field Notes"]
 tags = ["windows", "mxc", "security", "agents", "sandboxing", "rust"]
-draft = true
+draft = false
 aliases = ["/2026-10-13-enter-mxc-what-process-containers-even-are"]
 +++
 
 Every week brings another story about an agent harness treating your stuff as theirs: training on your files, shipping your code to somebody's endpoint, or getting exploited by someone who read the docs more carefully than the vendor did.
 
-I got tired of reading those stories. So I made a vow: either I write my own harness, or I support the people building in the open.
+I got tired of reading those stories. So I made a vow: either I write my own harness, or I support the people building in the open. I will not let a proprietary harness enter my life.
 
 I ended up doing both, too soon, as is typical for me. [rho](https://rho-code.dev) is mine: almost entirely LLM-coded, with tiny corners edited by me directly. It works, and it is forever a pat-pat good-effort project that I regard as learning territory. I even baked a sandbox into it. I could never shake the feeling that it was precisely what it was: an amateur sandbox with holes. [jinn](https://github.com/jayson-lennon/jinn) is the serious one, a coding agent built by someone whose skills FAR outrun mine, and I support that effort because the alternative was using `pi`, which...sorry but TypeScript. But here is the thing nobody tells you about the vow: **both roads end at the same place.** If the harness is mine, the security is mine; on `rho` that means an LLM-written harness running LLM-written commands behind a fence its own author doesn't entirely understand let alone trust. If I support someone else's, I'd better understand the answer they picked, because when an agent runs a shell command on my behalf, that command executes with *my full authority*. My files, my credentials, my network. And who wrote the command? A language model. Usually right, occasionally wrong, and in the worst case steered by something hostile that leaked into the prompt.
 
-On Linux, this problem has a deep bench: namespaces, seccomp, landlock, bubblewrap — decades of overflow. Windows has… enthusiasm. It's the underserved platform, which is exactly why I like spending time there, and exactly why I had no idea what I'd do about containment. I mean yes, there is Windows Sandbox, but it's one of those non-option options.
+On Linux, this problem has a deep bench: namespaces, seccomp, landlock, bubblewrap — decades of overflow. Windows has… enthusiasm. It's the underserved platform, which is exactly why I like spending time there, and exactly why I had no idea what I'd do about containment. I mean yes, there is Windows Sandbox, but it's one of those non-option options. You could also put the agent in Podman...or Docker, but in my heart I *want* something more elegant.
 
 Then, Microsoft shipped MXC after several months of beta-ness: real process containers, a derived sandbox identity for your workload, declarative policy. The explainers arrived within the week: summaries, walkthroughs, even a TypeScript tutorial or two. Nobody's published the scars yet. Underserved territory...heck yeah!
 
@@ -51,7 +51,7 @@ The moving parts, as best I can map them:
 | Piece | What it is |
 |---|---|
 | **Policy (JSON)** | The declarative request: command, working directory, timeout in milliseconds, filesystem grants (read-only / read-write / denied paths), network posture, UI access, lifetime. |
-| **`wxc-exec.exe`** | Microsoft's executor. Reads the request, derives the sandbox identity, launches the workload inside it, and passes stdio through so the caller's piping works unchanged. |
+| **`wxc-exec.exe`** | Microsoft's executor. Reads the request, derives the sandbox identity, launches the workload inside it, and passes `stdio` through so the caller's piping works unchanged. |
 | **AppContainer** | The Windows kernel feature doing the actual enforcement: the derived SID, the ordinary ACL checks, the job object, the per-process mitigations. |
 | **MXC SDK** | Microsoft's libraries for building these requests in-process. There's also the plain `wxc-exec` CLI, which is what I'm using. Simpler, and good enough for a field test. |
 
