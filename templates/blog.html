@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.name }} | {{ section.title }} {% endblock %}
+{% block description %}{% if section.description %}{{ section.description }}{% else %}{{ section.title }} - {{ site.name }}{% endif %}{% endblock %}
+
+{% block content %}
+{#- "Current" = every post in the same month as the newest published post.
+    Pages arrive sorted newest-first (sort_by = "date"), so the first one sets the month. -#}
+{% if section.pages %}
+{% set current_month = section.pages | first | get(key="date") | date(format="%Y-%m") %}
+{% endif %}
+<section aria-labelledby="section-title">
+    <header class="section-header">
+        <h1 id="section-title">{{ section.title }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <nav class="taxonomy-nav" aria-label="Filter by">
+        <a href="/archive/">Archive</a>
+        <a href="/categories/">Categories</a>
+        <a href="/tags/">Tags</a>
+    </nav>
+
+    {% if section.pages %}
+    <h2 class="month-heading">{{ section.pages | first | get(key="date") | date(format="%B %Y") }}</h2>
+    <ul class="page-list" role="list">
+        {% for page in section.pages %}
+        {% if page.date | date(format="%Y-%m") == current_month %}
+        <li>
+            <article class="page-list-item">
+                <a href="{{ page.path }}">
+                    <h2>{{ page.title }}</h2>
+                    <p class="meta">
+                        <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format='%B %d, %Y') }}</time>
+                        {% if page.categories %}
+                        <span class="meta-separator">&middot;</span>
+                        <span class="categories">{{ page.categories | join(sep=", ") }}</span>
+                        {% endif %}
+                        <span class="meta-separator">&middot;</span>
+                        <span class="reading-time">{{ page.word_count }} words &middot; {{ page.reading_time }} min read</span>
+                    </p>
+                    {% if page.description %}
+                    <p class="summary">{{ page.description }}</p>
+                    {% elif page.summary %}
+                    <p class="summary">{{ page.summary }}</p>
+                    {% endif %}
+                </a>
+            </article>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <nav class="pagination" aria-label="Older posts">
+        <a href="/archive/">Older posts in the archive &rarr;</a>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

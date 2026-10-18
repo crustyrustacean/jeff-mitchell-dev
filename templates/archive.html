@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.name }} | {{ section.title }} {% endblock %}
+{% block description %}{% if section.description %}{{ section.description }}{% else %}{{ section.title }} - {{ site.name }}{% endif %}{% endblock %}
+
+{% block content %}
+{#- Everything older than the current month shown on /blog/, grouped by month.
+    Reads the blog section directly; this section owns no pages itself. -#}
+{% set blog = get_section(path="blog") %}
+{% if blog.pages %}
+{% set current_month = blog.pages | first | get(key="date") | date(format="%Y-%m") %}
+{% endif %}
+{% set_global open_month = "" %}
+<section aria-labelledby="section-title">
+    <header class="section-header">
+        <h1 id="section-title">{{ section.title }}</h1>
+        {% if section.description %}
+        <p class="section-description">{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <nav class="taxonomy-nav" aria-label="Filter by">
+        <a href="/blog/">&larr; Current</a>
+        <a href="/categories/">Categories</a>
+        <a href="/tags/">Tags</a>
+    </nav>
+
+    {% for page in blog.pages %}
+    {% set month = page.date | date(format="%Y-%m") %}
+    {% if month != current_month %}
+        {% if month != open_month %}
+            {% if open_month != "" %}</ul>{% endif %}
+    <h2 class="month-heading">{{ page.date | date(format="%B %Y") }}</h2>
+    <ul class="archive-list" role="list">
+            {% set_global open_month = month %}
+        {% endif %}
+        <li>
+            <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">{{ page.date | date(format='%b %d') }}</time>
+            <a href="{{ page.path }}">{{ page.title }}</a>
+            {% if page.categories %}<span class="categories">{{ page.categories | join(sep=", ") }}</span>{% endif %}
+        </li>
+    {% endif %}
+    {% endfor %}
+    {% if open_month != "" %}</ul>{% else %}
+    <p>Nothing in the archive yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
