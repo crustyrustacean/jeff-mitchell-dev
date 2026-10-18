@@ -1,22 +1,24 @@
 +++
 title = "Flux Limiter: GCRA Rate Limiting Made Easy"
-date = 2026-10-19
+date = 2026-10-18
 description = "The announcement post I wrote for flux-limiter a year ago and never published, shown essentially as-written — overconfident claims, race-condition code samples, and all. Part 0 of the re-opening the hood series."
 categories = ["Projects"]
-tags = ["rust", "rate-limiting", "gcra"]
-draft = true
-aliases = ["/2026-11-23-flux-limiter-gcra-rate-limiting-made-easy", "/2026-10-16-flux-limiter-gcra-rate-limiting-made-easy", "/2026-10-19-flux-limiter-gcra-rate-limiting-made-easy"]
+tags = ["rust", "flux-limiter", "rate-limiting", "gcra"]
+draft = false
+aliases = ["/2026-10-18-flux-limiter-gcra-rate-limiting-made-easy"]
 +++
 
-> **A note before you read.** I wrote this post about a year ago, shortly after first publishing flux-limiter, and never posted it. I'm publishing it now essentially as-written: the claims and the code samples are untouched. The AI-assisted prose got a light trim, removing the worst of the filler, but nothing of substance changed (and I've added two bracketed notes where I couldn't resist). It reads very differently in hindsight. The code snippets below show the pre-0.8.0 implementation, including at least one race condition I hadn't found yet. The performance claims were never measured — there were no benchmarks at all. This is Part 0 of a short series, *Re-opening the Hood on flux-limiter*. Part 1, coming later this week, audits everything wrong here.
+> **A note before you read.** I wrote this post about a year ago, shortly after first publishing flux-limiter, and never posted it. I'm publishing it now essentially as-written: the claims and the code samples are untouched. The AI-assisted prose got a light trim, removing the worst of the filler, but nothing of substance changed (and I've added three bracketed notes where I couldn't resist). It reads very differently in hindsight. The code snippets below show the pre-0.8.0 implementation, including at least one race condition I hadn't found yet. The performance claims were never measured — there were no benchmarks at all. This is Part 0 of a short series, *Re-opening the Hood on flux-limiter*. Part 1, coming later this week, audits everything wrong here.
 
 Rate limiting is like being a bouncer at a popular nightclub – you need to control how many people can enter at a time, and when, without causing a riot outside. In the world of web APIs and services, rate limiting serves a similar purpose: protecting your servers from being overwhelmed while providing fair access to resources.
+
+<!-- more -->
 
 This post is about **flux-limiter**, a rate limiting library I wrote in Rust using the Generic Cell Rate Algorithm (GCRA). I'll cover why I built it, how GCRA works, and how the code fits together.
 
 ## Why did I build this thing?
 
-The simple fact is, I was looking at other rate limiters, namely `governor` and it's associated `tower-governor` incarnation for Axum, and had a great deal of trouble understanding them. I found myself longing for something simple that made sense, based on clear criteria. A challenge I've found in using Rust libraries is the *level of abstraction*. It's really challenging, at first glance, for a beginner to understand *how* to use them because they assume you think quickly in terms of abstraction.
+The simple fact is, I was looking at other rate limiters, namely `governor` and its associated `tower-governor` incarnation for Axum, and had a great deal of trouble understanding them. I found myself longing for something simple that made sense, based on clear criteria. A challenge I've found in using Rust libraries is the *level of abstraction*. It's really challenging, at first glance, for a beginner to understand *how* to use them because they assume you think quickly in terms of abstraction.
 
 I need to be hit in the face.
 
@@ -30,7 +32,7 @@ Imagine you're running a popular API that provides weather data. Without any con
 - **Driving up your infrastructure costs** unnecessarily  
 - **Creating an unfair experience** where one heavy user monopolizes resources
 
-Rate limiting solves these problems by setting boundaries: "You can make X requests per time period, but no more." It's like having a speed limit on the highway – it keeps traffic flowing smoothly for everyone.
+Rate limiting solves these problems by setting boundaries: "You can make X requests per time period, but no more." It's like having a speed limit on the highway, it keeps traffic flowing smoothly.
 
 ## The rate limiting algorithm landscape
 
@@ -65,7 +67,9 @@ This is where things get interesting – and where our flux-limiter comes in.
 
 ## Enter GCRA
 
-The Generic Cell Rate Algorithm might sound intimidating, but it's actually quite elegant. Instead of tracking tokens like the token bucket algorithm, GCRA tracks **when the next request should be allowed**. I found this *seriously* simple to understand.
+The GCRA might sound intimidating, but it's actually quite elegant. Instead of tracking tokens like the token bucket algorithm, GCRA tracks **when the next request should be allowed**. I found this *seriously* simple to understand.
+
+*[Note from present-day me: simple to understand, in principle at least. I still have trouble running it on paper, but I digress...]*
 
 Here's the key insight: GCRA is mathematically equivalent to the token bucket algorithm, but uses a different approach:
 
@@ -98,7 +102,7 @@ On to the code. I built flux-limiter to be production-ready with these goals:
 
 The codebase is organized into several clean modules:
 
-```rust
+```bash
 src/
 ├── lib.rs              // Public API exports
 ├── flux_limiter.rs     // Core rate limiter logic  
@@ -189,7 +193,7 @@ pub fn check_request(&self, client_id: T) -> Result<FluxLimiterDecision, FluxLim
 }
 ```
 
-*[Note from present-day me: this snippet shows the original `get()`-then-`insert()` pattern. It has a TOCTOU race condition — two threads can both read the same TAT and both be allowed. Fixed in 0.8.1 by switching to DashMap's `entry()` API for an atomic read-modify-write. I had no idea when I wrote this.]*
+*[Note from present-day me: this snippet shows the original `get()`-then-`insert()` pattern. It has a Time of Check to Time of Use (TOCTOU) race condition — two threads can both read the same TAT and both be allowed. Fixed in 0.8.1 by switching to DashMap's `entry()` API for an atomic read-modify-write. I had no idea when I wrote this.]*
 
 Let's break down the key concepts:
 
@@ -200,7 +204,7 @@ Let's break down the key concepts:
 
 ### Concurrent access with DashMap
 
-For high-performance concurrent access, I chose `DashMap` – a blazingly fast concurrent HashMap:
+For high-performance concurrent access, I chose `DashMap` – a fast concurrent HashMap:
 
 ```rust
 pub client_state: Arc<DashMap<T, u64>>,
@@ -224,7 +228,7 @@ pub struct FluxLimiterDecision {
 }
 ```
 
-This makes it trivial to add proper HTTP headers:
+This makes it straightforward to add proper HTTP headers:
 
 ```rust
 if let Some(retry_after) = decision.retry_after_seconds {
@@ -253,7 +257,7 @@ Call this periodically to remove clients that haven't been seen recently.
 
 ## Testing
 
-One of my favorite aspects of this implementation is how testable it is. The `Clock` abstraction makes deterministic testing trivial:
+One of my favorite aspects of this implementation is how testable it is. The `Clock` abstraction makes deterministic testing straightforward:
 
 ```rust
 #[test]
