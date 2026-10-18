@@ -2,7 +2,7 @@
 title = "Error Handling"
 date = 2026-09-24
 description = "An introduction to error handling in Rust"
-categories = ["fundamentals"]
+categories = ["Fundamentals"]
 tags = ["error-handling"]
 draft = false
 aliases = ["/2026-09-24-rust-fundamentals-error-handling"]

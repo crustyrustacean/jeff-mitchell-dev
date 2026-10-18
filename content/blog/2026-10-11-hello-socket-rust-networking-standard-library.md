@@ -3,7 +3,7 @@ title = "Hello, Socket: Rust Networking with the Standard Library"
 date = 2026-10-11
 description = "Build your first TCP server in Rust using only the standard library — form a socket address, bind a listener, and accept incoming connections."
 categories = ["Fundamentals"]
-tags = ["rust", "std", "tcp", "networking"]
+tags = ["rust", "standard-library", "tcp", "networking"]
 draft = false
 aliases = ["/2026-10-11-hello-socket-rust-networking-standard-library"]
 +++

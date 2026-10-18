@@ -1,22 +1,20 @@
 +++
 title = "Flux Limiter: GCRA Rate Limiting Made Easy"
-date = 2026-11-23
-description = "A post about the GCRA based rate limiter I made in Rust"
+date = 2026-10-19
+description = "The announcement post I wrote for flux-limiter a year ago and never published, shown essentially as-written — overconfident claims, race-condition code samples, and all. Part 0 of the re-opening the hood series."
 categories = ["Projects"]
 tags = ["rust", "rate-limiting", "gcra"]
 draft = true
-aliases = ["/2026-11-23-flux-limiter-gcra-rate-limiting-made-easy"]
+aliases = ["/2026-11-23-flux-limiter-gcra-rate-limiting-made-easy", "/2026-10-16-flux-limiter-gcra-rate-limiting-made-easy", "/2026-10-19-flux-limiter-gcra-rate-limiting-made-easy"]
 +++
 
-Rate limiting is like being a bouncer at a popular nightclub – you need to control how many people can enter and when, without causing a riot outside. In the world of web APIs and services, rate limiting serves a similar purpose: protecting your servers from being overwhelmed while providing fair access to resources.
+> **A note before you read.** I wrote this post about a year ago, shortly after first publishing flux-limiter, and never posted it. I'm publishing it now essentially as-written: the claims and the code samples are untouched. The AI-assisted prose got a light trim, removing the worst of the filler, but nothing of substance changed (and I've added two bracketed notes where I couldn't resist). It reads very differently in hindsight. The code snippets below show the pre-0.8.0 implementation, including at least one race condition I hadn't found yet. The performance claims were never measured — there were no benchmarks at all. This is Part 0 of a short series, *Re-opening the Hood on flux-limiter*. Part 1, coming later this week, audits everything wrong here.
 
-<!-- more -->
+Rate limiting is like being a bouncer at a popular nightclub – you need to control how many people can enter at a time, and when, without causing a riot outside. In the world of web APIs and services, rate limiting serves a similar purpose: protecting your servers from being overwhelmed while providing fair access to resources.
 
-# Building a High-Performance Rate Limiter in Rust: A Deep Dive into GCRA
+This post is about **flux-limiter**, a rate limiting library I wrote in Rust using the Generic Cell Rate Algorithm (GCRA). I'll cover why I built it, how GCRA works, and how the code fits together.
 
-Today, I want to share my journey building **flux-limiter**, a high-performance rate limiting library in Rust that uses the Generic Cell Rate Algorithm (GCRA). Whether you're a seasoned developer or just getting started with rate limiting, this post will walk you through the concepts and implementation details.
-
-# Why Did I Build this Thing?
+## Why did I build this thing?
 
 The simple fact is, I was looking at other rate limiters, namely `governor` and it's associated `tower-governor` incarnation for Axum, and had a great deal of trouble understanding them. I found myself longing for something simple that made sense, based on clear criteria. A challenge I've found in using Rust libraries is the *level of abstraction*. It's really challenging, at first glance, for a beginner to understand *how* to use them because they assume you think quickly in terms of abstraction.
 
@@ -24,7 +22,7 @@ I need to be hit in the face.
 
 I figured *maybe* others might need that as well.
 
-## What is Rate Limiting and Why Do We Need It?
+## What is rate limiting, and why do we need it?
 
 Imagine you're running a popular API that provides weather data. Without any controls, a single client could make thousands of requests per second, potentially:
 
@@ -34,29 +32,29 @@ Imagine you're running a popular API that provides weather data. Without any con
 
 Rate limiting solves these problems by setting boundaries: "You can make X requests per time period, but no more." It's like having a speed limit on the highway – it keeps traffic flowing smoothly for everyone.
 
-## The Rate Limiting Algorithm Landscape
+## The rate limiting algorithm landscape
 
-Before diving into implementation, let's explore the main approaches to rate limiting:
+There are five common approaches:
 
-### 1. Token Bucket
+### 1. Token bucket
 Think of this like a bucket that gets filled with tokens at a steady rate. Each request "costs" a token. If the bucket is empty, requests are denied. The bucket has a maximum capacity, allowing for bursts of activity.
 
 **Pros**: Intuitive, allows bursts, mathematically well-defined  
 **Cons**: Requires background token refill process, potential precision issues
 
-### 2. Leaky Bucket
-Imagine a bucket with a hole in the bottom that leaks at a constant rate. Requests are added to the bucket, and if it overflows, they're rejected. This smooths out traffic to a constant rate.
+### 2. Leaky bucket
+Imagine a bucket with a hole in the bottom that leaks at a constant rate. Each request adds water; whatever doesn't fit spills over and is dropped. The output is a steady, constant rate.
 
 **Pros**: Perfect for smoothing bursty traffic  
 **Cons**: Can be overly restrictive, doesn't handle natural burst patterns well
 
-### 3. Fixed Window Counter
+### 3. Fixed window counter
 Count requests in fixed time windows (e.g., per minute). Simple but can have edge cases where clients get twice the limit at window boundaries.
 
 **Pros**: Dead simple to implement  
 **Cons**: Vulnerable to boundary attacks, uneven request distribution
 
-### 4. Sliding Window
+### 4. Sliding window
 A more sophisticated version that tracks requests over a rolling time window, providing smoother rate limiting without boundary issues.
 
 **Pros**: More accurate than fixed windows  
@@ -65,7 +63,7 @@ A more sophisticated version that tracks requests over a rolling time window, pr
 ### 5. Generic Cell Rate Algorithm (GCRA)
 This is where things get interesting – and where our flux-limiter comes in.
 
-## Enter GCRA: The Elegant Solution
+## Enter GCRA
 
 The Generic Cell Rate Algorithm might sound intimidating, but it's actually quite elegant. Instead of tracking tokens like the token bucket algorithm, GCRA tracks **when the next request should be allowed**. I found this *seriously* simple to understand.
 
@@ -74,7 +72,7 @@ Here's the key insight: GCRA is mathematically equivalent to the token bucket al
 - **Token Bucket**: "How many tokens do I have right now?"
 - **GCRA**: "When is the theoretical arrival time (TAT) for the next request?"
 
-### Why GCRA is Awesome
+### Why GCRA is awesome
 
 1. **No Background Processes**: Unlike token bucket, there's no need to continuously refill tokens
 2. **Precise Timing**: Works with exact timestamps, avoiding floating-point precision issues
@@ -88,7 +86,7 @@ The algorithm boils down to:
 
 ## Meet flux-limiter: GCRA in Rust
 
-Now let's dive into the implementation! I built flux-limiter to be production-ready with these goals:
+On to the code. I built flux-limiter to be production-ready with these goals:
 
 - **High Performance**: Lock-free concurrent access
 - **Precise Timing**: Nanosecond precision for accurate rate limiting  
@@ -96,7 +94,7 @@ Now let's dive into the implementation! I built flux-limiter to be production-re
 - **Rich Metadata**: Provide detailed information for HTTP responses
 - **Memory Efficient**: Automatic cleanup of stale client data
 
-### Architecture Overview
+### Architecture overview
 
 The codebase is organized into several clean modules:
 
@@ -109,7 +107,7 @@ src/
 └── errors.rs           // Error handling
 ```
 
-### The Clock Abstraction
+### The `Clock` abstraction
 
 One of my favorite design decisions was abstracting time through a `Clock` trait:
 
@@ -137,7 +135,7 @@ impl Clock for SystemClock {
 }
 ```
 
-### Configuration Made Simple
+### Configuration
 
 Rate limiter configuration uses a builder pattern that's both flexible and type-safe:
 
@@ -161,7 +159,7 @@ pub fn validate(&self) -> Result<(), FluxLimiterError> {
 }
 ```
 
-### The Core Algorithm Implementation
+### The core algorithm
 
 Here's where the GCRA magic happens. The heart of the rate limiter lives in the `check_request` method:
 
@@ -191,6 +189,8 @@ pub fn check_request(&self, client_id: T) -> Result<FluxLimiterDecision, FluxLim
 }
 ```
 
+*[Note from present-day me: this snippet shows the original `get()`-then-`insert()` pattern. It has a TOCTOU race condition — two threads can both read the same TAT and both be allowed. Fixed in 0.8.1 by switching to DashMap's `entry()` API for an atomic read-modify-write. I had no idea when I wrote this.]*
+
 Let's break down the key concepts:
 
 - **`rate_nanos`**: Time between requests (1/rate converted to nanoseconds)
@@ -198,7 +198,7 @@ Let's break down the key concepts:
 - **`previous_tat_nanos`**: When this client's next request should theoretically arrive
 - **`is_conforming`**: The GCRA test - are we within the tolerance window?
 
-### Concurrent Access with DashMap
+### Concurrent access with DashMap
 
 For high-performance concurrent access, I chose `DashMap` – a blazingly fast concurrent HashMap:
 
@@ -211,7 +211,7 @@ DashMap provides:
 - **Fine-grained locking** for writes
 - **Excellent performance** under high concurrency
 
-### Rich Decision Metadata
+### Rich decision metadata
 
 Instead of just returning "allow/deny", flux-limiter provides rich metadata perfect for HTTP responses:
 
@@ -235,7 +235,7 @@ if let Some(remaining) = decision.remaining_capacity {
 }
 ```
 
-### Memory Management
+### Memory management
 
 One challenge with per-client rate limiting is memory growth. Clients come and go, but their state lingers. flux-limiter includes a cleanup mechanism:
 
@@ -251,7 +251,7 @@ pub fn cleanup_stale_clients(&self, max_stale_nanos: u64) {
 
 Call this periodically to remove clients that haven't been seen recently.
 
-## Testing: The Secret Sauce
+## Testing
 
 One of my favorite aspects of this implementation is how testable it is. The `Clock` abstraction makes deterministic testing trivial:
 
@@ -276,7 +276,7 @@ fn rate_limiting_blocks_rapid_requests() {
 
 The `TestClock` lets us control time completely, making tests fast and deterministic.
 
-## Real-World Usage
+## Real-world usage
 
 Using flux-limiter in your application is straightforward:
 
@@ -302,7 +302,9 @@ match limiter.check_request(client_id) {
 }
 ```
 
-## Performance Characteristics
+## Performance characteristics
+
+*[Note from present-day me: keep reading, but know that none of the numbers implied below had ever been measured when I wrote this. There were no benchmarks — I wouldn't add `criterion` to the crate for another year, and the "lock-free reads" claim about DashMap is simply wrong. Everything in this section gets audited, with real numbers, in the next post.]*
 
 flux-limiter is designed for high-throughput scenarios:
 
@@ -312,7 +314,7 @@ flux-limiter is designed for high-throughput scenarios:
 - **Precision**: Nanosecond timing for exact rate limiting
 - **Throughput**: Capable of millions of decisions per second
 
-## Key Takeaways
+## Key takeaways
 
 Building flux-limiter taught me several important lessons:
 
@@ -322,13 +324,9 @@ Building flux-limiter taught me several important lessons:
 4. **Rust's type system is your friend** – Generic client IDs and compile-time safety prevented many bugs
 5. **Performance and correctness can coexist** – Lock-free concurrency with nanosecond precision
 
-## What's Next?
+## What's next?
 
-flux-limiter demonstrates that you can build high-performance, mathematically sound rate limiting without complexity. The GCRA algorithm provides an elegant foundation, and Rust's zero-cost abstractions let us build something both fast and safe.
-
-If you're interested in the full implementation, check out the [repository](https://github.com/crustyrustacean/flux-limiter). The code is MIT licensed and production-ready.
-
-Rate limiting doesn't have to be complicated – sometimes the most elegant solution is also the most effective.
+The full implementation is in the [repository](https://github.com/crustyrustacean/flux-limiter). The code is MIT licensed and production-ready.
 
 That's not to say there isn't work still left to do. The cleanup system is perhaps overly simplistic, it could stand for some more nuanced refinement. Also, there is no quota strategy for replenishment, as the `governor` crate has. You have to start somewhere though, so there you have it!
 

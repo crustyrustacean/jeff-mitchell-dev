@@ -2,8 +2,8 @@
 title = "Strings"
 date = 2026-09-12
 description = "How to define, instantiate and use the string collection type in Rust."
-categories = ["fundamentals"]
-tags = ["collection-types", "string"]
+categories = ["Fundamentals"]
+tags = ["collection-types", "strings"]
 draft = false
 aliases = ["/2026-09-12-rust-fundamentals-collection-types-strings"]
 +++

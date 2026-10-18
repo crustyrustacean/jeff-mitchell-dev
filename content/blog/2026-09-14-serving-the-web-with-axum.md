@@ -3,7 +3,7 @@ title = "How-To: Serving the Web with Axum"
 date = 2026-09-14
 description = "An introduction to serving web assets with the Axum web framework"
 categories = ["Advanced Guides"]
-tags = ["rust", "web frameworks", "axum"]
+tags = ["rust", "web-frameworks", "axum"]
 draft = true
 aliases = ["/2026-09-14-serving-the-web-with-axum"]
 +++

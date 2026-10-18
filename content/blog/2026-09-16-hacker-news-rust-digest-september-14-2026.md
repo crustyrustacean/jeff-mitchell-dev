@@ -4,7 +4,7 @@ date = 2026-09-16
 description = "Microsoft elevating Rust to tier-1 led the week, alongside an e-scooter firmware rewrite, the never type's road to stabilization, WebAssembly runtime benchmarks, a Godot-based terminal multiplexer, and Rust extension modules in Python."
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "microsoft", "embedded", "webassembly", "pyo3"]
-draft = false 
+draft = false
 aliases = ["/2026-09-16-hacker-news-rust-digest-september-14-2026"]
 +++
 

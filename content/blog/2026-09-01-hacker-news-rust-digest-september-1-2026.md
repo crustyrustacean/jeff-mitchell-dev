@@ -4,7 +4,7 @@ date = 2026-09-01
 description = "TurboKV's hardware-accelerated key-value store leads the week, alongside a Rust-native model gateway, Apache Iggy's graduation to a top-level project, typestate patterns in an ACM paper, and a $400 AI-assisted Go-to-Rust rewrite."
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "databases", "streaming", "typestate", "ai-assisted-coding"]
-draft = false 
+draft = false
 aliases = ["/2026-09-01-hacker-news-rust-digest-september-1-2026"]
 +++
 

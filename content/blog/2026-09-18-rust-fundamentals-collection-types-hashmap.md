@@ -2,7 +2,7 @@
 title = "HashMaps"
 date = 2026-09-18
 description = "How to define, instantiate and use the hash map collection type in Rust."
-categories = ["fundamentals"]
+categories = ["Fundamentals"]
 tags = ["collection-types", "hashmaps"]
 draft = false
 aliases = ["/2026-09-28-rust-fundamentals-collection-types-hashmap"]

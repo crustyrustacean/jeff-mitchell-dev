@@ -2,7 +2,7 @@
 title = "De-mystifying `if-let`"
 date = 2026-09-27
 description = "How to think about the `if-let` syntax"
-categories = ["Field-Notes"]
+categories = ["Field Notes"]
 tags = ["syntax", "if-let"]
 draft = false
 +++

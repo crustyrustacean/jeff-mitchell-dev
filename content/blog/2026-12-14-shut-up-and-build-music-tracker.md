@@ -3,7 +3,7 @@ title = "Shut-Up and Build: Music Tracker"
 date = 2026-12-14
 description = "An on-going series on how to not overthink and just build."
 categories = ["Series", "Shut Up and Build"]
-tags = ["music tracker"]
+tags = ["music-tracker"]
 draft = true
 aliases = ["/2026-12-14-shut-up-and-build-music-tracker"]
 +++

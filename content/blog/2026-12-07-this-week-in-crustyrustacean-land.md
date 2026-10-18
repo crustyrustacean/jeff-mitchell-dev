@@ -3,7 +3,7 @@ title = "This Week in Crusty Rustacean-land"
 date = 2026-12-07
 description = "A weekly update on what's going on with me...and Rust"
 categories = ["Meta"]
-tags = ["author update"]
+tags = ["author-update"]
 draft = true
 aliases = ["/2026-12-07-this-week-in-crustyrustacean-land"]
 +++

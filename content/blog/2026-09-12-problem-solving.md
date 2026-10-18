@@ -2,8 +2,8 @@
 title = "The Card"
 date = 2026-09-12
 description = "A problem solving methodolgy"
-categories = ["fundamentals"]
-tags = ["problem-solving", "tools"]
+categories = ["Fundamentals"]
+tags = ["problem-solving", "tooling"]
 draft = false
 aliases = ["/2026-09-12-the-card"]
 +++

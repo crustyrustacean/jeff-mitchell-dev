@@ -3,7 +3,7 @@ title = "Building Something: Keeping You Guessing"
 date = 2026-10-26
 description = "A variation on the guessing game program from Chapter 2 of the Rust Book"
 categories = ["How-To"]
-tags = ["rust", "game", "guessing game"]
+tags = ["rust", "game", "guessing-game"]
 draft = true
 aliases = ["/2026-10-26-keeping-you-guessing"]
 +++

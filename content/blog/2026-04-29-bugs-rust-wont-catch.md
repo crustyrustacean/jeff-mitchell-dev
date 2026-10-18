@@ -2,7 +2,7 @@
 title = "Bugs Rust Won't Catch: Lessons from the uutils/coreutils CVE Audit"
 date = 2026-04-29
 description = "A professional audit of the Rust reimplementation of GNU coreutils uncovered 44 CVEs — none caught by the borrow checker, Clippy, or cargo-audit. Here's what to watch for."
-categories = ["Field-Notes"]
+categories = ["Field Notes"]
 tags = ["rust", "security", "systems-programming", "best-practices"]
 draft = false
 aliases = ["/2026-04-29-bugs-rust-wont-catch"]

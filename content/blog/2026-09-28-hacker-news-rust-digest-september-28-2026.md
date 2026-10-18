@@ -3,7 +3,7 @@ title = "Hacker News Rust Digest — September 28, 2026"
 date = 2026-09-28
 description = "A thinner Rust week on HN, led by the state of SIMD in Rust, Tokio's ambitious Topcoat web framework, AI agents that optimize Rust by measuring it, and a Rust take on 'Parse, don't validate.'"
 categories = ["Digest"]
-tags = ["rust", "hacker-news", "simd", "web-frameworks", "ai-agents", "type-systems", "performance"]
+tags = ["rust", "hacker-news", "simd", "web-frameworks", "agents", "type-systems", "performance"]
 draft = false
 aliases = ["/2026-09-28-hacker-news-rust-digest-september-28-2026"]
 +++

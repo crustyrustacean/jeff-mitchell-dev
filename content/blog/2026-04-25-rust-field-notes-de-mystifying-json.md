@@ -2,7 +2,7 @@
 title = "De-mystifying JSON"
 date = 2026-04-25
 description = "How to look at a JSON shape and translate it to Rust structs and enums."
-categories = ["Field-Notes"]
+categories = ["Field Notes"]
 tags = ["data-modelling"]
 draft = false
 aliases = ["/2026-04-25-rust-field-notes-de-mystifying-json"]

@@ -2,7 +2,7 @@
 title = "Not Dead, Just Sleeping"
 date = 2026-07-20
 description = "The author reflects on his dormant blog...and makes a commitment."
-categories = ["Digest"]
+categories = ["Meta"]
 tags = ["meta"]
 draft = false
 aliases = ["/2026-07-20-not-dead-just-sleeping"]

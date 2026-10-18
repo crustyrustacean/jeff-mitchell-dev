@@ -2,7 +2,7 @@
 title = "Giving Taxus Some TLC"
 date = 2026-08-25
 description = "The author reflects on returning to the Taxus SSG project."
-categories = ["projects"]
+categories = ["Projects"]
 tags = ["taxus"]
 draft = false
 aliases = ["/2026-08-25-giving-taxus-some-tlc"]

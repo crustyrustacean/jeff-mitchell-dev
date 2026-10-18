@@ -3,7 +3,7 @@ title = "Hacker News Rust Digest — September 07, 2026"
 date = 2026-09-07
 description = "A visual tour of dyn Trait vtables led the week, alongside Rust tooling going native in Vite, Apache Iggy's graduation, a $400 AI-assisted Go-to-Rust rewrite, and an embedded async debate."
 categories = ["Digest"]
-tags = ["rust", "hacker-news", "vtables", "frontend-tooling", "apache-iggy", "ai-coding"]
+tags = ["rust", "hacker-news", "vtables", "frontend-tooling", "apache-iggy", "ai-assisted-coding"]
 draft = false
 aliases = ["/2026-09-07-hacker-news-rust-digest-september-07-2026"]
 +++

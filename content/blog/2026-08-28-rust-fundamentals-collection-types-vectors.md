@@ -2,8 +2,8 @@
 title = "Vectors"
 date = 2026-08-28
 description = "How to define, instantiate and use the vector collection type in Rust."
-categories = ["fundamentals"]
-tags = ["collection-types", "vector"]
+categories = ["Fundamentals"]
+tags = ["collection-types", "vectors"]
 draft = false
 aliases = ["/2026-08-28-rust-fundamentals-collection-types-vectors"]
 +++

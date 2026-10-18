@@ -3,7 +3,7 @@ title = "Shut-Up and Build: Photography API"
 date = 2026-12-21
 description = "An on-going series on how to not overthink and just build."
 categories = ["Series", "Shut Up and Build"]
-tags = ["photography API"]
+tags = ["photography-api"]
 draft = true
 aliases = ["/2026-12-21-shut-up-and-build-photography-api"]
 +++
