@@ -3,8 +3,8 @@ title = "Hacker News Rust Digest — October 19, 2026"
 date = 2026-10-19
 description = "An eleven-year-old borrow checker soundness bug heads the week, alongside an RL-trained agentic model, a CoScreen revival built in Rust, and fresh tooling for tunnels, parametric CAD, and server-side rendering."
 categories = ["Digest"]
-tags = ["rust", "hacker-news", "borrow-checker", "ai-agents", "p2p", "open-source"]
-draft = true
+tags = ["rust", "hacker-news", "borrow-checker", "agents", "p2p", "open-source"]
+draft = false
 aliases = ["/2026-10-19-hacker-news-rust-digest-october-19-2026"]
 +++
 
