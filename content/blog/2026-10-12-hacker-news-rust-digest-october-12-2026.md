@@ -4,7 +4,7 @@ date = 2026-10-12
 description = "An AI-port week: Quake lands in safe Rust in the browser, the TypeScript compiler gets the same treatment, Eurydice compiles Rust back to readable C, Rust-first programmers start writing C tutorials, and a smart-home library reverse-engineers TP-Link's lock-in."
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "llm", "webassembly", "typescript", "compilers", "iot"]
-draft = false
+draft = true
 aliases = ["/2026-10-12-hacker-news-rust-digest-october-12-2026"]
 +++
 
