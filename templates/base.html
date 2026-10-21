@@ -3,6 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Theme bootstrap: must run before the stylesheet is applied so the
+      // first paint already has the right data-theme (avoids the light flash
+      // in dark mode). scripts.js initTheme() skips itself when this ran.
+      (function () {
+        let stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch (e) {}
+        const theme =
+          stored === "dark" || stored === "light"
+            ? stored
+            : window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
     <meta
       name="description"

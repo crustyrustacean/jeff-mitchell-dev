@@ -1,4 +1,8 @@
 function initTheme() {
+    // The inline bootstrap in <head> (base.html) has already set data-theme
+    // before first paint. Skip here to avoid doing it again after render;
+    // this function remains for pages/contexts without the bootstrap.
+    if (document.documentElement.getAttribute('data-theme')) return;
     const stored = localStorage.getItem('theme');
     if (stored === 'dark' || stored === 'light') {
         document.documentElement.setAttribute('data-theme', stored);
