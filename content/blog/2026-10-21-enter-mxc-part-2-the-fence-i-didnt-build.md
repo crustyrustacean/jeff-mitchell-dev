@@ -5,7 +5,7 @@ description = "Part two of the MXC field report: before wiring containment into 
 categories = ["Field Notes"]
 tags = ["windows", "mxc", "security", "agents", "sandboxing", "rust"]
 draft = false
-aliases = ["/2026-10-18-enter-mxc-part-2-the-fence-i-didnt-build", "/2026-10-23-enter-mxc-part-2-the-fence-i-didnt-build", "/2026-10-21-enter-mxc-part-2-the-fence-i-didnt-build"]
+aliases = ["/2026-10-21-enter-mxc-part-2-the-fence-i-didnt-build"]
 +++
 
 Part one ended with a promise: next post, I hand MXC to a real agent as its default shell sandbox, learning mode as the authoring loop, "and at least one discovery I did not see coming."
