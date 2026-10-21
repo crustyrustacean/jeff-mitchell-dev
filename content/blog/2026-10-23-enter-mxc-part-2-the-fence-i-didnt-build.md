@@ -4,7 +4,7 @@ date = 2026-10-23
 description = "Part two of the MXC field report: before wiring containment into an agent harness, I mapped every place it actually executes something — and discovered my plan had a category error. What a review pass caught, what stayed open, and why understanding had to come before code."
 categories = ["Field Notes"]
 tags = ["windows", "mxc", "security", "agents", "sandboxing", "rust"]
-draft = true
+draft = false
 aliases = ["/2026-10-18-enter-mxc-part-2-the-fence-i-didnt-build", "/2026-10-23-enter-mxc-part-2-the-fence-i-didnt-build"]
 +++
 
@@ -12,13 +12,13 @@ Part one ended with a promise: next post, I hand MXC to a real agent as its defa
 
 Here is the discovery I did not see coming: **I was about to make the same mistake again.**
 
-The first attempt at this integration happened over a weekend. I wired MXC into [jinn](https://github.com/jayson-lennon/jinn), the agent harness I help support, got filesystem and network auditing working, watched it record denials. Then I threw it away. Not because it failed — because I couldn't explain what it protected against. I had outpaced my understanding with code, again, and the hobby that was supposed to teach me security had instead taught me how to install a fence I couldn't inspect.
+The first attempt at this integration happened over a weekend. I wired MXC into [jinn](https://github.com/jayson-lennon/jinn), the agent harness I help support, got filesystem and network auditing working, watched it record denials. Then I threw it away. Not because it failed — because I couldn't explain what it protected against. I had outpaced my understanding with code, again, and the hobby that was supposed to teach me security had instead taught me I'm still running to far, too fast.
 
-So this time I did it backward. Before writing a line of integration code, I spent the time answering two questions: *everywhere an agent harness actually executes something*, and *what any of that is actually defending against*. The second answer overturned the first. This post is the map, the overturn, and the part I got wrong — which is the part worth reading, so let's start there.
+So this time I did it backward. Before writing a line of integration code, I spent the time pondering two things: *everywhere an agent harness actually executes something*, and *what any of that is actually defending against*. The outcome of the second pondering overturned the first. You have in your hands the map, the overturn, and the part I got wrong, which is what matters, so I lead with that.
 
 ## The category error
 
-To find where containment belongs in jinn, I did the obvious diligent thing: I audited the codebase for every process-spawn site. Every `Command::new`, every PTY allocation, every place the harness creates an OS process. I sorted them into tiers by who authors the command:
+To find where containment belongs in `jinn`, I did the obvious diligent thing: I audited the codebase for every process-spawn site. Every `Command::new`, every PTY allocation, every place the harness creates an OS process. I sorted them into tiers by who authors the command:
 
 | Tier | Who writes it | Examples |
 |---|---|---|
@@ -26,7 +26,7 @@ To find where containment belongs in jinn, I did the obvious diligent thing: I a
 | 2 | The user | session setup/teardown hooks, `$EDITOR`, the directory picker |
 | 3 | Nobody (infrastructure) | MCP servers, `rg`, image conversion |
 
-The conclusion wrote itself: Tier 1 is the containment target, because an LLM writes those commands and they run with your full authority. The plan that followed was coherent: wrap the bash tool in an MXC container, policy per project, learning mode to discover the grants. Subagents need no separate story, because jinn runs them in-process — contain the tools, and everything the model does is contained. Clean.
+The conclusion wrote itself: Tier 1 is the containment target, because an LLM writes those commands and they run with your full authority. The plan that followed was coherent: wrap the bash tool in an MXC container, policy per project, learning mode to discover the grants. Subagents need no separate story, because `jinn` runs them in-process — contain the tools, and everything the model does is contained. Clean.
 
 The error was in the audit's premise. **I searched for spawn sites, so I found spawn sites.** The file tools don't spawn anything. `read`, `write`, `edit` do their I/O inside the harness process itself, with no path canonicalization and no confinement to the session directory. From a "where does an OS process come from" census, they're invisible. From a "what can the model do to my machine" census, they're the whole game.
 
@@ -50,13 +50,13 @@ Speaking of which. Here is the whole thing, two paragraphs, the artifact I shoul
 
 **Defended against:** a model that is wrong rather than hostile — destructive commands, writes outside the project, accidental network side effects — plus *opportunistic* prompt injection, where hostile text in a fetched page or issue steers an otherwise-cooperative model. Containment converts these from "runs with your authority" to "bounced off a policy."
 
-**Not defended against:** a determined attacker targeting the container mechanism itself, malicious MCP servers, a malicious user, or a compromised harness. Microsoft says plainly that MXC profiles are not yet security boundaries, and the plan has to say what that means: this is containment of convenience and blast-radius reduction, not defense against a capable adversary. Anyone who tells you their agent sandbox stops a nation-state is selling something.
+**Not defended against:** a determined attacker targeting the container mechanism itself, malicious MCP servers, a malicious user, or a compromised harness. Microsoft says plainly that MXC profiles are not yet security boundaries, and the plan has to say what that means: this is containment of convenience and blast-radius reduction, not defense against a capable adversary. Anyone who tells you their agent sandbox stops a nation-state is grinning with swamp land in their pocket.
 
 The second paragraph does real work. Every design argument eventually lands on "is that in scope?" and without this written down, the answer is whatever the person arguing loudest assumes. It also, frankly, sets the honesty bar for the docs: if `enforce` doesn't cover the file tools (v1 it will) or the interactive terminal (v1 it won't, so the terminal gets withheld under enforce), the docs have to say so in those words.
 
 ## What resolved, what's still open
 
-Part one ended with a list of things I couldn't explain. Three of them have since closed, and I want to close the loop publicly because open questions are only honest if you eventually answer them.
+Part one ended with a list of things I couldn't explain. Three of them have since closed, and I want to close the loop publicly because open questions are only valuable if you eventually answer them.
 
 **The SDK-or-CLI fork dissolved.** I'd field-tested the `wxc-exec` CLI and planned around bundling it, with the in-process SDK as a maybe. Reading the SDK's actual documentation: `run` and `spawn` use the same in-process engine the CLI drives. The CLI is one consumer of the engine, not a separate mechanism. So the tested path and the integration path converge — the SDK compiles in, nothing to bundle, and my field notes carry over. (The SDK's API is also almost embarrassingly well-shaped for this: request with command, working directory, timeout, filesystem grants, network posture; result with outcome, output, warnings. Someone designed that for exactly this use.)
 
@@ -83,6 +83,6 @@ The Mac line will get its own paragraph in some future post; the short version i
 
 ## Next
 
-The blood-in-it post is still coming — a real agent, learning mode, real denials. But now it comes after Phase 0 ships, when there's a fence whose boundaries I can state in a sentence, because I've enumerated what it doesn't cover. Part one's vow got a refinement: understand in public, then build. The comment box is still open, and the still-open list above is the part I'd most like help with — especially anyone who knows *why* MSYS dies in an AppContainer. Inference from a corpse is not understanding, and I'd rather be corrected than confident.
+The rubber-on-concrete post is still coming — a real agent, learning mode, real denials. But now it comes after Phase 0 ships, when there's a fence whose boundaries I can state in a sentence, because I've enumerated what it doesn't cover. Part one's vow got a refinement: understand in public, then build. The comment box is still open, and the still-open list above is the part I'd most like help with — especially anyone who knows *why* MSYS dies in an AppContainer. Inference from a corpse is not understanding, and I'd rather be corrected than confident.
 
 *Thanks to the reviewer whose pass found the category error — you know who you are, and the postmortem line is yours.*
