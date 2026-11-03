@@ -1,5 +1,20 @@
 @import 'highlight-light';
 
+/* Links inside prose must not rely on colour alone (WCAG 1.4.3 / 1.4.1).
+   Dark-theme link/body contrast is below the 3:1 that would let colour
+   alone carry the distinction, so every inline link is underlined. */
+@mixin link-underline {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+
+    &:hover {
+        text-decoration-color: currentColor;
+    }
+}
+
+
 [data-theme="dark"] {
     @import 'highlight-dark';
 }
@@ -8,7 +23,12 @@
 [data-theme="light"] {
     --color-text: #333;
     --color-text-light: #666;
-    --color-text-lighter: #999;
+    /* #999 was 2.85:1 on white and failed WCAG AA for the footer
+       copyright/powered lines and article timestamps. */
+    --color-text-lighter: #6e6e6e;
+    /* Muted text that sits on --color-bg-soft (#fafafa) as well as white:
+       #6b6b6b clears 4.5:1 against both. */
+    --color-text-muted: #6b6b6b;
     --color-link: #2a7ae2;
     --color-link-hover: #1a5fb4;
     --color-bg: #fff;
@@ -26,7 +46,10 @@
 [data-theme="dark"] {
     --color-text: #d4d4d4;
     --color-text-light: #a0a0a0;
-    --color-text-lighter: #777;
+    /* #777 was 3.89:1 on #1a1a1a; #8f8f8f clears 4.5:1. */
+    --color-text-lighter: #8f8f8f;
+    /* Clears 4.5:1 on both #1a1a1a and #242424. */
+    --color-text-muted: #909090;
     --color-link: #6ba3f7;
     --color-link-hover: #8dbaFF;
     --color-bg: #1a1a1a;
@@ -408,6 +431,10 @@ main {
 .section-content {
     margin-bottom: 2rem;
     line-height: 1.8;
+
+    a {
+        @include link-underline;
+    }
 }
 
 .section-nav {
@@ -516,6 +543,12 @@ article {
     line-height: 1.8;
     margin-bottom: 2rem;
 
+    /* Body links are underlined so colour is not the only cue that
+       distinguishes them from surrounding text (WCAG 1.4.1). */
+    a {
+        @include link-underline;
+    }
+
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--font-heading);
         line-height: 1.3;
@@ -547,7 +580,7 @@ article {
         border-left: 3px solid var(--color-accent);
         margin: 1.5em 0;
         padding: 0.5em 1em;
-        color: var(--color-text-light);
+        color: var(--color-text-muted);
         background: var(--color-accent-subtle);
         border-radius: 0 4px 4px 0;
 
@@ -675,13 +708,22 @@ footer {
         white-space: nowrap;
     }
 
+    /* The "Built with Taxus" byline sits at the same muted colour as the
+       text around it, so colour alone can't identify the link. */
+    .footer-powered a {
+        @include link-underline;
+    }
+
     .footer-nav {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
 
+        /* Block-axis padding takes each link past the 44px minimum touch
+           target without changing the visual rhythm of the footer row. */
         a {
-            padding: 0 0.6rem;
+            display: inline-block;
+            padding: 8px 0.6rem;
         }
 
         a:first-child {
