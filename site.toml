@@ -14,3 +14,6 @@ templates_dir = "templates"
 [highlight]
 enabled = true
 class_prefix = 'hl-'
+
+[typescript]
+enabled = true

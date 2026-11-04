@@ -99,7 +99,7 @@
           </div>
           <button
             class="theme-toggle"
-            onclick="toggleTheme()"
+            type="button"
             aria-label="Toggle dark mode"
           ></button>
         </div>
@@ -129,6 +129,6 @@
       window.wasmBindings = bindings;
       bindings.hydrate_islands();
     </script>
-    <script src="/static/scripts.js"></script>
+    <script type="module" src="/static/ts/main.js"></script>
   </body>
 </html>
