@@ -25,7 +25,7 @@ jobs:
         run: rustup target add wasm32-unknown-unknown
 
       - name: Install taxus
-        run: cargo install --git https://github.com/crustyrustacean/taxus.git --locked --features typescript taxus-ssg
+        run: cargo install --git https://github.com/crustyrustacean/taxus.git --locked --features typescript taxus-ssg --force
 
       - name: Build site
         run: taxus build
