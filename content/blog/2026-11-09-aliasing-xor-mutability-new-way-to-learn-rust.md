@@ -1,24 +1,22 @@
 +++
 title = "Aliasing Xor Mutability: A New Way to Learn Rust?"
-date = 2026-11-16
-description = "Learning Rust via the notion that aliasing and mutability are mutually exclusive"
-categories = ["Beginner Guides"]
-tags = ["rust", "memory"]
+date = 2026-11-09
+description = "Many readers or one writer: using aliasing XOR mutability to reason about Rust's ownership and borrowing rules."
+categories = ["Field Notes"]
+tags = ["rust", "ownership", "borrowing"]
 draft = true
-aliases = ["/2026-11-16-aliasing-xor-mutability-new-way-to-learn-rust"]
+aliases = ["/2026-11-09-aliasing-xor-mutability-new-way-to-learn-rust"]
 +++
 
 It's time to get away from projects, AI, courses, and tutorial hell.
 
 Let's learn Rust *from first principles*. The inspiration for this thought is [here](https://blog.kodewerx.org/2025/08/are-we-teaching-rust-effectively.html). I'm not sure I'm the most qualified person to take you on this journey, but if you're willing to be patient, maybe we can learn a fresh angle of thought together.
 
-<!-- more -->
-
 Rust is the programming language which enables everyone to create reliable and efficient software. This mantra is part of what drew me too it. How does Rust achieve this lofty goal? As we all know, there is no garbage collector, you're following a set of rules, enforced by the compiler, which eliminate entire classes of memory related bugs.
 
 What are these rules?
 
-I went through the basics in [The Memory Doesn't Remain](/2026-04-20-rust-fundamentals-memory-ownership-borrowing/), so I won't repeat them here. You can try to learn these things individually, perhaps in combination, but the result is what many refer to as "fighting the borrow checker".
+I went through the basics in [Ownership and Borrowing](@/blog/2026-04-20-rust-fundamentals-memory-ownership-borrowing.md), so I won't repeat them here. You can try to learn these things individually, perhaps in combination, but the result is what many refer to as "fighting the borrow checker".
 
 What if there was another way, some guiding principle you could follow that adds texture and makes the rules easier to *reason about*?
 
