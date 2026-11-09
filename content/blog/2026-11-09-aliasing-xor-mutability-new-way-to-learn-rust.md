@@ -4,7 +4,7 @@ date = 2026-11-09
 description = "Many readers or one writer: using aliasing XOR mutability to reason about Rust's ownership and borrowing rules."
 categories = ["Field Notes"]
 tags = ["rust", "ownership", "borrowing"]
-draft = true
+draft = false 
 aliases = ["/2026-11-09-aliasing-xor-mutability-new-way-to-learn-rust"]
 +++
 
