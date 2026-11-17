@@ -4,7 +4,7 @@ date = 2026-11-16
 description = "Rust 1.100 lands the never type and custom allocators, while standard-library safety research, an experimental JIT, and native applications test the ecosystem's promises."
 categories = ["Digest"]
 tags = ["rust", "hacker-news", "rust-1-100", "memory-safety", "jit", "gpui", "xmpp", "ratatui"]
-draft = true
+draft = false
 aliases = ["/2026-11-16-hacker-news-rust-digest-november-16-2026"]
 +++
 
