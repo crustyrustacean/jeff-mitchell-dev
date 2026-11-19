@@ -8,6 +8,6 @@ During the mess that was late 2020 I decided to really learn to code. I bounced 
 
 I *want* to write the tutorials I wished I'd found back in 2022: plain language, working code, no pretending I knew what I was doing on the first pass. What's here will always morph to meet that goal.
 
-It's a work in progress...just like the author.
+It's a constant work in progress...just like the author.
 
-Newest posts are in [the blog](/blog/). The [about page](/about/) has a story of me, [projects](/projects/) has the code, and the music lives at [crusty-metallian.net](https://crusty-metallian.net/).
+Newest posts are in [the blog](/blog/). The [about page](/about/) has a story of me, [projects](/projects/) has the fruits of the labour, and the music lives at [crusty-metallian.net](https://crusty-metallian.net/).

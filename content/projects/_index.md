@@ -2,7 +2,7 @@
 title = "Projects"
 +++
 
-Projects I've built or am building.
+*Projects I've built or am building.*
 
 ## Flux Limiter
 
@@ -22,8 +22,14 @@ A static site generator. This site is built with it.
 
 [Taxus](https://get-taxus.org)
 
-## Halation Photos
+## Metallian Photos
 
-I've started re-inventing Instagram, mostly for myself at this point.
+A photo gallery focusing on my musical sightseeing adventures.
 
-[Halation](https://halation.photos)
+[Metallian Photos](https://metallian-photos.fly.dev)
+
+*Projects I've contributed to.*
+
+[actix-web-lab](https://crates.io/crates/actix-web-lab)
+
+
