@@ -1,16 +1,9 @@
 # gitignore for jeff-mitchell-dev
 
-# Zed IDE settings
-.zed
-
-# .rho configuration
-.rho
-
-# .rho logs
-logs
-
 # OS System Files
 .DS_Store
 
 # Build artifacts
 dist
+server/target
+
