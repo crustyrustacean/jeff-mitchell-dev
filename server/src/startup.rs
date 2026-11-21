@@ -3,6 +3,7 @@
 // dependencies
 use crate::configuration::Settings;
 use crate::routes::health_check;
+use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::{App, HttpServer, web};
 use std::net::TcpListener;
@@ -39,6 +40,7 @@ async fn run(listener: TcpListener) -> Result<Server, anyhow::Error> {
         App::new().wrap(TracingLogger::default()).service(
             web::scope("/api/v1")
                 .route("/health_check", web::get().to(health_check))
+                .service(Files::new("./dist", "/").prefer_utf8(true)),
         )
     })
     .listen(listener)?
