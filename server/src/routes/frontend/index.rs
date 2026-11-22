@@ -1,7 +1,5 @@
 // src/routes/frontend/index.rs
 
-// src/routes/frontend/index.rs
-
 use crate::template::TemplateRenderer;
 use actix_web::{HttpResponse, web::Data};
 use serde::Serialize;
@@ -14,7 +12,7 @@ struct IndexContext<'a> {
 }
 
 pub async fn get_index_page(
-    templates: Data<Box<dyn TemplateRenderer>>,
+    templates: Data<dyn TemplateRenderer>,
 ) -> Result<HttpResponse, actix_web::Error> {
     let index_context = IndexContext {
         title: "Home",

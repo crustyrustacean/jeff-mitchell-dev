@@ -1,7 +1,7 @@
 // src/template.rs
 
 use crate::utils::error_chain_fmt;
-use actix_web::{ResponseError, http::StatusCode};
+use actix_web::{HttpResponse, ResponseError, http::StatusCode};
 use thiserror::Error;
 
 pub mod tera;
@@ -26,6 +26,16 @@ impl ResponseError for TemplateError {
         match self {
             TemplateError::NotFound(_) => StatusCode::NOT_FOUND,
             TemplateError::Operation(_) => StatusCode::INTERNAL_SERVER_ERROR,
+        }
+    }
+
+    fn error_response(&self) -> HttpResponse {
+        tracing::error!(error = ?self, "template rendering error");
+        match self {
+            TemplateError::NotFound(_) => HttpResponse::NotFound().body("Not Found"),
+            TemplateError::Operation(_) => {
+                HttpResponse::InternalServerError().body("Internal Server Error")
+            }
         }
     }
 }

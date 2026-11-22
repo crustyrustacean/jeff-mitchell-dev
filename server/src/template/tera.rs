@@ -8,10 +8,10 @@ pub struct TeraRenderer {
 }
 
 impl TeraRenderer {
-    pub fn new() -> Result<Self, TemplateError> {
+    pub fn new(templates_glob: &str) -> Result<Self, TemplateError> {
         let mut engine = Tera::default();
         engine
-            .load_from_glob("templates/**/*.html")
+            .load_from_glob(templates_glob)
             .context("Unable to load the templates")?;
 
         Ok(Self { engine })
@@ -52,7 +52,7 @@ mod tests {
     #[test]
     fn render_returns_404_not_found_for_missing_template() {
         // Arrange
-        let renderer = TeraRenderer::new().unwrap();
+        let renderer = TeraRenderer::new("templates/**/*.html").unwrap();
         let template_name = "test";
         let context = serde_json::json!({});
 
@@ -61,5 +61,15 @@ mod tests {
 
         // Assert
         assert!(matches!(result, Err(TemplateError::NotFound(_))));
+    }
+
+    #[test]
+    fn render_returns_operation_error_for_non_object_context() {
+        let renderer = TeraRenderer::new("templates/**/*.html").unwrap();
+        let context = serde_json::json!(42);
+
+        let result = renderer.render("index.html", &context);
+
+        assert!(matches!(result, Err(TemplateError::Operation(_))));
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>jeff-mitchell.dev | {{ title }}</title>
+    <link rel="stylesheet" href="/static/screen.css">
 </head>
 <body>
     <header id="header">
@@ -13,9 +14,10 @@
     <main id="main">
         {% block content %}{% endblock content %}
     </main>
-     <footer id="footer">
+    <footer id="footer">
         <p>&copy; 2026 | Jeffery D. Mitchell | All Rights Reserved | Site built with: <a href="https://actix.rs">Actix Web</a>, <a href="https://keats.github.io/tera">Tera</a>, and <a href="https://data-star.dev">Datastar</a></p>
     </footer>
     <script type="module" src="/static/datastar.js?v=5"></script>
+    <script type="module" src="/static/scripts.js"></script>
 </body>
 </html>

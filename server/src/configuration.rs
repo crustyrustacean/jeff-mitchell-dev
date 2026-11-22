@@ -2,7 +2,6 @@
 
 // dependencies
 use serde_aux::field_attributes::deserialize_number_from_string;
-use std::convert::{TryFrom, TryInto};
 
 #[derive(serde::Deserialize, Clone)]
 pub struct Settings {
@@ -14,6 +13,8 @@ pub struct ApplicationSettings {
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub port: u16,
     pub host: String,
+    pub static_dir: String,
+    pub templates_glob: String,
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {

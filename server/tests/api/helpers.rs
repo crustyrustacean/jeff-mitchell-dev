@@ -5,9 +5,9 @@ use server::configuration::get_configuration;
 use server::startup::Application;
 use server::telemetry::{get_subscriber, init_subscriber};
 use server::template::{TemplateRenderer, tera::TeraRenderer};
-use std::sync::LazyLock;
+use std::sync::{Arc, LazyLock};
 
-// Ensure that the `tracing` stack is only initialised once using `once_cell`
+// Ensure that the `tracing` stack is only initialised once.
 static TRACING: LazyLock<()> = LazyLock::new(|| {
     let default_filter_level = "info".to_string();
     let subscriber_name = "test".to_string();
@@ -20,14 +20,33 @@ static TRACING: LazyLock<()> = LazyLock::new(|| {
     };
 });
 
-#[allow(dead_code)]
 pub struct TestApp {
     pub address: String,
+    #[allow(dead_code)]
     pub port: u16,
     api_client: reqwest::Client,
 }
 
+impl TestApp {
+    pub async fn get(&self, path: &str) -> reqwest::Response {
+        self.api_client
+            .get(format!("{}{path}", self.address))
+            .send()
+            .await
+            .expect("Failed to execute request.")
+    }
+}
+
 pub async fn spawn_app() -> TestApp {
+    let configuration = get_configuration().expect("Failed to read configuration.");
+    let template_renderer: Arc<dyn TemplateRenderer> = Arc::new(
+        TeraRenderer::new(&configuration.application.templates_glob)
+            .expect("Failed to build the template renderer."),
+    );
+    spawn_app_with_renderer(template_renderer).await
+}
+
+pub async fn spawn_app_with_renderer(template_renderer: Arc<dyn TemplateRenderer>) -> TestApp {
     LazyLock::force(&TRACING);
 
     let configuration = {
@@ -36,26 +55,21 @@ pub async fn spawn_app() -> TestApp {
         c
     };
 
-    let template_renderer: Box<dyn TemplateRenderer> =
-        Box::new(TeraRenderer::new().expect("Failed to build the template renderer."));
-
     // Launch the application as a background task
-    let application = Application::build(configuration.clone(), template_renderer)
+    let application = Application::build(configuration, template_renderer)
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
-    let _ = tokio::spawn(application.run_until_stopped());
+    drop(tokio::spawn(application.run_until_stopped()));
 
     let client = reqwest::Client::builder()
         .redirect(reqwest::redirect::Policy::none())
         .build()
         .unwrap();
 
-    let test_app = TestApp {
+    TestApp {
         address: format!("http://localhost:{}", application_port),
         port: application_port,
         api_client: client,
-    };
-
-    test_app
+    }
 }

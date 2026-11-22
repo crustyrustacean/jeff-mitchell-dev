@@ -19,7 +19,7 @@ struct NotFoundContext {
 }
 
 pub async fn not_found(
-    templates: Data<Box<dyn TemplateRenderer>>,
+    templates: Data<dyn TemplateRenderer>,
 ) -> Result<HttpResponse, actix_web::Error> {
     let not_found_context = NotFoundContext {
         title: "Not Found",
