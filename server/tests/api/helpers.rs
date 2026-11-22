@@ -1,10 +1,12 @@
 // tests/api/helpers.rs
 
 // dependencies
-use server::configuration::get_configuration;
+use server::configuration::{Settings, get_configuration};
 use server::startup::Application;
 use server::telemetry::{get_subscriber, init_subscriber};
 use server::template::{TemplateRenderer, tera::TeraRenderer};
+use std::path::{Path, PathBuf};
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, LazyLock};
 
 // Ensure that the `tracing` stack is only initialised once.
@@ -19,6 +21,34 @@ static TRACING: LazyLock<()> = LazyLock::new(|| {
         init_subscriber(subscriber);
     };
 });
+
+static TEMP_DIR_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+pub struct TempDir {
+    path: PathBuf,
+}
+
+impl TempDir {
+    pub fn new(prefix: &str) -> Self {
+        let id = TEMP_DIR_COUNTER.fetch_add(1, Ordering::Relaxed);
+        let path = std::env::temp_dir().join(format!(
+            "server-test-{prefix}-{}-{id}",
+            std::process::id()
+        ));
+        std::fs::create_dir_all(&path).expect("Failed to create temp directory.");
+        Self { path }
+    }
+
+    pub fn path(&self) -> &Path {
+        &self.path
+    }
+}
+
+impl Drop for TempDir {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.path);
+    }
+}
 
 pub struct TestApp {
     pub address: String,
@@ -38,24 +68,40 @@ impl TestApp {
 }
 
 pub async fn spawn_app() -> TestApp {
-    let configuration = get_configuration().expect("Failed to read configuration.");
+    let configuration = test_configuration();
     let template_renderer: Arc<dyn TemplateRenderer> = Arc::new(
         TeraRenderer::new(&configuration.application.templates_glob)
             .expect("Failed to build the template renderer."),
     );
-    spawn_app_with_renderer(template_renderer).await
+    spawn_app_with(configuration, template_renderer).await
 }
 
 pub async fn spawn_app_with_renderer(template_renderer: Arc<dyn TemplateRenderer>) -> TestApp {
+    spawn_app_with(test_configuration(), template_renderer).await
+}
+
+pub async fn spawn_app_with_static_dir(static_dir: impl Into<String>) -> TestApp {
+    let mut configuration = test_configuration();
+    configuration.application.static_dir = static_dir.into();
+    let template_renderer: Arc<dyn TemplateRenderer> = Arc::new(
+        TeraRenderer::new(&configuration.application.templates_glob)
+            .expect("Failed to build the template renderer."),
+    );
+    spawn_app_with(configuration, template_renderer).await
+}
+
+fn test_configuration() -> Settings {
+    let mut c = get_configuration().expect("Failed to read configuration.");
+    c.application.port = 0;
+    c
+}
+
+async fn spawn_app_with(
+    configuration: Settings,
+    template_renderer: Arc<dyn TemplateRenderer>,
+) -> TestApp {
     LazyLock::force(&TRACING);
 
-    let configuration = {
-        let mut c = get_configuration().expect("Failed to read configuration.");
-        c.application.port = 0;
-        c
-    };
-
-    // Launch the application as a background task
     let application = Application::build(configuration, template_renderer)
         .await
         .expect("Failed to build application.");

@@ -2,7 +2,37 @@
 
 use crate::helpers::{spawn_app, spawn_app_with_renderer};
 use server::template::{TemplateError, TemplateRenderer};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
+
+struct RecordingRenderer {
+    rendered_templates: Mutex<Vec<String>>,
+}
+
+impl RecordingRenderer {
+    fn new() -> Self {
+        Self {
+            rendered_templates: Mutex::new(Vec::new()),
+        }
+    }
+
+    fn rendered(&self) -> Vec<String> {
+        self.rendered_templates.lock().unwrap().clone()
+    }
+}
+
+impl TemplateRenderer for RecordingRenderer {
+    fn render(
+        &self,
+        template_name: &str,
+        _context: &serde_json::Value,
+    ) -> Result<String, TemplateError> {
+        self.rendered_templates
+            .lock()
+            .unwrap()
+            .push(template_name.to_string());
+        Ok(format!("<!DOCTYPE html><html><body>{template_name}</body></html>"))
+    }
+}
 
 struct FailingRenderer;
 
@@ -31,7 +61,7 @@ impl TemplateRenderer for MissingTemplateRenderer {
 }
 
 #[tokio::test]
-async fn index_page_returns_200_ok_and_renders_html_content() {
+async fn index_page_returns_200_ok_and_renders_html_document() {
     let app = spawn_app().await;
 
     let response = app.get("/").await;
@@ -49,12 +79,12 @@ async fn index_page_returns_200_ok_and_renders_html_content() {
 
     let body = response.text().await.expect("Failed to read body.");
     assert!(body.contains("<!DOCTYPE html>"));
-    assert!(body.contains("<title>jeff-mitchell.dev | Home</title>"));
-    assert!(body.contains("<p>Welcome!</p>"));
+    assert!(body.contains("<html"));
+    assert!(body.contains("</html>"));
 }
 
 #[tokio::test]
-async fn unknown_route_renders_404_error_template() {
+async fn unknown_route_returns_404_and_renders_html_document() {
     let app = spawn_app().await;
 
     let response = app.get("/does-not-exist").await;
@@ -72,8 +102,22 @@ async fn unknown_route_renders_404_error_template() {
 
     let body = response.text().await.expect("Failed to read body.");
     assert!(body.contains("<!DOCTYPE html>"));
-    assert!(body.contains("404"));
-    assert!(body.contains("The page you are looking for does not exist."));
+    assert!(body.contains("<html"));
+    assert!(body.contains("</html>"));
+}
+
+#[tokio::test]
+async fn frontend_routes_render_expected_template_names() {
+    let renderer = Arc::new(RecordingRenderer::new());
+    let app = spawn_app_with_renderer(renderer.clone()).await;
+
+    let index_response = app.get("/").await;
+    assert_eq!(reqwest::StatusCode::OK, index_response.status());
+
+    let not_found_response = app.get("/does-not-exist").await;
+    assert_eq!(reqwest::StatusCode::NOT_FOUND, not_found_response.status());
+
+    assert_eq!(renderer.rendered(), vec!["index.html", "error.html"]);
 }
 
 #[tokio::test]
