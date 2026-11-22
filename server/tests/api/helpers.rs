@@ -4,6 +4,7 @@
 use server::configuration::get_configuration;
 use server::startup::Application;
 use server::telemetry::{get_subscriber, init_subscriber};
+use server::template::{TemplateRenderer, tera::TeraRenderer};
 use std::sync::LazyLock;
 
 // Ensure that the `tracing` stack is only initialised once using `once_cell`
@@ -35,8 +36,11 @@ pub async fn spawn_app() -> TestApp {
         c
     };
 
+    let template_renderer: Box<dyn TemplateRenderer> =
+        Box::new(TeraRenderer::new().expect("Failed to build the template renderer."));
+
     // Launch the application as a background task
-    let application = Application::build(configuration.clone())
+    let application = Application::build(configuration.clone(), template_renderer)
         .await
         .expect("Failed to build application.");
     let application_port = application.port();

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jeff-mitchell.dev | {{ title }}</title>
+</head>
+<body>
+    <header id="header">
+        <h1>{{ header }}</h1>
+        <h2>{{ sub_header }}</h2>
+    </header>
+    <main id="main">
+        {% block content %}{% endblock content %}
+    </main>
+     <footer id="footer">
+        <p>&copy; 2026 | Jeffery D. Mitchell | All Rights Reserved | Site built with: <a href="https://actix.rs">Actix Web</a>, <a href="https://keats.github.io/tera">Tera</a>, and <a href="https://data-star.dev">Datastar</a></p>
+    </footer>
+    <script type="module" src="/static/datastar.js?v=5"></script>
+</body>
+</html>
