@@ -54,6 +54,7 @@ async fn run(
                     .index_file("index.html")
                     .prefer_utf8(true),
             )
+            .default_service(web::to(frontend::not_found))
             .app_data(template_renderer.clone())
     })
     .listen(listener)?
