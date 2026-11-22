@@ -2,30 +2,9 @@
 
 // src/routes/frontend/index.rs
 
-use crate::{routes::frontend::index, template::TemplateRenderer};
-use crate::utils::error_chain_fmt;
-use actix_web::{HttpResponse, ResponseError, web::Data};
+use crate::template::TemplateRenderer;
+use actix_web::{HttpResponse, web::Data};
 use serde::Serialize;
-use tera::Context;
-
-#[derive(thiserror::Error)]
-pub enum IndexError {
-    #[error("template rendering failed")]
-    Template(#[from] tera::Error),
-}
-
-impl std::fmt::Debug for IndexError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        error_chain_fmt(self, f)
-    }
-}
-
-impl ResponseError for IndexError {
-    fn error_response(&self) -> HttpResponse {
-        tracing::error!(error = ?self, "index page failed");
-        HttpResponse::InternalServerError().body("Something went wrong.")
-    }
-}
 
 #[derive(Serialize)]
 struct IndexContext<'a> {
@@ -43,6 +22,8 @@ pub async fn get_index_page(
         sub_header: "jeff-mitchell.dev API",
     };
 
-    let html = templates.render("index.html", &Context::from_serialize(&index_context).unwrap())?;
+    let json_index_context = serde_json::to_value(&index_context)?;
+
+    let html = templates.render("index.html", &json_index_context)?;
     Ok(HttpResponse::Ok().content_type("text/html").body(html))
 }
