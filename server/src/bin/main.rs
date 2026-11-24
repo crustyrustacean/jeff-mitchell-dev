@@ -12,8 +12,9 @@ async fn main() -> anyhow::Result<()> {
     let subscriber = get_subscriber("server".into(), "info".into(), std::io::stdout);
     init_subscriber(subscriber);
     let configuration = get_configuration()?;
-    let template_renderer: Arc<dyn TemplateRenderer> =
-        Arc::new(TeraRenderer::new(&configuration.application.templates_glob)?);
+    let template_renderer: Arc<dyn TemplateRenderer> = Arc::new(TeraRenderer::new(
+        &configuration.application.templates_glob,
+    )?);
     let application = Application::build(configuration, template_renderer).await?;
     application.run_until_stopped().await?;
 

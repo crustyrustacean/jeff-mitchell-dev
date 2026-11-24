@@ -31,10 +31,8 @@ pub struct TempDir {
 impl TempDir {
     pub fn new(prefix: &str) -> Self {
         let id = TEMP_DIR_COUNTER.fetch_add(1, Ordering::Relaxed);
-        let path = std::env::temp_dir().join(format!(
-            "server-test-{prefix}-{}-{id}",
-            std::process::id()
-        ));
+        let path =
+            std::env::temp_dir().join(format!("server-test-{prefix}-{}-{id}", std::process::id()));
         std::fs::create_dir_all(&path).expect("Failed to create temp directory.");
         Self { path }
     }
