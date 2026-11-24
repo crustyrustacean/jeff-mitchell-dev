@@ -30,7 +30,9 @@ impl TemplateRenderer for RecordingRenderer {
             .lock()
             .unwrap()
             .push(template_name.to_string());
-        Ok(format!("<!DOCTYPE html><html><body>{template_name}</body></html>"))
+        Ok(format!(
+            "<!DOCTYPE html><html><body>{template_name}</body></html>"
+        ))
     }
 }
 

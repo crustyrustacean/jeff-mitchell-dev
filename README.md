@@ -30,9 +30,12 @@ The repository is organized as a monorepo with two independently deployed parts:
 │   ├── configuration/       # Layered TOML config (base, local, production)
 │   ├── tests/               # Integration tests
 │   ├── Cargo.toml
+│   ├── deny.toml            # cargo-deny advisory, license, ban, and source policy
 │   ├── Dockerfile           # Multi-stage cargo-chef production image
 │   └── fly.toml             # Fly.io deployment configuration
-└── .github/workflows/       # CI/CD pipelines for Cloudflare Pages and Fly.io
+├── .githooks/               # Opt-in local git hooks (e.g. pre-push CI)
+├── justfile                 # Unified local & CI task runner
+└── .github/workflows/       # Unified gated CI/CD pipeline (ci-cd.yml)
 ```
 
 ---
@@ -49,15 +52,22 @@ The repository is organized as a monorepo with two independently deployed parts:
 
 ### Building Locally
 
-Prerequisites: Rust toolchain with the `wasm32-unknown-unknown` target and the `taxus` CLI.
+Prerequisites: [just](https://github.com/casey/just) and a Rust toolchain (plus `wasm32-unknown-unknown` and pinned `taxus-cli`). You can install all local CI tools from the repo root:
+
+```bash
+just install-tools
+just ci-site
+```
+
+To run the static build manually:
 
 ```bash
 rustup target add wasm32-unknown-unknown
-cargo install --git https://github.com/crustyrustacean/taxus.git --locked --features typescript --bin taxus taxus-cli
+cargo install --git https://github.com/crustyrustacean/taxus.git --rev 3497ce97 --locked --features typescript --bin taxus taxus-cli
 taxus build
 ```
 
-The generated site is written to `dist/`.
+The generated site is written to `dist/` and verified by `just site-verify`. To bump the Taxus version used locally and in GitHub Actions, update `taxus_rev` in `justfile`.
 
 ---
 
@@ -86,7 +96,15 @@ cd server
 cargo run
 ```
 
-To run the unit and integration test suite:
+To run the server CI suite (`rustfmt`, `clippy -D warnings`, `cargo-nextest`, doctests, and `cargo-deny`) from the repo root:
+
+```bash
+just ci-server
+```
+
+Or run `just ci` to run both `ci-site` and `ci-server`, `just server-docker` to validate the Docker image build locally, and `just setup-hooks` to opt in to `.githooks/pre-push` (which runs affected CI checks before `git push`).
+
+To run tests manually inside `server/`:
 
 ```bash
 cd server
@@ -97,10 +115,12 @@ cargo test
 
 ## Deployment
 
-Both deployments are automated via GitHub Actions on pushes to `trunk` (and support manual `workflow_dispatch`):
+Both CI and deployment are unified in `.github/workflows/ci-cd.yml` (mirroring the `justfile` recipes):
 
-* **Static Site (`.github/workflows/deploy.yml`):** Installs `taxus`, runs `taxus build`, and deploys `dist/` to Cloudflare Pages (`jeff-mitchell-dev`) via Wrangler.
-* **Backend Server (`.github/workflows/deploy-server.yml`):** Triggers on changes to `server/**` or the workflow file, and runs `flyctl deploy --remote-only` from `server/` using `server/Dockerfile` and `server/fly.toml` (`jeff-mitchell-dev-server` in region `dfw`, auto-stop/start on port `8000`).
+* **Change Detection (`changes`):** Runs `ci-site` on static site changes and `ci-server` on `server/**` changes (or both when `justfile`, `ci-cd.yml`, or `workflow_dispatch` runs).
+* **Gated CI (`ci-gate`):** Required upstream gate for all deployments. `deploy-site` and `deploy-server` only run on `trunk` after `ci-gate` succeeds.
+* **Static Site (`deploy-site`):** Downloads the validated `dist/` artifact from `ci-site` and deploys to Cloudflare Pages (`jeff-mitchell-dev`) via Wrangler.
+* **Backend Server (`deploy-server`):** Deploys `server/` to Fly.io via `flyctl deploy --remote-only` (after `ci-server` passes tests, formatting, Clippy, `cargo-deny`, and a Docker build check) and smoke-checks `https://api.jeff-mitchell.dev/api/v1/health_check`.
 
 ---
 

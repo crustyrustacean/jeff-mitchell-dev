@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+base_ref=""
+if git rev-parse --verify '@{upstream}' >/dev/null 2>&1; then
+  base_ref='@{upstream}'
+elif git rev-parse --verify origin/trunk >/dev/null 2>&1; then
+  base_ref='origin/trunk'
+fi
+
+if [ -z "$base_ref" ]; then
+  echo "pre-push: no upstream ref found; running full CI..."
+  just ci
+  exit 0
+fi
+
+changed_files="$(git diff --name-only "$base_ref"...HEAD)"
+if [ -z "$changed_files" ]; then
+  exit 0
+fi
+
+run_site=false
+run_server=false
+run_full=false
+
+while IFS= read -r file; do
+  case "$file" in
+    justfile|.github/workflows/*)
+      run_full=true
+      ;;
+    server/*)
+      run_server=true
+      ;;
+    content/*|templates/*|styles/*|scripts/*|static/*|site.toml|tsconfig.json|wrangler.toml)
+      run_site=true
+      ;;
+  esac
+done <<< "$changed_files"
+
+if [ "$run_full" = true ]; then
+  echo "pre-push: CI/workflow files changed; running full CI..."
+  just ci
+else
+  if [ "$run_site" = true ]; then
+    echo "pre-push: static site changes detected; running site CI..."
+    just ci-site
+  fi
+  if [ "$run_server" = true ]; then
+    echo "pre-push: server changes detected; running server CI..."
+    just ci-server
+  fi
+fi
