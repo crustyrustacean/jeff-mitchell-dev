@@ -178,8 +178,10 @@ jobs:
     name: Deploy Site to Cloudflare Pages
     needs: [changes, ci-gate]
     if: >-
+      !cancelled() &&
       github.event_name != 'pull_request' &&
       github.ref == 'refs/heads/trunk' &&
+      needs.changes.result == 'success' &&
       needs.ci-gate.result == 'success' &&
       (
         (github.event_name == 'push' && needs.changes.outputs.site == 'true') ||
@@ -207,8 +209,10 @@ jobs:
     name: Deploy Server to Fly.io
     needs: [changes, ci-gate]
     if: >-
+      !cancelled() &&
       github.event_name != 'pull_request' &&
       github.ref == 'refs/heads/trunk' &&
+      needs.changes.result == 'success' &&
       needs.ci-gate.result == 'success' &&
       (
         (github.event_name == 'push' && needs.changes.outputs.server == 'true') ||
