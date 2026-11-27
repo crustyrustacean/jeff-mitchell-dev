@@ -2,6 +2,9 @@
 title = "Projects"
 +++
 
+## Advent of Code
+[AoC 2025](https://github.com/crustyrustacean/aoc2025)
+
 *Projects I've built or am building.*
 
 ## Flux Limiter
@@ -18,15 +21,15 @@ My take on a coding harness, inspired by [Pi](https://pi.dev). It has a UI found
 
 ## Taxus
 
-A static site generator. This site is built with it.
+A static site generator. This site is built with it. I've slowly evolving a core library crate, which is published on [crates.io](https://crates.io/crates/taxus-ssg/2.0.1)
 
 [Taxus](https://get-taxus.org)
 
-## Metallian Photos
+## Halation Photos
 
-A photo gallery focusing on my musical sightseeing adventures.
+My take on a version of Instagram you might actually want to use.
 
-[Metallian Photos](https://metallian-photos.fly.dev)
+[halation-photos](https://halation.photos)
 
 *Projects I've contributed to.*
 
